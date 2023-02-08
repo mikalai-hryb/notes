@@ -1,0 +1,275 @@
+Постскриптум
+дорогу осилит идущий дарогу адоллее той хто ідзе
+пераменыя           ці зменыя
+ даныя
+прыдбанных ведаў ці атрыманых 
+загружать (спампанаваць?) download
+upload
+копироваць
+усталяваць?
+Вымаўленьне, расшырэньне - ньне ці нне
+пашырэнне або расшырэньне
+скрыты альбо схаваны?
+уладальнік файла ці уладальнік файлу
+прымацаваць/? файл
+
+на  конт гэтага
+на мой погляд альбо я мяркую, па маяму меркаваню,
+я засмучваюся ад таго щто
+ую сборныя сукупнасць - тавару, лесу, посуду, але сквера, ()
+абстрактныя вопуту, абавязку, інтэрвала
+я з упэщненнасцю магу казаць
+
+-------------------------------------------------------------------------------
+11. Файлы (Files). Частка 1
+
+файл — file
+імя — name
+пашырэнне/тып/фармат — extention/type/format
+памер — size
+уладальнік файла — file owner
+месцазнаходжанне, размяшчэнне - location
+змест, кантэнт — content
+радок — line
+слова — word
+літара/сімвал/знак — letter/symbol/character
+
+#вучуся #праграмаванне #айці #learning #programming #it
+-------------------------------------------------------------------------------
+11. Файлы (Files). Частка 2
+
+тэкставы файл — text file
+бінарны файл — binary file
+файл выявы — image file
+відэа файл — video file
+звычайны файл — ordinary file
+схаваны файл — hidden file
+файл дырэкторыя — directory file
+
+#вучуся #праграмаванне #айці #learning #programming #it
+-------------------------------------------------------------------------------
+11. Файлы (Files). Частка 3
+
+дырэкторыя — directory
+паддырэкторыя — subdirectory
+даччыная дырэкторыя — child directory
+бягучая дырэкторыя — current directory
+бацькоўская дырэкторыя — parent directory
+каранёвая дырэкторыя — root directory
+
+папка — folder
+каталог — catalog
+рэпазітар — repository
+
+#вучуся #праграмаванне #айці #learning #programming #it
+-------------------------------------------------------------------------------
+11. Файлы (Files). Частка 4
+
+стварыць/выдаліць — create/delete
+адкрыць/закрыць — open/close
+адправіць/атрымаць — send/receive
+запампаваць/спампаваць — upload/download
+прымацаваць/адмацаваць — attach/detach
+закадаваць/дэкадаваць — encode/decode
+
+знайсці — find
+прачытаць — read
+рэдагаваць — edit
+абнавіць — update
+змяніць — change
+захаваць — save
+
+#вучуся #праграмаванне #айці #learning #programming #it
+-------------------------------------------------------------------------------
+11. Файлы (Files). Частка 5
+
+прачытаць файл цалкам — read entire file
+пісаць/запіс у файл — write to file
+дадаць у файл — append to file
+перазапісаць існуючы змест файла — overwrite existing file content
+заархіваваць файл — archive file
+сціснуць файл — compress file
+перацягнуць файл — drag file
+перанесці/перамясціць файл — move file
+адсартаваць файлы — sort files
+атрымаць спіс файлаў — list files
+
+#вучуся #праграмаванне #айці #learning #programming #it
+-------------------------------------------------------------------------------
+11. Файлы (Files). Частка 6
+
+файлавая сістэма — file system
+кадоўка файла — file encoding
+глабальная табліца файлаў — global file table
+запіс табліцы файлай — file table entry 
+правы доступу да файла — file permissions
+дэскрыптар файла — file descriptor 
+сокет? — socket
+канец файла — EOF(End Of File)
+
+#вучуся #праграмаванне #айці #learning #programming #it
+-------------------------------------------------------------------------------
+
+
+
+
+https://gist.github.com/maxtruxa/b2ca551e42d3aead2b3d
+update
+add
+insert/remove
+form
+include
+contains
+read
+get
+set
+sort
+allow/deny
+выцянуць/пхнуць — pull/push 
+
+
+variable 
+constant
+literal
+data
+casting
+pointer
+length
+type
+
+
+string
+symbol
+
+Dynamic and weak typing
+Primitive values
+Null
+underfuned
+BigInt
+
+frozenset
+range
+
+interger
+
+DateTime
+structure
+enumeration
+
+character
+symbol
+byte
+bit
+number
+decimal
+float
+complex
+boolean
+tuple
+array list
+tuple
+set
+none/null/nil
+
+map
+object
+dictionary
+
+
+operation system
+script
+progmram
+command
+console
+terminal
+shell
+input
+output
+cli command-line interface
+gui graphical-user interface
+
+in
+return
+
+Escape Sequences
+\t
+\n
+
+
+true
+false
+null/none/nil
+
+trailing comma
+uppercase
+a lowercase
+snakecase
+paskalcase
+camelcase
+
+if statements 
+function
+lambda/anoymous function
+argument
+parameter
+attribute
+class
+control flow (if and else branches)
+while
+switch
+boolean
+string
+number
+interger
+float
+tuple
+bytes
+variable
+constant
+set
+frozenset
+complex
+error-prone
+check
+property
+attribute
+narrow
+open
+close
+delete
+remove
+pull
+push
+queue
+iteration
+instance
+optional
+operartor
+range, tuple, list, array
+dictinary, map, object
+literal
+construct
+empty string
+type
+object
+primitive
+error
+bug
+feature
+chore
+case
+throw an error
+try
+catch
+if/else
+linter
+
+github context
+filter
+getter
+setter
+concatinatino
+divition
+
+
+abriviations

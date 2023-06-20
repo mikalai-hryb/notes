@@ -1,10 +1,36 @@
 # TS
 
+https://masteringnuxt.com/nuxt3/lessons
+
 ECMAScript - specification. The latest is ECMAScript 2022.
 
 JavaScript - one of realization/implementation of ECMAScript specification.
 
 `  backticks character
+
+TypeScript is a static type-checker.
+
+TypeScript’s core values:
+* much of the time, you will know better than TypeScript
+
+## English
+* message bubble
+* so there’s a tradeoff on what sorts of things a type-checker finds acceptable
+* but generally speaking
+* it pays for itself in the long run
+* more thorough checks
+* we can opt out of them individually
+* simultaneously
+* Much like something
+* to narrow the union with code help
+
+## Best Practices
+
+* avaid any
+* use interface until you need to use features from type
+* let TS to infer the types
+* use tuples where it's nessesary 
+* always prefer parameters with union types instead of overloads when possible
 
 ## Type annotations
 
@@ -48,7 +74,7 @@ You can use `,` or `;` to separate the properties of an object type.
 
 ## Union Types
 
-`Union type` is a type formed from two or more other types, representing values that may be any one of those types.
+`Union type` is a type formed from two or more other types, representing values that may be any one of those types. Each member is called a union member.
 
 ```ts
 function printId(id: number | string) {
@@ -56,7 +82,7 @@ function printId(id: number | string) {
 }
 ```
 
-## Type alias
+## Type alias (named type)
 
 `Type alias` - a name for any type.
 
@@ -100,6 +126,7 @@ We can use `as const` to convert the entire object to be type literals. The `as 
 
 ## Narrowing
 
+`Narrowing` is a process of refining types to more specific types 
 We can use `narrowing` to check for values that might be null, the type guard is used here:
 
 ```ts
@@ -125,6 +152,12 @@ Type guards:
 * typeof guard
 * Truthiness guard (if (something), if (!!something))
 * Equality narrowing
+* The in operator narrowing
+* instanceof narrowing
+* Assignments
+* control flow analysis
+* type predicates
+* Discriminated unions
 
 Writing `!` after any expression is effectively a type assertion that the value isn’t `null` or `undefined`:
 
@@ -136,3 +169,48 @@ function liveDangerously(x?: number | null) {
 ```
 
 `x != null` or `x != underfined` removes both `null` and `underfind` from the type
+
+https://www.typescriptlang.org/docs/handbook/2/narrowing.html
+
+`never` type is assignable to every type; however, no type is assignable to never (except never itself).
+It's nice to use it in switch for default in order not to miss a new case.
+
+## Generics
+
+The generics are all about relating two or more values with the same type.
+`generics` are used when we want to describe a correspondence between two values. We do this by declaring a type parameter in the function signature:
+
+```ts
+function map<Input, Output>(arr: Input[], func: (arg: Input) => Output): Output[] {
+  return arr.map(func);
+}
+```
+
+We constrain the type parameter to a type by writing an extends clause:
+
+```ts
+function longest<Type extends { length: number }>(a: Type, b: Type) {
+  if (a.length >= b.length) {
+    return a;
+  } else {
+    return b;
+  }
+}
+```
+
+## Overload signatures
+
+This example has 2 overload signatures (overloads) and implementation signature ( function implementation).
+
+```ts
+function makeDate(timestamp: number): Date;
+function makeDate(m: number, d: number, y: number): Date;
+function makeDate(mOrTimestamp: number, d?: number, y?: number): Date {
+  if (d !== undefined && y !== undefined) {
+    return new Date(y, mOrTimestamp, d);
+  } else {
+    return new Date(mOrTimestamp);
+  }
+}
+```
+

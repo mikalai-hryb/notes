@@ -11,6 +11,9 @@ Authorization determines the access rights. It provides the permissions.
 The maximum amount of data that can be transmitted over an internet connection
 in a given amount of time.
 
+## Bootstrap
+Bootstrapping means launching commands when a machine starts.
+
 ## CLI
 CLI - is a text-based interface used to interact with a computer program or
 system by typing commands into a terminal or command prompt.
@@ -23,6 +26,9 @@ A discrete data center refers to a type of data center infrastructure that is
 physically separate or distinct from other data center facilities. It is
 designed to operate independently and is often dedicated to specific functions
 or applications.
+
+## HPC
+HPC - High-Performance Computing (applications).
 
 ## ISP
 ISP - Internet Service Provider
@@ -37,6 +43,9 @@ information to get from its source to you.
 Network capacity refers to the maximum information transfer limit of a network
 at any given point.
 
+## RAM
+RAM - Random-Access Memory.
+
 ## SDK
 SDK - Software Development Kit. It is a collection of software tools,
 libraries, documentation, and resources that developers use to create
@@ -48,3 +57,20 @@ of time. So if bandwidth is the max amount of data, throughput is how much of
 that data makes it to its destination – taking latency, 
 network speed,
 packet loss and other factors into account.
+
+## VDS
+VDS - Virtual Dedicated Server.
+
+## VPS
+VPS - Virtual Private Server.
+
+
+ядро
+поток
+процесс
+архитектура (arm, x86)
+https://ru.stackoverflow.com/questions/445768/%D0%9C%D0%BD%D0%BE%D0%B3%D0%BE%D0%BF%D0%BE%D1%82%D0%BE%D1%87%D0%BD%D0%BE%D0%B5-vs-%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D0%BE%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5
+
+
+BI???
+IPv4 vs IPv6

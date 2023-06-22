@@ -14,9 +14,10 @@ inexpensive cloud computing services.
   * <u>AZ</u> is one or more
   [discrete data centers](./terms/general.md#discrete-data-center) with
   redundant power, networking and connectivity
-  * examples: _ap-southeast-2a_, _ap-southeast-2b_, _ap-southeast-2c_
   * AZs are separated from each other
   * AZs are connected with high bandwidth, ultra-low latency networking
+  * examples: <i>ap-southeast-2a</i>, <i>ap-southeast-2b</i>,
+  <i>ap-southeast-2c</i>
 
 ### AWS Data Centers
   * <u>data center</u> is a physical location that stores computing machines
@@ -28,10 +29,10 @@ inexpensive cloud computing services.
   * 90+ cities across 40+ countries
 
 ### How to choose an AWS Region?
-* `Compliance` with data governance and legal requirements
-* `Proximity` to customers
-* `Available services` within a region
-* `Pricing` (pricing varies region to region)
+* <b>Compliance</b> with data governance and legal requirements
+* <b>Proximity</b> to customers
+* <b>Available services</b> within a region
+* <b>Pricing</b> (pricing varies region to region)
 
 ### Global Services:
 * IAM
@@ -53,33 +54,35 @@ Users or Groups can be assigned policies.
 <u>Policy</u> is a set of permisons (JSON document). Policies define the
 permissions of the users.
 
-In AWS you should apply/follow `"least privilege principle"`.
+In AWS you should apply/follow <b>least privilege principle</b>.
 
-Policy consists of the following elements:
-* `Version` - defines the version of the policy language, current value is
-`2012-10-17`
-* `Statement` - contain a single statement or an array of individual statements
-  * `Sid` - statement id
-  * `Principal` - account/user/role to which this policy applied to   
-  * `Effect` - whether the statement allows or denies access
-  * `Action` - list of actions this policy allows or denies
-  * `Resource` - list of resources to which the actions applied to
-  * `Condition` - conditions for when this policy is in effect
+#### Policy consists of the following elements:
+* <u>Version</u> - defines the version of the policy language, current value is
+  <b>2012-10-17</b>
+* <u>Statement</u> - contain a single statement or an array of individual
+  statements
+  * <u>Sid</u> - statement id
+  * <u>Principal</u> - account/user/role to which this policy applied to
+  * <u>Effect</u> - whether the statement allows or denies access
+  * <u>Action</u> - list of actions this policy allows or denies
+  * <u>Resource</u> - list of resources to which the actions applied to
+  * <u>Condition</u> - conditions for when this policy is in effect
 
 #### Policy types:
-* `Identity-based policy` - grands permissions to an identity (user/group/role)
+* <u>Identity-based policy</u> - grands permissions to an identity (user, group
+or role)
   * managed policies
     * AWS managed
     * Customer managed
   * inline policies
-* `Resource-based policy` - attached to a resource such as an Amazon S3 bucket,
-grants the specified principal permission to perform actions on that resource.
-Resource-based policies are inline policies. There are no managed
+* <u>Resource-based policy</u> - attached to a resource such as an Amazon S3
+bucket, grants the specified principal permission to perform actions on that
+resource. Resource-based policies are inline policies. There are no managed
 resource-based policies.
-* `IAM permissions boundaries`
-* `Service control policies (SCPs)`
-* `Access control lists (ACLs)`
-* `Session policies`
+* IAM permissions boundaries
+* Service control policies (SCPs)
+* Access control lists (ACLs)
+* Session policies
 
 ### Entity
 <u>Entities</u> - IAM resource objects that AWS uses for authentication:
@@ -126,9 +129,9 @@ account's IAM Users and the status of their various credentials.
 ## EC2
 <u>instance</u> - virtual computing environment or virtual server
 <u>instance type</u> - a configuration of CPU, memory, storage, and
-[networking capacity](./terms/general.md#network-capacity) for your instances
+[networking capacity](./terms/general.md#network-capacity) and for your instances
 
-EC2 - Elastic Compute Cloud - infrastructure as a Service
+<u>EC2</u> - Elastic Compute Cloud - infrastructure as a Service
 * renting virtual machines (EC2)
 * storing data on virtual drivers (EBS - elastic block store)
 * distributing load across machines (ELB - elastic load balancer)
@@ -146,45 +149,43 @@ EC2 configuration
 * Firewall rules: security groups
 * Bootstrap script: EC2 User Data
 
-Bootstrapping means launching commands when a machine starts
-We can bootstrap EC2 instances using User Data script
-The script uses root user
+We can [bootstrap](./terms/general.md#bootstrap) EC2 instances using User Data
+script. The script uses root user.
 
-VPS (Virtual Private Server) does not allow to change core or os. Resources are allocated dynamically. 
-Examples: openVZ, Virtuozzo, FreeBSD.
+[VPS](./terms/general.md#vps) does not allow to change core or OS. Resources
+are allocated dynamically. Examples: openVZ, Virtuozzo, FreeBSD.
 
-VDS (Virtual Dedicated Server) uses hypervisor(virtual machine manager). It's really full virtualization. It allows configuring everything, like a physical server. A fixed amount of resources is allocated to VDS.
+[VDS](./terms/general.md#vds) uses hypervisor (virtual machine manager). It's
+really full virtualization. It allows configuring everything, like a physical
+server. A fixed amount of resources is allocated to VDS.
 Examples: VMware, KVM, XEN, Hyper-v.
 
-CPU - Central Processing Unit
-ядро
-поток
-процесс
-архитектура (arm, x86)
-https://ru.stackoverflow.com/questions/445768/%D0%9C%D0%BD%D0%BE%D0%B3%D0%BE%D0%BF%D0%BE%D1%82%D0%BE%D1%87%D0%BD%D0%BE%D0%B5-vs-%D0%B0%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D0%BE%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5
-RAM - random-access memory
+### EC2 instace types
+Example: <i>m5.2xlarge</i>
+* m - instance class
+* 5 - generation
+* 2xlarge - size withing the instance class
 
-EC2 instace types
-m5.2xlarge
-m - instance class
-5 - generation
-2xlarge - size withing the instance class
+<u>General Purpose</u> - is great for a diversity of workloads, they have
+balance beetween compute, memory and networking.
 
-General Purpose - is great for a diversity of workloads, they have balance beetween compute, memory and networking
-Compute Optimized - is great for compute-intensive tasks that require high-performance processors, such as batch processing workloads, media transcodeing (converting files from one format to another), high performance web servers
+<u>Compute Optimized</u> - is great for compute-intensive tasks that require
+high-performance processors, such as batch processing workloads, media
+transcodeing (converting files from one format to another), high performance web
+servers.
 
-Memory optimized
-Fast perfomance for workloads that process larde data sets in memory
-in-memory DBs
+<u>Memory optimized</u> provides fast perfomance for workloads that process
+large data sets in memory.
+
+### In-Memory DBs
 * Redis
 * SQLite
 * Microsoft SQL Server
 
-BI???
-IPv4 vs IPv6
+### Security groups
+<u>Security groups</u> are acting as a "firewall" on EC2 instances.
 
-Security groups are acting as a "firewall" on EC2 instances.
-They regulate
+#### Security groups regulate
 * access to ports
 * authorised IP ranges
 * control of inbound network (from other to the instance)
@@ -232,13 +233,16 @@ EC2
 * To connect to ec2 instance we need to check VPC and subnet. The subnet should have a route table. In this route table should be a route with 0.0.0.0 Destination and an Internet gateway as a Target.
 * The permission file (.pem) to connect to the instance via SSH shold have 0400 rights (chmod 0400 abc.pem)
 
-
 hadoops, cassandra, kafka
 
-Placement group strategies
+### Placement group strategies
+Placement groups are used to influence the placement of a group of
+interdependent instances to meet the needs of your workload.
 * cluster - one AZ, low-latency group
 * spread - different AZs, max 7 instnces per group
 * partition - spread across partitions within an AZ (up to 7 partition for AZ)
+
+Use cases are big data applications with HDFS, HBase, Cassandra, Kafka
 
 ENI - Elastic Network Interface - logical component in a VPC that represents a virtual network card
 ENI is what gives EC2 instances access to the network, for example Eth0

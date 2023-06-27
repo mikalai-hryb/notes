@@ -236,16 +236,25 @@ EC2
 hadoops, cassandra, kafka
 
 ### Placement group strategies
-Placement groups are used to influence the placement of a group of
+<u>Placement groups</u> are used to influence the placement of a group of
 interdependent instances to meet the needs of your workload.
-* cluster - one AZ, low-latency group
-* spread - different AZs, max 7 instnces per group
-* partition - spread across partitions within an AZ (up to 7 partition for AZ)
+* cluster placement group - is a logical grouping of instances within a single AZ, 
+low-latency, high network throughput
+* partition - spread across partitions (which rely on different sets of racks)
+within an AZ (up to 7 partitions for AZ). The group is limited only by
+the limits of the account.
+* spread placement group - different AZs, max 7 instnces per group (critical apps)
 
 Use cases are big data applications with HDFS, HBase, Cassandra, Kafka
 
-ENI - Elastic Network Interface - logical component in a VPC that represents a virtual network card
-ENI is what gives EC2 instances access to the network, for example Eth0
+### ENI
+<u>ENI</u> - Elastic Network Interface - logical component in a VPC that
+represents a virtual network card. ENI is what gives EC2 instances access to
+the network, for example Eth0.
+
+### EC2 Hibernate
+The EC2 Instance Root Volume type must be an EBS volume and must be encrypted to
+ensure the protection of sensitive content.
 
 when we stop EC2 instance the EBS is kept intact
 for terminattion the EBS volumes are set-up to be destroyed
@@ -474,7 +483,6 @@ traffic only across the registered targets in its Availability Zone.
 * CLB
   * Disabled by default
   * No charges for inter AZ data if enabled
-
 
 ## SSL/TLS
 * SSL/TLS Certificate allows traffic between your clients and your LB to be

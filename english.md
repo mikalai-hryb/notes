@@ -75,3 +75,7 @@ route 53 will automatically failover to the second EC2 instance
 expand/shrink
 
 ISP - intr
+
+do some/network failover
+
+ to fulfill the request

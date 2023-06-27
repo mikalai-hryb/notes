@@ -64,6 +64,10 @@ VDS - Virtual Dedicated Server.
 ## VPS
 VPS - Virtual Private Server.
 
+## Virtual Server
+A virtual server is located in the cloud or in an offsite data center and shares
+hardware and software resources with other virtual servers.
+
 
 ядро
 поток

@@ -12,7 +12,7 @@ inexpensive cloud computing services.
 
 ### AWS Availability Zones (AZ)
   * <u>AZ</u> is one or more
-  [discrete data centers](./terms/general.md#discrete-data-center) with
+  [discrete data centers](./general-terms.md#discrete-data-center) with
   redundant power, networking and connectivity
   * AZs are separated from each other
   * AZs are connected with high bandwidth, ultra-low latency networking
@@ -127,9 +127,12 @@ device
 account's IAM Users and the status of their various credentials.
 
 ## EC2
-<u>instance</u> - virtual computing environment or virtual server
-<u>instance type</u> - a configuration of CPU, memory, storage, and
-[networking capacity](./terms/general.md#network-capacity) and for your instances
+<u>Instance</u> - virtual computing environment or
+[virtual server](./general-terms.md#virtual-server).
+
+<u>Instance type</u> - a configuration of CPU, memory, storage, and
+[networking capacity](./general-terms.md#network-capacity) and for your
+instances.
 
 <u>EC2</u> - Elastic Compute Cloud - infrastructure as a Service
 * renting virtual machines (EC2)
@@ -149,13 +152,13 @@ EC2 configuration
 * Firewall rules: security groups
 * Bootstrap script: EC2 User Data
 
-We can [bootstrap](./terms/general.md#bootstrap) EC2 instances using User Data
+We can [bootstrap](./general-terms.md#bootstrap) EC2 instances using User Data
 script. The script uses root user.
 
-[VPS](./terms/general.md#vps) does not allow to change core or OS. Resources
+[VPS](./general-terms.md#vps) does not allow to change core or OS. Resources
 are allocated dynamically. Examples: openVZ, Virtuozzo, FreeBSD.
 
-[VDS](./terms/general.md#vds) uses hypervisor (virtual machine manager). It's
+[VDS](./general-terms.md#vds) uses hypervisor (virtual machine manager). It's
 really full virtualization. It allows configuring everything, like a physical
 server. A fixed amount of resources is allocated to VDS.
 Examples: VMware, KVM, XEN, Hyper-v.

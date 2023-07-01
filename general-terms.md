@@ -41,6 +41,13 @@ storage device, from a disk to a volume.
 ## HPC
 HPC - High-Performance Computing (applications).
 
+## Image
+Images function like [volumes](#volume), but they have no physical hardware
+related to them. They’re like a picture of a physical volume, containing every
+bit stored on the captured volume. You can create an image of any volume,
+whether it’s stored on a hard drive or a CD, and store it on any other device
+with sufficient free space.
+
 ## IOPS
 IOPS  - IO operations per seconds.
 
@@ -56,6 +63,9 @@ information to get from its source to you.
 ## Network capacity
 Network capacity refers to the maximum information transfer limit of a network
 at any given point.
+
+## NFS
+NFS - Network File System.
 
 ## Partition
 A partition is very much like a [volume](#volume). In fact, the two terms are
@@ -78,6 +88,12 @@ applications for specific platforms, frameworks, or programming languages.
 * [Disk](#disk)
 * [Partition](#partition)
 * [Volume](#volume)
+* [Image](#image)
+
+## Storage types
+* block-level storage
+* file-level storage
+* object-level storage
 
 ## Throughput
 Throughput is how much information actually gets delivered in a certain amount

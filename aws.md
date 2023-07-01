@@ -284,11 +284,18 @@ ensure the protection of sensitive content.
 * EFS
 * S3
 
+#### Root Storage Device
+Every time you launch an instance from an AMI, a root storage device is created
+for that instance. The root storage device contains all the information
+necessary (image) to boot the instance.
+
 #### EBS
 <u>EBS</u> - Elastic Block Storage is a network drive you can attach to your
 instances while they run. It's bound to a specific AZ.
 
 * it's a network drive
+* it's a block-level storage volume
+* can be attached to a running instance
 * you can think of EBS as a "network USB stick"
 * it's locked to an AZ
   * to attach to an instance from another AZ we need to make a snapshot first
@@ -300,16 +307,50 @@ instances while they run. It's bound to a specific AZ.
 * attached EBS volumes are not deleted (delete-on-termination attribute is
 disabled)
 * has multi-attach feature
+* EBS is recommended when for running databases on EC2 instances
 
-snapshot is a backup of an EBS volume at a point in time
+##### Snapshots
+<u>Snapshot</u> is a backup of an EBS volume at a point in time.
 
 EBS snapshot archive
 * archive tier is 75% cheaper
 * takes 24-72  hours to restore
 
-There is a posibility to recover deleted snapshot (retention can be set between 1 and 365 days )
+There is a posibility to recover deleted snapshot (retention can be set
+between 1 and 365 days)
 
 FSR - Fast Snapshot Restore (it consts many)
+
+#### Instance Store
+<u>EC2 instance Store</u> - high-performance hardware disk.
+
+* better I/O performance
+* they are ephemeral (you will lose once stop/hibernate/terminate instance)
+* it's a disk that is physically attached to the host computer
+* it's a block-level storage
+* we can use backups and replication to incurease durability
+* is not durable long-term place to store your data
+
+#### EFS
+<u>EFS</u> - Elastic File System.
+
+* it's managed by [NFS](./general-terms.md#nfs)
+* it works with EC2 instances in multi-AZ
+* it's file-level storage
+* higly available, scalable, expensive (3x gp2)
+* POSIX filesystem
+* it has higher price point than EBS
+* can leverate EFS-IA for cost savings
+
+#### S3
+<u>S3</u> - Simple Storage Service, it's reliable and inexpensive data storage
+infrastructure. It is designed to make web-scale computing easier by enabling
+you to store and retrieve any amount of data, at any time, from within EC2 or
+anywhere on the web.
+
+Within EC2 is used to store EBS Snapshots.
+
+
 
 
 AMI - Amazon Machine Image, it represents a customization of an EC2 instance
@@ -325,12 +366,7 @@ start A
 
 EC2 instnce is virtual machine but it is attached to a real hardware server
 
-EC2 instance Store - high-performance hardware disk
-* better I/O performance
-* they are ephemeral (you will lose once stop instance)
-* we can use backups and replication to incurease durability
 
-EC2 instance Store - is not durable long-term place to store your data
 
 EBS volume types
 * gp2 / gp3 - general purpose SSD volume, balanced price and performance
@@ -402,16 +438,7 @@ To encrypt un encrypted EBS volume
 3) create new ebs volume from the snapshot
 4) attach the new volume
 
-AWS EFS - Elastic File System
-EFS is managed by NFS (network file system)
-EFS works with EC2 instances in multi-AZ
-higly available, scalable, expensive (3x gp2)
 
-POSIX filesystem
-
-
-EFS has higher price point than EBS
-can leverate EFS-IA for cost savings
 
 EFS vs EBS vs Instance store
 

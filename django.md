@@ -11,7 +11,7 @@ Entry.objects.all()[:5] # LIMIT 5
 Entry.objects.all()[5:10] # OFFSET 5 LIMIT 5
 ```
 
-*step* parameter of Python slice syntax evaluates the query, for instance 
+*step* parameter of Python slice syntax evaluates the query, for instance
 ```
 Entry.objects.all()[:10:2]
 ```

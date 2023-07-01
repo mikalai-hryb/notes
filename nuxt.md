@@ -13,7 +13,7 @@ Server Side Rendering - means brouser gets a rendered HTML(server renders the HT
 
 Universal Rendering - means brouser gets a rendered HTML, at this point the site is ready-to-see but not it is not ready-to-iteract, after small period of time brouser gets a JavaScript and hydration process happens
 
-Hydration - we make static UI elements interactive by parsing the JavaScript 
+Hydration - we make static UI elements interactive by parsing the JavaScript
 
 Universal Rendering Pros
 * performance

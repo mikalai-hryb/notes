@@ -29,7 +29,7 @@ TypeScript’s core values:
 * avaid any
 * use interface until you need to use features from type
 * let TS to infer the types
-* use tuples where it's nessesary 
+* use tuples where it's nessesary
 * always prefer parameters with union types instead of overloads when possible
 
 ## Type annotations
@@ -126,7 +126,7 @@ We can use `as const` to convert the entire object to be type literals. The `as 
 
 ## Narrowing
 
-`Narrowing` is a process of refining types to more specific types 
+`Narrowing` is a process of refining types to more specific types
 We can use `narrowing` to check for values that might be null, the type guard is used here:
 
 ```ts
@@ -213,4 +213,3 @@ function makeDate(mOrTimestamp: number, d?: number, y?: number): Date {
   }
 }
 ```
-

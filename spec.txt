@@ -2,7 +2,7 @@
 дорогу осилит идущий дарогу адоллее той хто ідзе
 пераменыя           ці зменыя
  даныя
-прыдбанных ведаў ці атрыманых 
+прыдбанных ведаў ці атрыманых
 загружать (спампанаваць?) download
 upload
 копироваць
@@ -101,9 +101,9 @@ upload
 файлавая сістэма — file system
 кадоўка файла — file encoding
 глабальная табліца файлаў — global file table
-запіс табліцы файлай — file table entry 
+запіс табліцы файлай — file table entry
 правы доступу да файла — file permissions
-дэскрыптар файла — file descriptor 
+дэскрыптар файла — file descriptor
 сокет? — socket
 канец файла — EOF(End Of File)
 
@@ -125,10 +125,10 @@ get
 set
 sort
 allow/deny
-выцянуць/пхнуць — pull/push 
+выцянуць/пхнуць — pull/push
 
 
-variable 
+variable
 constant
 literal
 data
@@ -207,7 +207,7 @@ snakecase
 paskalcase
 camelcase
 
-if statements 
+if statements
 function
 lambda/anoymous function
 argument

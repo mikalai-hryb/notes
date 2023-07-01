@@ -29,7 +29,7 @@ for failover
 this one, I got lucky
 
 hands on training
-You have launched an EC2 instance that will host a NodeJS application. 
+You have launched an EC2 instance that will host a NodeJS application.
 You want to ensure your EC2 instances have the highest networking performance while communicating with each other
 
 retain
@@ -59,7 +59,7 @@ capacity
 
 It turns out that ...
 
-You have an Auto Scaling Group fronted by an Application Load Balancer. 
+You have an Auto Scaling Group fronted by an Application Load Balancer.
 
  you're about to run out of free space,
 
@@ -79,3 +79,9 @@ ISP - intr
 do some/network failover
 
  to fulfill the request
+
+ nterdependent instances
+
+ likelihood
+
+ evenly

@@ -23,7 +23,7 @@ console.log(p2)
 
 const myFetch = (url) => new Promise((resolve) => resolve(fetch(url)))
 const r = await myFetch(url).then(r => {
-  console.log(r.useFinalURL); 
+  console.log(r.useFinalURL);
   return r.text()
 })
 console.log(r)

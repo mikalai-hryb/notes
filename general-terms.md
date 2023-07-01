@@ -36,7 +36,7 @@ that might come below it.
 ## Drive
 A drive is a physical device that’s used to store data. It’s not really a formal
 term but a commonly-used one. The term is often used informally to refer to any
-storage device, from a disk to a volume. 
+storage device, from a disk to a volume.
 
 ## HPC
 HPC - High-Performance Computing (applications).
@@ -82,7 +82,7 @@ applications for specific platforms, frameworks, or programming languages.
 ## Throughput
 Throughput is how much information actually gets delivered in a certain amount
 of time. So if bandwidth is the max amount of data, throughput is how much of
-that data makes it to its destination – taking latency, 
+that data makes it to its destination – taking latency,
 network speed,
 packet loss and other factors into account.
 

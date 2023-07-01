@@ -27,8 +27,22 @@ physically separate or distinct from other data center facilities. It is
 designed to operate independently and is often dedicated to specific functions
 or applications.
 
+## Disk
+"Disk" is the word used by Unix systems to refer to physical storage devices.
+Disks contain volumes and can contain multiple volumes of different sizes.
+A disk is like the parent container for all the logical divisions of storage
+that might come below it.
+
+## Drive
+A drive is a physical device that’s used to store data. It’s not really a formal
+term but a commonly-used one. The term is often used informally to refer to any
+storage device, from a disk to a volume. 
+
 ## HPC
 HPC - High-Performance Computing (applications).
+
+## IOPS
+IOPS  - IO operations per seconds.
 
 ## ISP
 ISP - Internet Service Provider
@@ -43,6 +57,14 @@ information to get from its source to you.
 Network capacity refers to the maximum information transfer limit of a network
 at any given point.
 
+## Partition
+A partition is very much like a [volume](#volume). In fact, the two terms are
+used almost interchangeably. A "partition" is a chunk of a disk. It doesn’t
+necessarily contain a file system, and it might not be formatted to store data.
+Instead, a partition is just a part of a disk with a specific size, which is set
+at the time of creation. A partition can be resized, but it requires re-writing
+the disk’s partition table and possibly erasing data.
+
 ## RAM
 RAM - Random-Access Memory.
 
@@ -50,6 +72,12 @@ RAM - Random-Access Memory.
 SDK - Software Development Kit. It is a collection of software tools,
 libraries, documentation, and resources that developers use to create
 applications for specific platforms, frameworks, or programming languages.
+
+## Storage Devices
+* [Drive](#drive)
+* [Disk](#disk)
+* [Partition](#partition)
+* [Volume](#volume)
 
 ## Throughput
 Throughput is how much information actually gets delivered in a certain amount
@@ -67,6 +95,13 @@ VPS - Virtual Private Server.
 ## Virtual Server
 A virtual server is located in the cloud or in an offsite data center and shares
 hardware and software resources with other virtual servers.
+
+## Volume
+A volume is the part of the disk that you interact with as a user. While
+[partitions](#partition) and volumes are coterminal, a volume has a name and
+file system in addition to a size. When you mount a
+[storage device](#storage-devices) and its icon appears in your file browser,
+you’re seeing the volume.
 
 
 ядро

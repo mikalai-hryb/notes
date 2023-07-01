@@ -38,7 +38,7 @@ inexpensive cloud computing services.
 * IAM
 * Route 53
 * CloudFront
-* WAF 
+* WAF
 * Budgets
 
 ### Region-scoped services:
@@ -163,7 +163,7 @@ really full virtualization. It allows configuring everything, like a physical
 server. A fixed amount of resources is allocated to VDS.
 Examples: VMware, KVM, XEN, Hyper-v.
 
-### EC2 instace types
+### Instace types
 Example: <i>m5.2xlarge</i>
 * m - instance class
 * 5 - generation
@@ -241,12 +241,29 @@ hadoops, cassandra, kafka
 ### Placement group strategies
 <u>Placement groups</u> are used to influence the placement of a group of
 interdependent instances to meet the needs of your workload.
-* cluster placement group - is a logical grouping of instances within a single AZ, 
-low-latency, high network throughput
-* partition - spread across partitions (which rely on different sets of racks)
+* `cluster` placement group - is a logical grouping of instances within a single
+AZ, low-latency, high network throughput, it's nice for
+[HPC](./general-terms.md#hpc) apps
+  * many instances is allowed to launch
+* `partition` - spread across partitions (which rely on different sets of racks)
 within an AZ (up to 7 partitions for AZ). The group is limited only by
-the limits of the account.
-* spread placement group - different AZs, max 7 instnces per group (critical apps)
+the limits of the account. It's nice for large distributed and replicated
+workloads
+  * each group is devided into logical segments called partitions
+  * each partition has its own set of racks
+  * each rack has its own network and power source
+  * no two partitions within a placement group share the same racks
+  * group can have partitions in multiple AZs in the same Region
+  * group can have a maximum of 7 partitions per AZ
+  * number of instances that can be launched into a partition placement group is
+  limited only by the limits of the account
+* `spread` placement group - is a group of instances that are each placed on
+distinct hardware. It's nice for a small number of critical instances that
+should be kept separate from each other
+  * rack spread placement group can span multiple AZs in the same Region
+  * max 7 instnces per AZ per group (if Region has 3 AZs, 3x7 = 21)
+
+different AZs, max 7 instnces per AZ per group
 
 Use cases are big data applications with HDFS, HBase, Cassandra, Kafka
 
@@ -255,23 +272,38 @@ Use cases are big data applications with HDFS, HBase, Cassandra, Kafka
 represents a virtual network card. ENI is what gives EC2 instances access to
 the network, for example Eth0.
 
-### EC2 Hibernate
+### Hibernate
 The EC2 Instance Root Volume type must be an EBS volume and must be encrypted to
 ensure the protection of sensitive content.
+* when we stop EC2 instance the EBS is kept intact
+* for terminattion the EBS volumes are set-up to be destroyed
 
-when we stop EC2 instance the EBS is kept intact
-for terminattion the EBS volumes are set-up to be destroyed
+### Storage types
+* EBS
+* Instance Store
+* EFS
+* S3
 
-EBS - Elastic Block Storage is a network drive you can attach to your instances while they run
-network USB stick
+#### EBS
+<u>EBS</u> - Elastic Block Storage is a network drive you can attach to your
+instances while they run. It's bound to a specific AZ.
 
-
-IOPS  - IO operations per seconds
-provisioned capacity(size in GBs, IOPS0 )
+* it's a network drive
+* you can think of EBS as a "network USB stick"
+* it's locked to an AZ
+  * to attach to an instance from another AZ we need to make a snapshot first
+  and then restore an EBS volume from thi snapshot and finally attach it
+* EBS allows the instance to persist data, even after thier termination
+* we have to provisione capacity(size in GBs, [IOPS](./general-terms.md#iops))
+  * the capacity can be increased over time
+* root EBS volume is deleted (delete-on-termination attribute is enabled)
+* attached EBS volumes are not deleted (delete-on-termination attribute is
+disabled)
+* has multi-attach feature
 
 snapshot is a backup of an EBS volume at a point in time
 
-EBS snapshot archive 
+EBS snapshot archive
 * archive tier is 75% cheaper
 * takes 24-72  hours to restore
 
@@ -302,7 +334,7 @@ EC2 instance Store - is not durable long-term place to store your data
 
 EBS volume types
 * gp2 / gp3 - general purpose SSD volume, balanced price and performance
-* io1 / io2 - highest-performance SSD volume 
+* io1 / io2 - highest-performance SSD volume
 * st1 - HHD, for frequenty accessed, throughput -intensive workloads, low cost
 * sc1 - HDD, for lees frequently accessed workloads, lowest cost
 
@@ -375,7 +407,7 @@ EFS is managed by NFS (network file system)
 EFS works with EC2 instances in multi-AZ
 higly available, scalable, expensive (3x gp2)
 
-POSIX filesystem 
+POSIX filesystem
 
 
 EFS has higher price point than EBS
@@ -475,7 +507,7 @@ When cross-zone load balancing is on, each load balancer node distributes
 traffic across the registered targets in all registered Availability Zones.
 
 When cross-zone load balancing is off, each load balancer node distributes
-traffic only across the registered targets in its Availability Zone. 
+traffic only across the registered targets in its Availability Zone.
 
 * ALB
   * Enabled by default all the time (can be disabled at the Target Group level)
@@ -518,11 +550,11 @@ ALB & NLB
 * Supports multiple listeners with multiple SSL/TLS Certificates
 * Uses SNI to make it work
 
-### Security Policy 
+### Security Policy
 Elastic Load Balancing uses a Secure Socket Layer (SSL) negotiation
 configuration, known as a security policy, to negotiate SSL connections between
 a client and the load balancer. A security policy is a combination of
-SSL protocols, SSL ciphers, and the Server Order Preference option. 
+SSL protocols, SSL ciphers, and the Server Order Preference option.
 
 A security policy determines which ciphers and protocols are supported during
 SSL negotiations between a client and a load balancer.
@@ -531,7 +563,7 @@ SSL negotiations between a client and a load balancer.
 * It's called Connection Draining for CLB
 * It's time to complete "in-flight requests" while the instance is
 de-registring or unhealthy
-  * Stops sending new reqeusts to the EC2 instances which is de-registering 
+  * Stops sending new reqeusts to the EC2 instances which is de-registering
 
 ## ASG
 The goal of ASG
@@ -571,7 +603,7 @@ Dynamic Scaling Policies
 * target tracking scaling
   * most simple and easy to set-up
   * ex: I want the average ASG CPU to stay at around 40%
-* simple 
+* simple
   * when a CloundWatch alarm is triggered (ex CPU > 70%), then add 2 units
   * when a CloundWatch alarm is triggered (ex CPU < 30%), then remove 1
 * step scaling
@@ -583,7 +615,7 @@ Dynamic Scaling Policies
 Predictive Scaling
 * Predictive scaling: continuosly forecast load and schedule scaling ahead
 
-Scheduled actions 
+Scheduled actions
   * anticipate a scaling based on known usage patterns
   * ex: increase the min capacity to 10 at 5 pm on Friday
 #### Good metrics to scale on
@@ -758,7 +790,7 @@ Alias:
 * targets:
   * ELB, Cloudwront, API Gateway, Elastic Beanstalk, S3 Website,
   VPC Interface Endpoint, Global Accelerator
-* NOT TARGETS:  
+* NOT TARGETS:
   * EC2 DNS endpoint
   * RDS DNS endpoint
 
@@ -791,7 +823,7 @@ Alias:
   * there should be a default record in case if no match on location
   * use cases: website localization, restrict content distribution, load
   balancing
-  * can be associated with Health Checks  
+  * can be associated with Health Checks
 * Multi-value answer
   * can be associated with Health Checks
     * the Simpole policy can also return some value, but only Multi-value

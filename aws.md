@@ -129,6 +129,7 @@ account's IAM Users and the status of their various credentials.
 ## EC2
 <u>Instance</u> - virtual computing environment or
 [virtual server](./general-terms.md#virtual-server).
+* EC2 instnce is virtual machine but it is attached to a real hardware server
 
 <u>Instance type</u> - a configuration of CPU, memory, storage, and
 [networking capacity](./general-terms.md#network-capacity) and for your
@@ -306,11 +307,16 @@ instances while they run. It's bound to a specific AZ.
 * root EBS volume is deleted (delete-on-termination attribute is enabled)
 * attached EBS volumes are not deleted (delete-on-termination attribute is
 disabled)
-* has multi-attach feature
+* has multi-attach feature (io1 / io2)
 * EBS is recommended when for running databases on EC2 instances
+* EBS volumes can be encrypted (data-at-rest encryption). If EC2 + EBS is used
+the AWS provides data-in-transit encryption (from EC2 to EBS)
+* Cloudwatch metrics:  bandwidth, throughput, latency, and average queue length
 
 ##### Snapshots
-<u>Snapshot</u> is a backup of an EBS volume at a point in time.
+<u>Snapshot</u> is an incremental backup of an EBS volume at a point in time,
+which means that only the blocks on the device that have changed after your most
+recent snapshot are saved.
 
 EBS snapshot archive
 * archive tier is 75% cheaper
@@ -320,6 +326,13 @@ There is a posibility to recover deleted snapshot (retention can be set
 between 1 and 365 days)
 
 FSR - Fast Snapshot Restore (it consts many)
+
+##### Volume Types
+* gp2 / gp3 - general purpose SSD volume, balanced price and performance
+* io1 / io2 - highest-performance SSD volume, I/O intencive workloads,
+consistent IOPS rate, highest level of volume durability
+* st1 - throughput optimized HDD, for frequenty accessed, throughput-intensive workloads, low cost
+* sc1 - cold HDD, for lees frequently accessed workloads, lowest cost
 
 #### Instance Store
 <u>EC2 instance Store</u> - high-performance hardware disk.
@@ -350,29 +363,29 @@ anywhere on the web.
 
 Within EC2 is used to store EBS Snapshots.
 
+### AMI
+AMI - Amazon Machine Image, it represents a customization of an EC2 instance.
+It's a supported and maintained image provided by AWS that provides the
+information required to launch an instance.
 
+* faster boot/configuration time because software is pre-packaged
+* AMI can be build for a specific region but later it can be copied accrooss
+regions
 
+AMI includes
+* EBS snapshot(s) or template for the root volume of the instance for
+instance-store-backed AMIs
+* launch permissions (which AWS account can launch the instances)
+* block device mapping that specifies the volumes to attach to the instance
 
-AMI - Amazon Machine Image, it represents a customization of an EC2 instance
-Faster boot/configuration time because software is pre-packaged
-AMI can be build for a specific region but later it can be copied accrooss regions
-
-AMI types:
+#### Types
 * a public AMI (aws provided)
 * your own AMIs
 * AMI Marketplace
 
-start A
-
-EC2 instnce is virtual machine but it is attached to a real hardware server
-
-
-
-EBS volume types
-* gp2 / gp3 - general purpose SSD volume, balanced price and performance
-* io1 / io2 - highest-performance SSD volume
-* st1 - HHD, for frequenty accessed, throughput -intensive workloads, low cost
-* sc1 - HDD, for lees frequently accessed workloads, lowest cost
+#### Types (in terms of store)
+* an Amazon EBS-backed AMI
+* an instance store-backed AMI
 
 Characteristics of volums
 * size

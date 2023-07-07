@@ -49,7 +49,7 @@ whether it’s stored on a hard drive or a CD, and store it on any other device
 with sufficient free space.
 
 ## IOPS
-IOPS  - IO operations per seconds.
+IOPS  - Input/Output operations per seconds.
 
 ## ISP
 ISP - Internet Service Provider
@@ -66,6 +66,10 @@ at any given point.
 
 ## NFS
 NFS - Network File System.
+
+## NVMe
+NVMe - Non-Volatile Memory Express is a new transfer protocol designed for
+solid-state memory.
 
 ## Partition
 A partition is very much like a [volume](#volume). In fact, the two terms are

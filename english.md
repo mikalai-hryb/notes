@@ -85,3 +85,5 @@ do some/network failover
  likelihood
 
  evenly
+
+For data resiliency and disaster recovery,

@@ -307,7 +307,7 @@ instances while they run. It's bound to a specific AZ.
 * root EBS volume is deleted (delete-on-termination attribute is enabled)
 * attached EBS volumes are not deleted (delete-on-termination attribute is
 disabled)
-* has multi-attach feature (io1 / io2)
+* has multi-attach feature (io1 / io2, and other limitations)
 * EBS is recommended when for running databases on EC2 instances
 * EBS volumes can be encrypted (data-at-rest encryption). If EC2 + EBS is used
 the AWS provides data-in-transit encryption (from EC2 to EBS)
@@ -320,7 +320,7 @@ recent snapshot are saved.
 
 EBS snapshot archive
 * archive tier is 75% cheaper
-* takes 24-72  hours to restore
+* takes 24-72 hours to restore
 
 There is a posibility to recover deleted snapshot (retention can be set
 between 1 and 365 days)
@@ -331,18 +331,23 @@ FSR - Fast Snapshot Restore (it consts many)
 * gp2 / gp3 - general purpose SSD volume, balanced price and performance
 * io1 / io2 - highest-performance SSD volume, I/O intencive workloads,
 consistent IOPS rate, highest level of volume durability
-* st1 - throughput optimized HDD, for frequenty accessed, throughput-intensive workloads, low cost
+* st1 - throughput optimized HDD, for frequenty accessed, throughput-intensive
+workloads, low cost
 * sc1 - cold HDD, for lees frequently accessed workloads, lowest cost
 
 #### Instance Store
-<u>EC2 instance Store</u> - high-performance hardware disk.
+<u>EC2 instance Store</u> - high-performance hardware disk, temporary
+block-level storage for your instance
 
 * better I/O performance
-* they are ephemeral (you will lose once stop/hibernate/terminate instance)
+* they are ephemeral [0-23] (you will lose once stop/hibernate/terminate
+instance but not reboot)
 * it's a disk that is physically attached to the host computer
 * it's a block-level storage
 * we can use backups and replication to incurease durability
 * is not durable long-term place to store your data
+* instance store volumes are attached only at instance launch
+* max 10GB for root volume
 
 #### EFS
 <u>EFS</u> - Elastic File System.

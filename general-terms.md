@@ -38,6 +38,17 @@ A drive is a physical device that’s used to store data. It’s not really a fo
 term but a commonly-used one. The term is often used informally to refer to any
 storage device, from a disk to a volume.
 
+## Fle Systems
+* FAT family -  introduced in the late 1970s, simple design, it's still used in
+embedded systems to this date
+* HPFS - was created to address the shortcomings of FAT by Microsoft and IBM
+* NTFS - Microsoft separated due to several differences in opinion and created
+NTFS
+* MINIX - is predecessor of ext family, it was simple and elided several complex
+features the UNIX file system offered. MINIX was the first file system supported
+by Linux
+* ext - was created to address the shortcomings of the MINIX
+
 ## HPC
 HPC - High-Performance Computing (applications).
 

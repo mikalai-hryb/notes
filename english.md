@@ -87,3 +87,7 @@ do some/network failover
  evenly
 
 For data resiliency and disaster recovery,
+
+predecessor
+
+shortcomings

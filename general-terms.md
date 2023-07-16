@@ -98,6 +98,9 @@ SDK - Software Development Kit. It is a collection of software tools,
 libraries, documentation, and resources that developers use to create
 applications for specific platforms, frameworks, or programming languages.
 
+## SNI
+SNI - Server Name Indication.
+
 ## Storage Devices
 * [Drive](#drive)
 * [Disk](#disk)

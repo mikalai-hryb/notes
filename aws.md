@@ -129,11 +129,10 @@ account's IAM Users and the status of their various credentials.
 ## EC2
 <u>Instance</u> - virtual computing environment or
 [virtual server](./general-terms.md#virtual-server).
-* EC2 instnce is virtual machine but it is attached to a real hardware server
+* EC2 instance is virtual machine but it is attached to a real hardware server
 
 <u>Instance type</u> - a configuration of CPU, memory, storage, and
-[networking capacity](./general-terms.md#network-capacity) and for your
-instances.
+[networking capacity](./general-terms.md#network-capacity) for your instances.
 
 <u>EC2</u> - Elastic Compute Cloud - infrastructure as a Service
 * renting virtual machines (EC2)
@@ -181,10 +180,14 @@ servers.
 <u>Memory optimized</u> provides fast perfomance for workloads that process
 large data sets in memory.
 
-### In-Memory DBs
+#### In-Memory DBs
 * Redis
 * SQLite
 * Microsoft SQL Server
+
+### Root Device Volume
+The root device volume contains the image used to boot the instance when you
+launch an instance
 
 ### Security groups
 <u>Security groups</u> are acting as a "firewall" on EC2 instances.
@@ -218,26 +221,24 @@ SG good to know:
   * SG from the same VPC
   * SG for a peered VPC
 
-22 = SSH (secure shell) - log into a Linux instance
-21 = FTP (File Transfer Protocol) - upload files into a file share
-22 = SFTP (Secure File Transfer Protocol) - upload files using SSH
-80 = HTTP - access unsecured websites
-443 = HTTPS - access secured websites
-3389 = RDP (Remote Desktop Protocol) - log into a Windows instance
+#### Ports
+* 22 = SSH (secure shell) - log into a Linux instance
+* 21 = FTP (File Transfer Protocol) - upload files into a file share
+* 22 = SFTP (Secure File Transfer Protocol) - upload files using SSH
+* 80 = HTTP - access unsecured websites
+* 443 = HTTPS - access secured websites
+* 3389 = RDP (Remote Desktop Protocol) - log into a Windows instance
 
 inbound rules allow connectivity from outside into EC2 instance
 
-IP protocol number
+#### IP protocol number
 1 - ICMP
 6 - TCP
 17 - UDP
 
-EC2
-
+???
 * To connect to ec2 instance we need to check VPC and subnet. The subnet should have a route table. In this route table should be a route with 0.0.0.0 Destination and an Internet gateway as a Target.
 * The permission file (.pem) to connect to the instance via SSH shold have 0400 rights (chmod 0400 abc.pem)
-
-hadoops, cassandra, kafka
 
 ### Placement group strategies
 <u>Placement groups</u> are used to influence the placement of a group of
@@ -583,7 +584,7 @@ encrypted in transit (in-flight encryption)
   * Ability to specify a security policy to support older versions of
   SSL/TLS (legacy clients)
 
-### SNI
+### [SNI](./general-terms.md#sni)
 * SNI solves the problem of loading multiple SSL/TLS Certificates onto one web
 server (to server multiple websites)
 * It's 'newer' protocol, and requires the client to indicate the hostname of

@@ -916,3 +916,56 @@ records
   * create a public hosted zone
   * update NS records on Domain Registrar to use Route 53 Name Servers
 * Domain Registrar != DNS Service
+
+## S3
+Simple Storage Solution
+
+<u>Bucket</u> - top level directory.
+
+<u>Bucket objects</u> - files in the buckets.
+
+* it's advertised as "infinitely scaling" storage
+* many websites use S3 as a backbone
+* many AWS Services use S3 as an integration as well
+* Bucket must have a globally unique name (across all regions all accounts)
+* Buckets are defined at the region level
+* S3 looks like a global service but buckets are created in a region
+
+### Use cases
+* backup and storage
+* disaster recovery
+* archive
+* Hybrid Cloud storage
+* application hosting
+* media hosting
+* data lakes & big data analytics
+* software delivery
+* static websites
+
+### Bucket naming convertion
+* no uppercase, no underscore
+* 3-63 characters long
+* not an IP
+* must start with lowercase letter or number
+* must NOT start with the prefix `xn-`
+* must NOT end with the suffix `-s3alias`
+
+### Bucket Objects
+Objects have a Key
+<u>Key</u> is the full path
+* s3://my-bucket/`my_file.txt`
+* s3://my-bucket/`my_folder/another_folder/my_file.txt`
+
+The key is composed of prefix + object name.
+If key is `my_folder/another_folder/my_file.txt`.
+The prefix is `my_folder/another_folder/`.
+The object name is `my_file.txt`.
+
+* Max object size is 5TB
+* If uploading more than 5GB  must use `multi-part upload`
+* Objects have metadata (list of text key/value pairs - system or user metadata)
+* Objects may have tags (unicode key/value pair - up to 10)
+* Version ID (if versioning is enabled)
+
+S3 pre-signed URL - is a url of an S3 object that has encoded credentials. This
+allowes to view/download the file without authentication.

@@ -336,6 +336,30 @@ consistent IOPS rate, highest level of volume durability
 workloads, low cost
 * sc1 - cold HDD, for lees frequently accessed workloads, lowest cost
 
+##### Multi-attach
+Multi-attach - attach the same EBS volume to multiple EC2 instances in
+the same AZ
+
+* same AZ
+* each instance has full read/write permissions to the volume
+* up to 16 EC2 instances at a time
+* for cluster-aware file systems
+
+##### EBS Encryption
+* Data at rest is encrypted
+* all the data in flight moving between instance and volume is encrypted
+* all snapshot are encrypted
+* all volumes created from snapshot are encrypted
+
+Encryption has a minimal impact on latency
+EBS Encryption leverages keys from KMS (AES-256)
+
+To encrypt un encrypted EBS volume
+1) create snapshot
+2) using copy encrypt the snapshot
+3) create new ebs volume from the snapshot
+4) attach the new volume
+
 #### Instance Store
 <u>EC2 instance Store</u> - high-performance hardware disk, temporary
 block-level storage for your instance
@@ -369,30 +393,7 @@ anywhere on the web.
 
 Within EC2 is used to store EBS Snapshots.
 
-### AMI
-AMI - Amazon Machine Image, it represents a customization of an EC2 instance.
-It's a supported and maintained image provided by AWS that provides the
-information required to launch an instance.
-
-* faster boot/configuration time because software is pre-packaged
-* AMI can be build for a specific region but later it can be copied accrooss
-regions
-
-AMI includes
-* EBS snapshot(s) or template for the root volume of the instance for
-instance-store-backed AMIs
-* launch permissions (which AWS account can launch the instances)
-* block device mapping that specifies the volumes to attach to the instance
-
-#### Types
-* a public AMI (aws provided)
-* your own AMIs
-* AMI Marketplace
-
-#### Types (in terms of store)
-* an Amazon EBS-backed AMI
-* an instance store-backed AMI
-
+#### Other info
 Characteristics of volums
 * size
 * throughput
@@ -425,7 +426,6 @@ io2 block Express (4GiB - 64 TiB)
 * supports EBS Multi-attach (same AZ)
 * user should care about backups and replication
 
-
 HDD
 * connt be a boot volume
 * 125GiB to 16TiB
@@ -435,44 +435,42 @@ HDD
   * for data that is infrequently accessed
   * max throughtput 250 MiB/s - max IOPS 250
 
+### EBS vs EFS  vs Instance store
 
-Multi-attach
-* same AZ
-* each instance has full read/write permissions to the volume
-* up to 16 EC2 instances at a time
-* for cluster-aware file systems
+Scalability - aplication/system can handle greater by adaptying.
 
-EBS Encryption
-* Data at rest is encrypted
-* all the data in flight moving between instance and volume is encrypted
-* all snapshot are encrypted
-* all volumes created from snapshot are encrypted
+Vertical scalability - increasing  the size of the instance.
+Vertical scalability is very common for non distributed  systems such as a DB.
 
-Encryption has a minimal impact on latency
-EBS Encryption leverages keys from KMS (AES-256)
+Horizontal scalability - increasing the number of instanes/systems for your app.
 
-To encrypt un encrypted EBS volume
-1) create snapshot
-2) using copy encrypt the snapshot
-3) create new ebs volume from the snapshot
-4) attach the new volume
+High Availability - running your app/system in at least 2 data centers (AZs).
 
+The goal of HA is survive if a data center loss.
 
+### AMI
+AMI - Amazon Machine Image, it represents a customization of an EC2 instance.
+It's a supported and maintained image provided by AWS that provides the
+information required to launch an instance.
 
-EFS vs EBS vs Instance store
+* faster boot/configuration time because software is pre-packaged
+* AMI can be build for a specific region but later it can be copied accrooss
+regions
 
-Scalability - aplication/system can handle greater   by adaptying
+AMI includes
+* EBS snapshot(s) or template for the root volume of the instance for
+instance-store-backed AMIs
+* launch permissions (which AWS account can launch the instances)
+* block device mapping that specifies the volumes to attach to the instance
 
-Vertical scalability - increasing  the size of the instance
-vertical scalability is very common for non distributed  systems such as a DB
+#### Types
+* a public AMI (aws provided)
+* your own AMIs
+* AMI Marketplace
 
-Horizontal scalability - increasing the number of instanes/systems for your app
-
-High Availability - running your app/system in at least 2 data centers (AZs)
-
-The goal of HA is survive if a data center loss
-
-
+#### Types (in terms of store)
+* an Amazon EBS-backed AMI
+* an instance store-backed AMI
 
 ## ALB - Application Load Balancer
 

@@ -21,6 +21,14 @@ system by typing commands into a terminal or command prompt.
 ## CPU
 CPU - Central Processing Unit.
 
+## Data Structure
+The data structure is the storage area and the algorithms that organize
+the objects in that storage.
+
+## Data Type
+A data type defines the values and operations allowed
+for a single expression or object.
+
 ## Discrete Data Center
 A discrete data center refers to a type of data center infrastructure that is
 physically separate or distinct from other data center facilities. It is
@@ -90,6 +98,10 @@ Instead, a partition is just a part of a disk with a specific size, which is set
 at the time of creation. A partition can be resized, but it requires re-writing
 the disk’s partition table and possibly erasing data.
 
+## Process
+A process in Linux is nothing but a program in execution. It's a running
+instance of a program. Any command that you execute starts a process.
+
 ## RAM
 RAM - Random-Access Memory.
 
@@ -147,3 +159,16 @@ https://ru.stackoverflow.com/questions/445768/%D0%9C%D0%BD%D0%BE%D0%B3%D0%BE%D0%
 
 BI???
 IPv4 vs IPv6
+
+process
+stream
+signal
+SSH (Secure Shell, https://egghead.io/lessons/bash-copy-an-ssh-key-to-a-remote-server-using-ssh-copy-id)
+file system
+file format
+check sum
+transpiling
+memoization
+CRM (customer relationship management system)
+history command
+ .(source) in bash

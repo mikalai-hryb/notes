@@ -85,6 +85,7 @@ Unlike variables found in programming languages, Terraform's input variables don
 * type: The type of data contained in the variable.
 * default: The default value.
 * validation blocks
+* sensitive
 
 ### If an input variable does not have the `default` argument what does it mean?
 ### And what options do you have to provide the value of an input variable?
@@ -95,6 +96,13 @@ You have a few options to pass the value of an input variable to TF
 * `-var <variable_name>=<variable_value>` command line flag
 * `TF_VAR_<variable_name>=<variable_value>` environment variable
 * `<variable_name>=<variable_value>` in *.tfvars file
+
+### What happen when you reference a sensitive variable in outputs?
+TF will raise an error about exposing the value.
+You will need to mark the output variable sensitive as well to get rid of the error.
+Keep in mind, that TF stores the state as plain text.
+Marking variables as sensitive is not sufficient to secure them.
+You must also keep them secure while passing them into Terraform configuration, and protect them in your state file.
 
 ### What files does TF load automatically?
 Terraform automatically loads all files in the current directory with the exact name `terraform.tfvars` or matching `*.auto.tfvars`. You can also use the `-var-file` flag to specify other files by name.
@@ -143,3 +151,21 @@ Terraform Cloud runs Terraform on disposable virtual machines in its own cloud i
 
 ### What is string interpolation?
 String interpolation is the inserting the output of an expression into a string.
+
+### Can a provider make an argument sensitive?
+Yes, for instance, AWS provider marks `aws_db_instance.this.password` as `sensitive value`.
+When an argument is marked as `sensitive` by a developer it will be marked `sensitive` in the plan.
+
+### What are benifits of using locals?
+* simplification TF configuration since you can reference the local multiple times (reduce repetition in the configuration)
+* writing more readable configuration by using meaningful names rather than hard-coding values
+
+### What data can be used in locals?
+* literals
+* input variables
+* other local variables
+* dynamic expressions
+* functions
+* resource attributes
+
+??? Respond to the confirmation prompt with yes.

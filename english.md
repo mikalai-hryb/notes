@@ -95,3 +95,5 @@ shortcomings
 AMI-backed by either EC2 instance sotre or EBS
 
 data resiliency
+
+avoid inadvertent exposure

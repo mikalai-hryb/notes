@@ -169,3 +169,18 @@ When an argument is marked as `sensitive` by a developer it will be marked `sens
 * resource attributes
 
 ??? Respond to the confirmation prompt with yes.
+
+### What are outputs?
+TF outputs let you export structured data about your resources.
+This data can be used in configurations of other parts of your infrastructure.
+Outputs are also about exposing data from a child module to a root module.
+
+### How to query an individual output?
+`terraform output <output_name>` --> if it's a string it will be covered with `""`
+`terraform output -raw <output_name>` --> no covering
+
+### In which cases TF does not redact sensitive outputs?
+* quering a specific output by name
+* quering all of your outputs in JSON format
+* using outputs from a child module in your root module
+* storing outputs in state file

@@ -50,39 +50,96 @@ Terraform supports reusable configuration components called modules. A module is
 ### Does TF support collaboration in some way?
 About collaboration. Since the configuration is written in a file, the VCS can be used for collaboration.
 
+### What is a resource block?
+`resource "type" "name" {}` is all this together called resource block.
+
+### What is a resource block body?
+The content between {} is called resourbe block body or block body.
+
 ### What is a resource identifier?
-A resource type and a resource name form a resource identifier or id separated by a peried in the format `resource_type.resource_name`.
+A resource type and a resource name form a resource identifier(ID) separated by a peried in the format `resource_type.resource_name`.
 The resource identifier must be unique within a workspace.
 The resouce identifier is not the same as resource id attribute.
 
+### What types of properties does a resource have?
+* arguments
+* attributes
+* meta-arguments
+
 ### What is a resource argument?
-Arguments configure a particular resource; because of this, many arguments are resource-specific. Arguments can be required or optional, as specified by the provider.
+Arguments configure a particular resource; because of this, many arguments are resource-specific. Arguments can be `required` or `optional`, as specified by the provider.
 
 ### What is a resource attribute?
 Attributes are values exposed by an existing resource. References to resource attributes take the format `resource_type.resource_name.attribute_name`. Unlike arguments which specify an infrastructure object's configuration, a resource's attributes are often assigned to it by the underlying cloud provider or API.
 
 ### What is a resource meta-argument?
 Meta-arguments are a function of Terraform itself and are not resource or provider-specific.
-Meta-arguments change a resource's behavior, such as using a count meta-argument to create multiple resources.
-
-### What is a resource block?
-`resource "type" "name" {}` is all this together called resource block
-
-### What is a resource block body?
-The content between {} is called resourbe block body or block body
+Meta-arguments change a resource's behavior, such as using a `count` meta-argument to create multiple resources.
 
 ### What are TF input variables?
 Input variables make your Terraform configuration more flexible by defining values that your end users can assign to customize the configuration.
-Terraform's input variables don't change values during a Terraform run.
+Unlike variables found in programming languages, Terraform's input variables don't change values during a Terraform run such as plan, apply, or destroy.
+
+### What arguments can an input variable have?
+* description: A short description to document the purpose of the variable.
+* type: The type of data contained in the variable.
+* default: The default value.
+* validation blocks
+
+### If an input variable does not have the `default` argument what does it mean?
+### And what options do you have to provide the value of an input variable?
+It means the variable is required.
+You have a few options to pass the value of an input variable to TF
+* omit providing the value if variable is `optional`
+* provide a variable value when you will be asked during a TF run if variable is `required`
+* `-var <variable_name>=<variable_value>` command line flag
+* `TF_VAR_<variable_name>=<variable_value>` environment variable
+* `<variable_name>=<variable_value>` in *.tfvars file
+
+### What files does TF load automatically?
+Terraform automatically loads all files in the current directory with the exact name `terraform.tfvars` or matching `*.auto.tfvars`. You can also use the `-var-file` flag to specify other files by name.
+
+### What could be the value of the input variable?
+Variable values must be literal values, and cannot use computed values like resource attributes, expressions, or other variables.
+
+### What varialbe types does TF support?
+* string
+* number
+* bool
+* map
+* list
+* set
+* object
+* tuple
+* any
+
+### Does TF do variable conversion?
+Yes, it will convert input variable values into the correct type if possible.
+For example, "2" -> 2, if `type = number`.
+But it's better to use appropriate types.
+
+### How you can refer to an input variable in your configuration?
+To refer to an input variable you need to use the following syntax `var.variable_name`
 
 ### Where TFC runs TF?
 Terraform Cloud runs Terraform on disposable virtual machines in its own cloud infrastructure by default.
 
+### What are simple (single-values) types?
+* number
+* string
+* bool
+
 ### What are collection types?
-* list
-* map
-* set
+* list: A sequence of values of the same type.
+* map: A lookup table, matching keys to values, all of the same type.
+* set: An unordered collection of unique values, all of the same type.
 
 ### What are structural types?
 * tuple: A fixed-length sequence of values of specified types.
 * object: A lookup table, matching a fixed set of keys to values of specified types.
+
+### What are complex types?
+???
+
+### What is string interpolation?
+String interpolation is the inserting the output of an expression into a string.

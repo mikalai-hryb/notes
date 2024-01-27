@@ -234,3 +234,16 @@ Outputs are also about exposing data from a child module to a root module.
 * quering all of your outputs in JSON format
 * using outputs from a child module in your root module
 * storing outputs in state file
+
+### What are data sources?
+
+Terraform data sources let you dynamically fetch data from APIs or other Terraform state backends.
+
+### What pattern is used to reference data source attributes?
+
+The pattern is `data.<type>.<name>.<attribute>`
+
+### How to share data between TFC workspaces?
+
+* you can use outputs of `terraform_remote_state` data source
+* you can use outputs of `tfe_outputs` data source

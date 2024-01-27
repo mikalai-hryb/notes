@@ -11,3 +11,5 @@ address bar - place on the page where the browser displays URLs
 URL - is a text string that specifies where a resource (such as a web page, image, or video) can be found on the Internet.
 
 origin - scheme (protocol) + hostname (domain) + and port of the URL
+
+A Plugin, Add-on, or Extension is a piece of software added to an existing computer program.

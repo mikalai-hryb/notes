@@ -247,3 +247,13 @@ The pattern is `data.<type>.<name>.<attribute>`
 
 * you can use outputs of `terraform_remote_state` data source
 * you can use outputs of `tfe_outputs` data source
+
+### What types of dependencies can be between resources?
+
+* implicit dependency (attribute usage in other resources)
+* explicit dependency (`depends_on` argument)
+
+### How TF understands dependencies between resources?
+
+Terraform infers dependencies between resources based on the configuration given (studying the resouorce attributes), so that resources are created and destroyed in the correct order.
+There are cases when TF cannot infer dependencies between different parts of your resources. And you will need to create an explicit dependency with the help of `depends_on` argument.

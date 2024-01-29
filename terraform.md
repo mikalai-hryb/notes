@@ -257,3 +257,12 @@ The pattern is `data.<type>.<name>.<attribute>`
 
 Terraform infers dependencies between resources based on the configuration given (studying the resouorce attributes), so that resources are created and destroyed in the correct order.
 There are cases when TF cannot infer dependencies between different parts of your resources. And you will need to create an explicit dependency with the help of `depends_on` argument.
+
+### what is the `count` argument for?
+
+The `count` argument replicates the given resource or module a specific number of times with an incrementing counter.
+To use it within the block body you need `count.index` - starting with zero.
+
+### what is the `for_each` argument for?
+
+Terraform's for_each meta-argument allows you to configure a set of similar resources by iterating over a data structure to configure a resource or module for each item in the data structure.

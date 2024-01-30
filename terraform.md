@@ -23,6 +23,31 @@ blue/green, canary, ...
 ### What is a provider in TF?
 
 A provider in Terraform is a Terraform plugin that enables interaction with an API.
+Terraform providers manage resources by communicating between Terraform and target APIs.
+
+### How to manage provider versions in TF?
+
+There are 2 options
+
+* Specify provider version constraints in the configuration's `terraform.required_providers` block
+* Use dependency lock file (`.terraform.lock.hcl`)
+
+### How does TF select a provider version to download?
+
+If there is a lock file then TF will donwload the provider versions specifed in the lock file.
+
+If Terraform does not find a lock file, it will download the latest versions of the providers that fulfill the version constraints defined in the `required_providers` block. If there is no the `required_providers` block TF will download the latest version.
+
+### What is the dependency lock file and what is this file for?
+
+Dependency lock file or `.terraform.lock.hcl` has pinned provider versions and instructs Terraform to always install the same provider version, ensuring that consistent runs across your team or remote sessions.
+
+### How to upgrade a provider version?
+
+1. run `terraform init -upgrade`
+2. run `terraform apply` to make sure there are no side effects
+3. fix side effects if needed
+4. commit changes to configuration and the dependency lock file
 
 ### How many APIs TF can work with?
 

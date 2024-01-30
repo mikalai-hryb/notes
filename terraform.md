@@ -275,6 +275,16 @@ Terraform's for_each meta-argument allows you to configure a set of similar reso
 
 HCL does not provide a posibility to define a function because it's a configuration language but not a programming language. However, you can use several built-in functions to perform operations dynamically.
 
-### What the `templatefile` function is for?
+### What is the `templatefile` function for?
 
 Terraform will interpolate these values using the `templatefile` function.
+
+### What does the syntax of a conditional expression look like?
+
+The syntax of a conditional expression first defines the condition, then the outcomes for true and false evaluations.
+`var.enable_ha ? 3 : 1`
+
+### What is the splat expression?
+
+The splat expression captures all objects in a list that share an attribute.
+`aws_instance.ubuntu[*].id` --> this will produce a list of ids.

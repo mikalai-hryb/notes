@@ -97,3 +97,7 @@ AMI-backed by either EC2 instance sotre or EBS
 data resiliency
 
 avoid inadvertent exposure
+
+When prompted, press enter to leave the passphrase blank on this key.
+
+Respond yes to confirm the operation.

@@ -122,12 +122,16 @@ Unlike variables found in programming languages, Terraform's input variables don
 
 It means the variable is required.
 You have a few options to pass the value of an input variable to TF
+Terraform loads variables in the following order, with later sources taking precedence over earlier ones:
 
 * omit providing the value if variable is `optional`
 * provide a variable value when you will be asked during a TF run if variable is `required`
-* `-var <variable_name>=<variable_value>` command line flag
+
 * `TF_VAR_<variable_name>=<variable_value>` environment variable
-* `<variable_name>=<variable_value>` in *.tfvars file
+* variables in `terraform.tfvars`
+* variables in `terraform.tfvars.json`
+* `<variable_name>=<variable_value>` in `*.auto.tfvars` or `*.auto.tfvars.json` files (lexical order )
+* `-var <variable_name>=<variable_value>` or `-var-file` options on command line
 
 ### What happen when you reference a sensitive variable in outputs?
 
@@ -266,3 +270,11 @@ To use it within the block body you need `count.index` - starting with zero.
 ### what is the `for_each` argument for?
 
 Terraform's for_each meta-argument allows you to configure a set of similar resources by iterating over a data structure to configure a resource or module for each item in the data structure.
+
+### How to define a function in TF?
+
+HCL does not provide a posibility to define a function because it's a configuration language but not a programming language. However, you can use several built-in functions to perform operations dynamically.
+
+### What the `templatefile` function is for?
+
+Terraform will interpolate these values using the `templatefile` function.

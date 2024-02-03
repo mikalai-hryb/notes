@@ -103,3 +103,7 @@ When prompted, press enter to leave the passphrase blank on this key.
 Respond yes to confirm the operation.
 
 Once you eliminate the possibility of language misconfiguration, version mismatching, or state discrepancies, consider bringing your issue to the core Terraform team or Terraform provider community as a bug report.
+
+unintended changes
+
+you should let someone know that you intend to do something

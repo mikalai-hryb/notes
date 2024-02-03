@@ -377,3 +377,11 @@ Terraform will update the terraform_version whenever you apply a change to your 
 ### What best practises you know/want to follow?
 
 * Using Terraform in production, the team should have plans and procedures in place to determine how they will manage Terraform versions and handle upgrades.
+
+### How to move resources between modules in TF?
+
+The `moved` configuration block lets you track your resource moves in the configuration itself.
+
+### What happens when you move resources?
+
+When you move existing resources from a parent to a child module, your Terraform resource IDs will change.

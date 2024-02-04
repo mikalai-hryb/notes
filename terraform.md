@@ -385,3 +385,16 @@ The `moved` configuration block lets you track your resource moves in the config
 ### What happens when you move resources?
 
 When you move existing resources from a parent to a child module, your Terraform resource IDs will change.
+
+### What can be validated with custom conditions?
+
+Terraform lets you define custom conditions in your module configuration to validate resources, data sources, and outputs.
+
+Terraform supports preconditions, which it evaluates before it provisions the enclosing block (plan step), and postconditions, which it evaluates afterward.
+
+* `variable.<name>.validation`
+* `data.<type>.<name>.lifecycle.precondition`
+* `data.<type>.<name>.lifecycle.postcondition`
+* `resource.<type>.<name>.lifecycle.precondition`
+* `resource.<type>.<name>.lifecycle.postcondition`
+* `output.<name>.precondition`

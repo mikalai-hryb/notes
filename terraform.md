@@ -403,3 +403,18 @@ Terraform supports preconditions, which it evaluates before it provisions the en
 ### HOw to make it easier for users to understand how to use a module which contains many resources?
 
 Using objects in your modules lets you group related attributes together, making it easier for users to understand how to use your module. You can make attributes within objects optional, which make it easier for you to ship new module versions without changing the variables that module users need to define.
+
+### What are the `check` blocks?
+
+Terraform checks let you define assertions to validate as part of your infrastructure management workflow.
+
+Checks let you take advantage of Terraform's abstraction of the differences between different provider APIs.
+
+Unlike variable validation or custom conditions, check blocks are decoupled from the lifecycle of a specific resource or data source.
+
+Unlike custom conditions or variable validation errors, failed checks do not block applies.
+
+### How to make the check block more flexible?
+
+You can reference data sources in `check` block assertions.
+Terraform queries the data source when it evaluates your configuration's checks, at the end of each Terraform operation.

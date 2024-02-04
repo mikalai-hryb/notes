@@ -39,10 +39,8 @@ accidential deletion
 I need a little bit of patience
 gp3 is newer generation of volumes
 
-
 leverages
 let's deep dive into the distinction
-
 
 we scaled up our t2.micro incstance into t3.medioum
 
@@ -111,3 +109,5 @@ you should let someone know that you intend to do something
 When the list is empty, the count meta-argument will evaluate to 0
 
 Terraform will not provision this resource.
+
+than your configuration as a whole.

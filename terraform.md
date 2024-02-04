@@ -377,6 +377,7 @@ Terraform will update the terraform_version whenever you apply a change to your 
 ### What best practises you know/want to follow?
 
 * Using Terraform in production, the team should have plans and procedures in place to determine how they will manage Terraform versions and handle upgrades.
+* using objects in modules to group related attributes together
 
 ### How to move resources between modules in TF?
 
@@ -398,3 +399,7 @@ Terraform supports preconditions, which it evaluates before it provisions the en
 * `resource.<type>.<name>.lifecycle.precondition`
 * `resource.<type>.<name>.lifecycle.postcondition`
 * `output.<name>.precondition`
+
+### HOw to make it easier for users to understand how to use a module which contains many resources?
+
+Using objects in your modules lets you group related attributes together, making it easier for users to understand how to use your module. You can make attributes within objects optional, which make it easier for you to ship new module versions without changing the variables that module users need to define.

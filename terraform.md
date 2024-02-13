@@ -418,3 +418,25 @@ Unlike custom conditions or variable validation errors, failed checks do not blo
 
 You can reference data sources in `check` block assertions.
 Terraform queries the data source when it evaluates your configuration's checks, at the end of each Terraform operation.
+
+### What are tests in TF?
+
+Terraform tests let you validate your module configuration without impacting your existing state file or resources.
+
+Testing is a separate operation that is not part of a plan or apply workflow, but instead builds ephemeral infrastructure and tests your assertions against in-memory state for those short-lived resources.
+
+### How TF runs the `run` blocks?
+
+Terraform executes `run` blocks sequentially.
+
+### What are `mocks` in TF?
+
+Terraform also lets you mock providers, resources, and data sources for your tests. This lets you simulate any resources and their attributes that your configuration depends on without actually creating ephemeral infrastructure for testing. When you use test mocking, Terraform automatically generates values for every computed field of your resources and data sources.
+
+### What is the difference between validation methods and tests?
+
+validation methods are variable validation, preconditions, postconditions, and check blocks.
+
+Validation is like error checking for your Terraform configuration. When validation fails, the module consumer is responsible for resolving the issue.
+
+Tests let module authors verify the behavior of the configuration and ensure that updates do not introduce breaking changes.

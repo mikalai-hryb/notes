@@ -111,3 +111,5 @@ When the list is empty, the count meta-argument will evaluate to 0
 Terraform will not provision this resource.
 
 than your configuration as a whole.
+
+deepen your understanding of how

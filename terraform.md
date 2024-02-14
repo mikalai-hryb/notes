@@ -77,7 +77,7 @@ TF takes an immutable approach to infrastructure reducing the complexity of upgr
 
 State file acts as a source of truth for your invironment.
 TF uses the state file to determine the changes to make to your infrastructure so that it will match your configuration.
-The Terraform state file is the only way Terraform can track which resources it manages
+The Terraform state file is the only way Terraform can track which resources it manages.
 
 ### What programming style do TF configuration files use? Procedural, declarative or imperative?
 
@@ -440,3 +440,29 @@ validation methods are variable validation, preconditions, postconditions, and c
 Validation is like error checking for your Terraform configuration. When validation fails, the module consumer is responsible for resolving the issue.
 
 Tests let module authors verify the behavior of the configuration and ensure that updates do not introduce breaking changes.
+
+### What does `init` step include?
+
+TF
+
+* configures the backend
+* installs all modules and providers
+* creates a version lock file
+
+### What feateres does TFC include?
+
+* remote state
+* remote execution
+* structured plan output
+* workspace resource summuries
+
+### What is `.terraform` for?
+
+TF uses the `.terraform` directory to store the project's providers and modules.
+
+### In which cases you need to run `terraform init`?
+
+* have created new TF configuration and are ready to use it
+* have cloned a version control repository containing Terraform configuration, and are ready to use it
+* have added, removed, or changed the version of a module or provider in an existing workspace
+* have added, removed, or changed the backend or cloud blocks within the terraform block of an existing workspace

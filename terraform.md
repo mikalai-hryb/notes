@@ -166,6 +166,13 @@ Keep in mind, that TF stores the state as plain text.
 Marking variables as sensitive is not sufficient to secure them.
 You must also keep them secure while passing them into Terraform configuration, and protect them in your state file.
 
+### In which cases TF does not redact sensitive variables?
+
+* query a specific output by name (`terraform output <my_variable>`)
+* query all of your outputs in JSON format (`terraform output -json`)
+* use outputs from a child module in your root module
+* Terraform stores all output values as plain text in a state file, including sensitive variables
+
 ### What files does TF load automatically?
 
 Terraform automatically loads all files in the current directory with the exact name `terraform.tfvars` or matching `*.auto.tfvars`. You can also use the `-var-file` flag to specify other files by name.

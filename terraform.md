@@ -482,3 +482,31 @@ The saved plan is not in human-readable format.
 To read the plan you need to use `terraform show <plan_file_name>`.
 
 To convert the plan to JSON you need `terraform show -json <plan_file_name> | jq > <file_name>.json`.
+
+### What happens during apply step?
+
+in normal workflow
+
+1. lock workspace state (`.terraform.tfstate.lock.info`)
+2. create a plan and wait for your to approve
+3. execute the steps defined in the plan (it tries to do that in parallel when possible)
+4. update workspace state with a snapshot of the new state of resources
+5. unlock workspace state
+6. report the changes it made and outputs
+
+en error workflow
+
+1. log the error and report it to the console
+2. update the state file with any changes to your resources
+3. unlock the state file
+
+### What happens after error? Does TF make some change to infrastructure?
+
+TF does not support automatically rolling back a partially-completed apply.
+
+### Name common resons for apply errors?
+
+* change to a resource outside of TF
+* networking or other transient errors
+* unexpected error from upstream API (duplicate resource name, reaching a resource limit, etc)
+* a bug in TF provider or TF itself

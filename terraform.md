@@ -466,3 +466,19 @@ TF uses the `.terraform` directory to store the project's providers and modules.
 * have cloned a version control repository containing Terraform configuration, and are ready to use it
 * have added, removed, or changed the version of a module or provider in an existing workspace
 * have added, removed, or changed the backend or cloud blocks within the terraform block of an existing workspace
+
+### What does TF workflow consist of?
+
+* Initialize - prepares your workspace so TF can apply your configuration.
+* Plan - allows you to preview the changes TF will make before you apply them.
+  TF creates the plan by comparing your TF configuration to the state of your infrastructure.
+* Apply - makes the changes defined by your plan to create, update, or destroy resources.
+
+### What TF feature is handy in automated TF pipelines?
+
+Save an execution plan to a file with `-out` flag and apply it later.
+The saved plan is not in human-readable format.
+
+To read the plan you need to use `terraform show <plan_file_name>`.
+
+To convert the plan to JSON you need `terraform show -json <plan_file_name> | jq > <file_name>.json`.

@@ -113,3 +113,7 @@ Terraform will not provision this resource.
 than your configuration as a whole.
 
 deepen your understanding of how
+
+The variables you have used so far have all been single values.
+
+A likely place to use list variables is

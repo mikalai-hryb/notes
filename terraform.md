@@ -202,17 +202,23 @@ Terraform Cloud runs Terraform on disposable virtual machines in its own cloud i
 
 ### What are simple (single-values) types?
 
+Simpe variables are variables that contain single value.
+
 * number
 * string
 * bool
 
 ### What are collection types?
 
+Collection variables contain more than one value.
+
 * list: A sequence of values of the same type.
 * map: A lookup table, matching keys to values, all of the same type.
 * set: An unordered collection of unique values, all of the same type.
 
 ### What are structural types?
+
+Structural types have a fixed number of values that can be of different types.
 
 * tuple: A fixed-length sequence of values of specified types.
 * object: A lookup table, matching a fixed set of keys to values of specified types.
@@ -510,3 +516,8 @@ TF does not support automatically rolling back a partially-completed apply.
 * networking or other transient errors
 * unexpected error from upstream API (duplicate resource name, reaching a resource limit, etc)
 * a bug in TF provider or TF itself
+
+### What is the difference between TF input variables and variables in programming languages?
+
+* TF variables don't change values during a Terraform run
+* TF variables allow users to more safely customize thier infrastructure

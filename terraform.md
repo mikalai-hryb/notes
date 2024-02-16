@@ -528,3 +528,11 @@ TF does not support automatically rolling back a partially-completed apply.
 
 * TF variables don't change values during a Terraform run
 * TF variables allow users to more safely customize thier infrastructure
+
+### What does the `~>` mean?
+
+The `~>` allows to update the only the last identifier but requires all identifiers except the last one to match the specified identifiers.
+
+### When TF updates state file `version` key?
+
+TF updates state file `version` when a new version of TF requires a change to the state file's format.

@@ -536,3 +536,9 @@ The `~>` allows to update the only the last identifier but requires all identifi
 ### When TF updates state file `version` key?
 
 TF updates state file `version` when a new version of TF requires a change to the state file's format.
+
+### Does `-target` option update only one resource?
+
+Not always, resource targeting updates the target resource and resources that the target depends on, but not resources that depend on it.
+
+Targeting resources can introduce inconsistencies.

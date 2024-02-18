@@ -542,3 +542,37 @@ TF updates state file `version` when a new version of TF requires a change to th
 Not always, resource targeting updates the target resource and resources that the target depends on, but not resources that depend on it.
 
 Targeting resources can introduce inconsistencies.
+
+### How to review resources in the state file?
+
+The Terraform CLI allows you to review resources in the state file with `terraform show`.
+
+### Does TF provide a way to recreate a resource?
+
+Yes, you can recreate a resource with `terraform apply -replace="aws_instance.example"`
+The `plan` command support `-replace` as well.
+
+The `terraform taint` command is DEPRECATED now in favor of `-replace` flag.
+
+### How to rename a resource adress in a state file?
+
+The `terraform mv` command can help.
+
+* the `terraform state mv -state-out=<another-state-file> <resource_address> <resource_address>` moves the resource to another state file without changing the resource address
+  * `-state-out` flag is DEPRECATED. To move a resource to another state file
+    1. remove the resorce from the first state file with `removed` block in old configuration
+    2. remove the resorce from old configuration
+    3. add `import` block to new configuration
+    4. define the resource in new configuration
+* the `terraform state mv <old_resource_address> <new_resource_address>` renames the resource within the state file
+* a resource can be moved to another state file and renamed at the same time
+
+### How to remove a resource from a state file?
+
+Use a `removed` block to remove specific resources from your state.
+
+### What blocks can help you to refactor a TF configuration?
+
+* import
+* moved - can move a rename a resource
+* removed

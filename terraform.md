@@ -576,3 +576,23 @@ Use a `removed` block to remove specific resources from your state.
 * import
 * moved - can move a rename a resource
 * removed
+
+### HashiCorp promissed to add feature that generates configuration based on existing infrastructure. Is TF supporting this feature now?
+
+Yes, but this feature is still experimental (v1.7.3)
+
+### How to generate TF configuration for a resource?
+
+1. Import the resource into state file with the help of `terraform import` or `import` block (configuration-driven import)
+2. Use `terraform plan -generate-config-out=generated.tf` to generate configuration
+3. Prune the generated configuration to contain only the necessary arguments you identified (TF uses the provider to generate all arguments)
+4. Apply configuration with `terraform apply`
+
+### Can you reference the imported resource right away?
+
+No, the resource must exist in the state before you can reference it in configuration otherwise TF will try to recreate a referencing resource.
+Since Terraform has not loaded the resource into state yet, it does not have an attribute in the state to compare with the hardcoded one. That's why it tries to recreate the referencing resource.
+
+### Imagine, you have a configuration-driven import. At what step will TF really import the resource?
+
+At `apply` step. Importing manipulates the Terraform state file during the apply.

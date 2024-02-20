@@ -596,3 +596,22 @@ Since Terraform has not loaded the resource into state yet, it does not have an 
 ### Imagine, you have a configuration-driven import. At what step will TF really import the resource?
 
 At `apply` step. Importing manipulates the Terraform state file during the apply.
+
+### How `refresh` is working?
+
+Terraform `plan` and `apply` operations run an implicit in-memory refresh as part of their functionality, reconciling any drift from your state file before suggesting infrastructure changes.
+
+TF locates resources with the resource IDs.
+
+NOTE: now TF does not overwrite the state file as part of `plan` or `apply`! It kind of uses `-refresh-only` flag.
+
+### What is the difference between `refresh` subcommand and `-refresh-only` flag?
+
+* `terraform refresh` automatically overwrites a state file without giving the option to review the modifications first. As a result, it could lead to a situation, when TF can drop all resources from the state file.
+
+* `-refresh-only` mode for `plan` and `apply` operations makes it safer to check Terraform state against real infrastructure by letting you review proposed changes to the state file.
+
+### What is the difference between a refresh-only `plan` and `apply`?
+
+* `terraform plan -refresh-only` only checks the diff between current infrastructure and state file, it does not compare state with the configuration
+* `terraform apply -refresh-only` checks the diff between current infrastructure and state file, it does not compare state with the configuration, it also check the diff in outputs

@@ -623,3 +623,16 @@ NOTE: now TF does not overwrite the state file as part of `plan` or `apply`! It 
 3) Run `terraform init` -> prompt `yes`
 4) Add Terraform variable if needed
 5) Run `rm terraform.tfstate` locally
+
+### What information can be shown in `terraform console`
+
+1) a resource data `aws_s3_bucket.data`
+2) a data block data `data.aws_s3_objects.data`
+3) a local variable value `local.bucket_name`
+4) function manupulations
+
+### How to pass a command to TF to run?
+
+```bash
+ echo 'jsondecode(file("bucket_policy.json"))' | terraform console
+```

@@ -615,3 +615,11 @@ NOTE: now TF does not overwrite the state file as part of `plan` or `apply`! It 
 
 * `terraform plan -refresh-only` only checks the diff between current infrastructure and state file, it does not compare state with the configuration
 * `terraform apply -refresh-only` checks the diff between current infrastructure and state file, it does not compare state with the configuration, it also check the diff in outputs
+
+### How to migrate local TF file to the TFC?
+
+1) Configure `terraform.cloud` block
+2) Run `terraform login`
+3) Run `terraform init` -> prompt `yes`
+4) Add Terraform variable if needed
+5) Run `rm terraform.tfstate` locally

@@ -636,3 +636,43 @@ NOTE: now TF does not overwrite the state file as part of `plan` or `apply`! It 
 ```bash
  echo 'jsondecode(file("bucket_policy.json"))' | terraform console
 ```
+
+### What is TF module?
+
+A Terraform module is a set of Terraform configuration files in a single directory.
+Terraform modules are similar to the concepts of libraries, packages, or modules found in most programming languages, and provide many of the same benefits.
+
+### What is a root module?
+
+It's a directory where you run TF commands directly.
+
+### What is the child module?
+
+A module that is called by another configuration is referred to as a "child module" of that configuration.
+
+### What the difference between local and remote modules?
+
+Local modules are loaded from local filesystem.
+Remote modules are loadede from a remote source.
+
+* Terrafrom Registry
+* most VCS
+* HTTP URLs
+* TFC
+* TFE
+
+### What problems can modules solve?
+
+* Organize configuration (make it easier to navigate, understand, and update your configuration)
+* Encapsulate configuration (encapsulate configuration into distinct logical components)
+* Re-use configuration
+* Provide consistency and ensure best practices (for example, consistent names and best practices are applied across all of your configuration)
+* Self service (make your configuration easier for other teams to use)
+
+### What are module best practices?
+
+* Name your provider `terraform-<PROVIDER>-<NAME>`
+* Start writing your configuration with modules in mind
+* Use local modules to organize and encapsulate your code
+* Use the public Terraform Registry to find useful modules
+* Publish and share modules with your team

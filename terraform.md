@@ -8,6 +8,14 @@
 
 HashiCorp Terraform is an infrastructure as code tool (IaC) that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share.
 
+### What is the main purpose of the Terraform language?
+
+The main purpose of the Terraform language is declaring resources, which represent infrastructure objects. All other language features exist only to make the definition of resources more flexible and convenient.
+
+### What is Terraform configuration?
+
+A Terraform configuration is a complete document in the Terraform language that tells Terraform how to manage a given collection of infrastructure. A configuration can consist of multiple files and directories.
+
 ### What is IaC?
 
 The infrastructure as code workflow lets your declaratively manage a variety of services and automate your changes to them
@@ -90,6 +98,10 @@ To provision resources efficiently TF builds a resource graph to determine the r
 ### What is a TF module?
 
 Terraform supports reusable configuration components called modules. A module is a container for multiple resources that are used together.
+
+Terraform modules are self-contained pieces of infrastructure-as-code that abstract the underlying complexity of infrastructure deployments.
+
+A module is a collection of `.tf` and/or `.tf.json` files kept together in a directory.
 
 ### Does TF support collaboration in some way?
 
@@ -645,6 +657,7 @@ Terraform modules are similar to the concepts of libraries, packages, or modules
 ### What is a root module?
 
 It's a directory where you run TF commands directly.
+Terraform always runs in the context of a single root module.
 
 ### What is the child module?
 
@@ -676,3 +689,32 @@ Remote modules are loadede from a remote source.
 * Use local modules to organize and encapsulate your code
 * Use the public Terraform Registry to find useful modules
 * Publish and share modules with your team
+
+### How to install a TF module?
+
+You need to run `terraform init` or `terraform get` to install the module. TF installs the module into `.terraform/modules` within configuration's working directory.
+
+For local modules, Terraform will create a symlink to the module's directory.
+
+### What is the difference between a child module and submodule?
+
+Externally located modules are called child modules
+Embedded inside the current workspace are called submodules.
+
+### What is the cloud-init?
+
+Cloud-init is the industry standard multi-distribution method for cross-platform cloud instance initialisation. It is supported across all major public cloud providers, provisioning systems for private cloud infrastructure, and bare-metal installations.
+
+### How cloud-init config looks like?
+
+It's a YAML config that starts with `#cloud-config` comment.
+
+### What is a block header?
+
+The block header is the block type and any quoted labels that follow it.
+
+### Is it possible to override TF blocks (variable, output, data, resource, terraform blocks)?
+
+Yes, blocks in `*_override.tf` or `override.tf` (.json extentions as well) files override blocks in normal configuration files.
+
+Keep in mind that the merging behavior is slightly different for each block type.

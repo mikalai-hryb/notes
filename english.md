@@ -117,3 +117,5 @@ deepen your understanding of how
 The variables you have used so far have all been single values.
 
 A likely place to use list variables is
+
+ consider which resource arguments to expose to module end users as input variables.

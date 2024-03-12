@@ -119,3 +119,13 @@ The variables you have used so far have all been single values.
 A likely place to use list variables is
 
  consider which resource arguments to expose to module end users as input variables.
+
+Expression references let Terraform understand which value the reference `derives from`
+
+ we recommend using expression references to `imply` dependencies when possible
+
+ This was `fragile`
+
+ However
+
+ Terraform `defers` reading data resources in the following situations

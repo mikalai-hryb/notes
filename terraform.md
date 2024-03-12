@@ -12,6 +12,10 @@ HashiCorp Terraform is an infrastructure as code tool (IaC) that lets you define
 
 The main purpose of the Terraform language is declaring resources, which represent infrastructure objects. All other language features exist only to make the definition of resources more flexible and convenient.
 
+### What is the difference between TF language and HCL?
+
+Terraform's configuration language is based on a more general language called HCL.
+
 ### What is Terraform configuration?
 
 A Terraform configuration is a complete document in the Terraform language that tells Terraform how to manage a given collection of infrastructure. A configuration can consist of multiple files and directories.
@@ -70,6 +74,10 @@ refresh - TF views real word infrastructure
 plan - TF figures out what it needs to do (reconciling the configuration and infrastructure)
 apply - TF build the infrastructure
 
+### When we say TF apply, what exactly do we mean?
+
+Applying a Terraform configuration is the process of creating, updating, and destroying real infrastructure objects in order to make their settings match the configuration.
+
 ### What approaches exist in terms of infrastructure mutability?
 
 There are mutable and immutable approaches.
@@ -106,6 +114,14 @@ A module is a collection of `.tf` and/or `.tf.json` files kept together in a dir
 ### Does TF support collaboration in some way?
 
 About collaboration. Since the configuration is written in a file, the VCS can be used for collaboration.
+
+### What is a block in TF?
+
+A block is a container for other content.
+A block has a type. Each block type defines how many labels must follow the type keyword.
+The `network_interface` nested block has no labels.
+
+Most of Terraform's features (including resources, input variables, output values, data sources, etc.) are implemented as top-level blocks.
 
 ### What is a resource block?
 
@@ -292,6 +308,8 @@ Outputs are also about exposing data from a child module to a root module.
 ### What are data sources?
 
 Terraform data sources let you dynamically fetch data from APIs or other Terraform state backends.
+
+The data sources are a special type of resource used only for looking up information.
 
 ### What pattern is used to reference data source attributes?
 
@@ -718,3 +736,138 @@ The block header is the block type and any quoted labels that follow it.
 Yes, blocks in `*_override.tf` or `override.tf` (.json extentions as well) files override blocks in normal configuration files.
 
 Keep in mind that the merging behavior is slightly different for each block type.
+
+### What aproach does TF use for checksum verifiation?
+
+This checksum verification is intended to represent a `trust on first use` approach.
+
+### How an argument looks in TF?
+
+`image_id = "abc123"`
+Where `image_id` is argument name and `"abc123"` is the argument value
+
+### How to access information about a resource?
+
+Use the `<RESOURCE_TYPE>.<NAME>.<ATTRIBUTE>` syntax to reference a resource attribute in an expression.
+
+### What do you know about implicit and explicit dependencies?
+
+The implicit means "internal".
+When resource identifier is used in another resource it's called the implicit dependency.
+
+The explicit means "external".
+When we use the `depends_on` attribute it's called explicit dependency.
+
+### Can `depends_on` include arbitrary expressions?
+
+The `depends_on` include arbitrary expressions because its value must be known before Terraform knows resource relationships and thus before it can safely evaluate expressions.
+
+### When to use `for_each` instead of `count`?
+
+If your instances are almost identical, `count` is appropriate.
+
+If some of their arguments need distinct values that can't be directly derived from an integer, it's safer to use `for_each`.
+
+### What does chaining `for_each` between resources mean?
+
+Because a resource using `for_each` appears as a map of objects when used in expressions elsewhere, you can directly use one resource as the `for_each` of another in situations where there is a one-to-one relationship between two sets of objects.
+
+```hcl
+resource "random_pet" "a" {
+  for_each = var.pets
+  length = 2
+}
+
+resource "random_pet" "b" {
+  for_each = random_pet.a
+  prefix = each.value.id
+  length = 2
+}
+```
+
+### What is the syntax for sets?
+
+The Terraform language doesn't have a literal syntax for set values.
+
+### When does TF read the data resources?
+
+Terraform reads data resources during the planning phase when possible.
+
+### How do data sources work?
+
+The data resources cause Terraform only to read objects.
+Terraform reads data resources during the planning phase when possible.
+
+TF defers reading data resources:
+
+* a managed resource attribute or other value that Terraform cannot predict is used as an argument
+* data resource depends directly on a managed resource
+* data resource has custom conditions and it depends directly or indirectly on a managed resource that itself has planned changes in the current plan
+
+#### Example
+
+There is "d" data resource and "r" managed resource. The d depends on r.attribute
+
+1) changes in r.b
+   1) using r.attribute directly in d.attribute deffers the reading
+   2) using local variable (r.attribute) in d.attribute prevents deferring reading (reading happens during refresh)
+   3) using r.attribute in d.precondition or d.postcondition deffers the reading
+   4) using local variable (r.attribute) in d.precondition or d.postcondition deffers the reading
+2) no changes in r
+   1) using r.attribute directly in d (reading happens during refresh)
+   2) using local variable in d.attribute (reading happens during refresh)
+
+### Is it allowed to use expressions in provider block?
+
+Yes, but can only reference values that are known before the configuration is applied, for example, input variables.
+
+### Can you create resources in different AWS regions within one TF configuration?
+
+Yes, to do that we need to define a few provider blocks. The first one is a default one, other must have `alias` meta-argument.
+
+### How to declare a configuration alias within a module?
+
+To declare a configuration alias within a module in order to receive an alternate provider configuration from the parent module, add the `configuration_aliases` argument to that provider's `required_providers` entry.
+
+```hcl
+terraform {
+  required_providers {
+    mycloud = {
+      source  = "mycorp/mycloud"
+      version = "~> 1.0"
+      configuration_aliases = [ mycloud.alternate ]
+    }
+  }
+}
+```
+
+### How to reference an alternate provider in a resource?
+
+```hcl
+resource "aws_instance" "foo" {
+  provider = aws.west
+
+  # ...
+}
+
+module "example" {
+  source    = "./example"
+  providers = {
+    aws = aws.west
+  }
+}
+
+module "tunnel" {
+  source    = "./tunnel"
+  providers = {
+    aws.src = aws.usw1
+    aws.dst = aws.usw2
+  }
+}
+```
+
+### What does provider `source` address consist of?
+
+it consists of `[<HOSTNAME>/]<NAMESPACE>/<TYPE>`
+
+HOSTNAME is "registry.terraform.io" by default

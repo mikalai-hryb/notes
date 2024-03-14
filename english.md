@@ -129,3 +129,13 @@ Expression references let Terraform understand which value the reference `derive
  However
 
  Terraform `defers` reading data resources in the following situations
+
+The description should `concisely` explain the purpose of the variable
+
+For `commentary` for module maintainers, use comments.
+
+Terraform may treat the entire block as `redacted`.
+
+which can help you `spot the mistake`.
+
+Variable `precedence` within Terraform tests

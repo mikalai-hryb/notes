@@ -171,20 +171,24 @@ Unlike variables found in programming languages, Terraform's input variables don
 
 ### If an input variable does not have the `default` argument what does it mean?
 
-### And what options do you have to provide the value of an input variable?
-
 It means the variable is required.
-You have a few options to pass the value of an input variable to TF
-Terraform loads variables in the following order, with later sources taking precedence over earlier ones:
 
-* omit providing the value if variable is `optional`
-* provide a variable value when you will be asked during a TF run if variable is `required`
+### In which order TF load variables?
 
-* `TF_VAR_<variable_name>=<variable_value>` environment variable
-* variables in `terraform.tfvars`
-* variables in `terraform.tfvars.json`
-* `<variable_name>=<variable_value>` in `*.auto.tfvars` or `*.auto.tfvars.json` files (lexical order )
-* `-var <variable_name>=<variable_value>` or `-var-file` options on command line
+* `TF_VAR_*` defined in cloud
+* `TF_VAR_*` defined locally
+* `terraform.tfvars`
+* `terraform.tfvars.json`
+* `*.auto.tfvars` or `*.auto.tfvars.json` files, processed in lexical order of their filenames
+* workspace terraform variale (HCL or not)
+* `-var '<variable-name>="<value>"` or
+  `-var-file *.tfvars` or
+  `-var-file *.tfvars.json`
+  The last definded option takes precedence
+* variables in `variables` block within test files
+* variables in `variables` block within `run` block in test files
+
+If no mechanism of the above is used TF will ask for the value of a required variable or the default value of an optional variable will be used.
 
 ### What happen when you reference a sensitive variable in outputs?
 
@@ -871,3 +875,17 @@ module "tunnel" {
 it consists of `[<HOSTNAME>/]<NAMESPACE>/<TYPE>`
 
 HOSTNAME is "registry.terraform.io" by default
+
+### How many arguments can be specified in `variable` block?
+
+* description - This specifies the input variable's documentation
+* type - This argument specifies what value types are accepted for the variable
+* default - A default value which then makes the variable optional
+* sensitive - Limits Terraform UI output when the variable is used in configuration (defalts to false)
+* nullable - Specify if the variable can be null within the module (defaults to true)
+* validation - A block to define validation rules, usually in addition to type constraints
+
+### When TF can disclose a sensitive variable?
+
+TF sent a value to providers without any obfuscation.
+A provider error could disclose a value if that value is included in the error message.

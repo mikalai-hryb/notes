@@ -139,3 +139,36 @@ Terraform may treat the entire block as `redacted`.
 which can help you `spot the mistake`.
 
 Variable `precedence` within Terraform tests
+
+`For brevity,` output values are ...
+
+and so it should be written from the perspective of the user of the module `rather than` its maintainer
+
+The expressions in local values `are not limited to literal constants`
+
+A module that has been called by another module `is` often `referred to as` a child module
+
+`This makes it possible to` publish modules for others to use
+
+publicly available
+
+The depends_on argument should be used only as a last
+
+arguments
+that
+includes
+contents
+kinds
+newest
+referenced
+constraints
+architecture
+documentation
+boundaries
+appropriate
+implicitly
+explicitly
+corresponding
+hierarchical
+
+so we recommend `moderation`

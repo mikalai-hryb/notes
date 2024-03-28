@@ -170,5 +170,17 @@ implicitly
 explicitly
 corresponding
 hierarchical
+consecutive
+equality
+contrived
+analogous
+This implies
+acquiring
+This is seamless when changing a resource's attributes
+
+
+
 
 so we recommend `moderation`
+
+" traight double-quote characters

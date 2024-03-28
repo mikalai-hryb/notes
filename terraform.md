@@ -6,16 +6,19 @@
 
 * TFC
   * remote state management
+  * private registry
   * remote execution
   * structured plan output
   * workspace resource summuries
 * validation
   * variables validation
   * precondition and postcondition for resources and data sources
-  * checks
+  * checks (assertions)
 * built-in testing mechanism
 * handy refactoring workflow with the help of `import`, `moved` and `removed` blocks
 * plugins and TF version constraints in `terraform` block
+* better handling sensitive information
+* provider functions
 
 ## Docs
 
@@ -106,9 +109,19 @@ TF takes an immutable approach to infrastructure reducing the complexity of upgr
 
 ### What is the purpose of the state file in TF?
 
+The primary purpose of Terraform state is to store bindings between objects in a remote system and resource instances declared in your configuration.
+
 State file acts as a source of truth for your invironment.
 TF uses the state file to determine the changes to make to your infrastructure so that it will match your configuration.
 The Terraform state file is the only way Terraform can track which resources it manages.
+
+### What is `lineage` in a state file?
+
+The "lineage" is a unique ID assigned to a state when it is created.
+
+### What is `serial` in a state file?
+
+Terraform uses the `serial` to keep track of the changes made in each new state file and uses it to make sure your operations run against the correct known state file
 
 ### What programming style do TF configuration files use? Procedural, declarative or imperative?
 
@@ -266,16 +279,21 @@ Simpe variables are variables that contain single value.
 
 Collection variables contain more than one value.
 
-* list: A sequence of values of the same type.
-* map: A lookup table, matching keys to values, all of the same type.
-* set: An unordered collection of unique values, all of the same type.
+* list(...): A sequence of values of the same type.
+The keyword list is a shorthand for list(any).
+* map(...): A lookup table, matching keys to values, all of the same type.
+The keyword map is a shorthand for map(any).
+* set(...): An unordered collection of unique values, all of the same type.
+It does not have any secondary identifier.
 
 ### What are structural types?
 
 Structural types have a fixed number of values that can be of different types.
 
-* tuple: A fixed-length sequence of values of specified types.
-* object: A lookup table, matching a fixed set of keys to values of specified types.
+* tuple(...): A fixed-length sequence of values of specified types.
+* object(...): A lookup table, matching a fixed set of keys to values of specified types.
+
+Sructural types require a schema as an argument, to specify which types are allowed for which elements.
 
 ### What are complex types?
 
@@ -690,6 +708,8 @@ NOTE: now TF does not overwrite the state file as part of `plan` or `apply`! It 
 3) a local variable value `local.bucket_name`
 4) function manupulations
 
+The console holds a lock on the state, and you will not be able to use the console while performing other actions that modify state.
+
 ### How to pass a command to TF to run?
 
 ```bash
@@ -897,9 +917,49 @@ module "tunnel" {
 
 ### What does provider `source` address consist of?
 
-it consists of `[<HOSTNAME>/]<NAMESPACE>/<TYPE>`
+It consists of `[<HOSTNAME>/]<NAMESPACE>/<TYPE>`, for example, hashicorm/aws
 
-HOSTNAME is "registry.terraform.io" by default
+* HOSTNAME is the hostname of the Terraform registry that distributes the provider "registry.
+Defaults to "registry.terraform.io"
+* NAMESPACE is an organizational namespace within the specified registry
+* TYPE is a short name for the platform or system the provider manages
+
+### Do provider repositories have a naming convention?
+
+I would say yes, it's better to follow `terraform-provider-<TYPE>` naming convertion.
+
+For example,
+
+* https://github.com/hashicorp/terraform-provider-aws
+* https://github.com/hashicorp/terraform-provider-google
+* https://github.com/oracle/terraform-provider-oci
+
+### What does module `source` address consist of?
+
+* `<NAMESPACE>/<NAME>/<PROVIDER>` for public Terraform registry.
+For example, `"hashicorp/consul/aws"`
+
+* `<HOSTNAME>/<NAMESPACE>/<NAME>/<PROVIDER>` for private regirstry.
+For example, `"app.terraform.io/example_corp/vpc/aws"`
+
+* HOSTNAME is the hostname of the Terraform registry that distributes the module "registry.
+Defaults to "registry.terraform.io"
+* NAMESPACE on the public Terraform Registry the "namespace" represents the organization that is packaging and distributing the module.
+
+For example,
+
+* https://registry.terraform.io/modules/hashicorp/consul/aws/latest
+* https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest
+
+### Do module repositories have a naming convention?
+
+Yes, they have to follow `terraform-<PROVIDER>-<NAME>`.
+
+For example,
+
+* https://github.com/hashicorp/terraform-aws-consul
+* https://github.com/terraform-aws-modules/terraform-aws-iam
+* https://github.com/terraform-aws-modules/terraform-aws-ec2-instance
 
 ### How many arguments can be specified in `variable` block?
 
@@ -943,3 +1003,270 @@ moved {
 ```
 
 Before creating a new plan for `aws_instance.b`, Terraform first checks whether there is an existing object for `aws_instance.a` recorded in the state. If there is an existing object, Terraform renames that object to `aws_instance.b` and then proceeds with creating a plan.
+
+### When TF processes the `import` block?
+
+Terraform processes the import block during the plan stage. Once a plan is approved, Terraform imports the resource into its state during the subsequent apply stage.
+
+### Is `import` block idempotent?
+
+Yes, the `import` block is idempotent, meaning that applying an import action and running another plan will not generate another import action as long as that resource remains in your state.
+
+### Is literal value an expression?
+
+Yes, both "some_stinrg" and 5 are the simplest expressions.
+
+### What is the result of an expression?
+
+The result of an expression is a value. All values have a type (except null value), which dictates where that value can be used and what transformations can be applied to it.
+
+### What is going on when you set a resource argument to `null` value?
+
+If you set an argument of a resource to `null`, Terraform behaves as though you had completely omitted it — it will use the argument's default value if it has one, or raise an error if the argument is mandatory.
+
+### How to access elements in complex types, structural types, or collection types?
+
+Elements of list/tuple and map/object values can be accessed using the square-bracket index notation, like local.list[3], local.map["key"]
+
+### What is the interpolation in TF?
+
+A `${ ... }` sequence is an interpolation
+
+### What is the directive in TF?
+
+A `%{ ... }` sequence is a directive, which allows for conditional results and iteration over collections, similar to conditional and for expressions.
+
+* `%{if <BOOL>}/%{else}/%{endif}`
+* `%{for <NAME> in <COLLECTION>} / %{endfor}`
+* `"Hello, %{ if var.name != "" }${var.name}%{ else }unnamed%{ endif }!"`
+* <<EOT
+  %{ for ip in aws_instance.example[*].private_ip }
+  server ${ip}
+  %{ endfor }
+  EOT
+
+### What is an operator?
+
+An operator is a type of expression that transforms or combines one or more other expressions.
+
+Operators that work on two values place an operator symbol between the two values, similar to mathematical notation: `1 + 2`.
+
+Operators that work on only one value place an operator symbol before that value, like `!true`.
+
+### How to expand function arguments?
+
+Provide the list value as an argument and follow it with the `...` symbol
+
+```tf
+min([55, 2453, 2]...)
+```
+
+### What is a version constraint?
+
+The `version constraint` is a specially formatted string.
+
+### What version constraint operators do you know?
+
+* `=` (or no operator): Allows only one exact version number
+
+* `!=`: Excludes an exact version number
+
+* `>, >=, <, <=`: Comparisons against a specified version
+
+* The `~>` is called "pessimistic constraint operator".
+Allows only the rightmost version component to increment.
+`~> 1.0.4`: Allows Terraform to install `1.0.5` and `1.0.10` but not `1.1.0`.
+
+The `,`(commas) can be used in version constraint
+
+```tf
+version = ">= 3.0.0, !=3.0.2, < 4.0.0"
+```
+
+Prerelease versions do not match inexact operators such as `>=`, `~>`, etc.
+To pick a prerelease version (with suffix, for example, `1.2.0-beta`) the constraint has to use the `=` operator or no operator.
+
+### What is the type constrainsts?
+
+Type constraints are expressed using a mixture of type keywords and function-like constructs called type constructors.
+
+Type constraints look like other kinds of Terraform expressions, but are a special syntax. They are valid only in `type` argument of an input variable.
+
+### What do you know about the `any`?
+
+The keyword `any` is a special construct that serves as a placeholder for a type yet to be decided. The `any` is not itself a type: when interpreting a value against a type constraint containing `any`, Terraform will attempt to find a single actual type that could replace the `any` keyword to produce a valid result.
+
+### Is the `tfe_outputs` data source able to read sensitive outputs?
+
+Yes, however, the whole map of `data.tfe_outputs.values` will be marked sensitve if at least one output is marked sensitive.
+
+The `nonsensitive` function can help to expose the sensitive values.
+You can filter state JSON data in TFC.
+
+### What does the terraform plan command do? (16)
+
+Creates an execution plan and then determines what actions are necessary to achieve the desired state by evaluating the difference between the configuration file and the state file.
+
+### Does terraform taint command modify infrastructure as soon as you run it?
+
+No, this command will not modify infrastructure, but it will modify the state file in order to mark a resource as tainted, and the next apply will implement this change.
+
+### Can we make sure that S3 bucket are encrypted with Sentinel Police?
+
+Yes.
+
+Sentinel is a policy as code framework that’s integrated into Hashicorp enterprise products. Sentinel allows users to define policies that are enforced against infrastructure between the plan and apply phases of a Terraform run.
+
+Compared to many tools that scan existing infrastructure for policy infractions, Sentinel proactively prevents provisioning of out-of-policy infrastructure.
+
+Sentinel can enforce compliance policies and policies are checked when a run is performed, after the `terraform plan` but before it can be confirmed or the `terraform apply` is executed.
+
+### Check all TF environemnt variables?
+
+Does `TF_CLI_ARGS`, `TF_IN_AUTOMATION` exist?
+
+`TF_CLI_ARGS_plan` is valid
+
+The value of `TF_CLI_ARGS` will specify additional arguments to the command-line. This allows easier automation in CI environments as well as modifying the default behavior of Terraform on your own system.
+
+The flag `TF_CLI_ARGS` affects all Terraform commands. If you specify a named command in the form of `TF_CLI_ARGS_name` then it will only affect that command.
+
+These arguments are inserted directly after the subcommand (such as plan) and before any flags specified directly on the command-line. This behavior ensures that flags on the command-line take precedence over environment variables.
+
+### What is the difference beetween `terraform show` and `terraform state show`?
+
+`terraform show` is used to provide human-readable output from a state or plan file. It outputs the result similar to plan - data, resource and output blocks with attributes and data, resource identifiers. The `-json` option can be used.
+It also can be used to read the information from a plan file.
+
+`terraform state show <ADDRESS>` shows the attributes of one resource in the Terraform state. The output is human-readable. The `-json` option can not be used.
+
+### What is `idempotence` in the context of IaC?
+
+The idempotent characteristic provided by IaC tools ensures that, even if the same code is applied multiple times, the result remains the same.
+
+### How complex the TF workspaces are?
+
+Terraform workspaces are technically equivalent to renaming your state file. Terraform wraps this simple notion with a set of protections and support for remote state.
+
+For local state, Terraform stores the workspace states in a directory called `terraform.tfstate.d`. This directory should be treated similarly to local-only `terraform.tfstate`.
+
+### Is it mandatory to provide a version constraint string to pull modules from the Terraform registry?
+
+* `source` - Require meta-argument
+* `version` - Optional meta-arguments
+
+### What files TF directory can potentially contain?
+
+* `*.tf` files (TF configuration files)
+* `*.tfvars`, `*.auto.tfvars`, `*.tfvars.json`, `*.auto.tfvars.json` variable files
+* `terraform.tfstate` state file if backend is local and only one workspace
+  * this file always for `default` worksapce even if extra workspaces exist
+* `terraform.tfstate.backup` backup state file. Terraform forces every state modification command to write a backup file
+* `terraform.tfstate.d/<WORKSPACE NAME>/terraform.tfstate` state files if backend is local and a few extra workspaces are used
+* `tests/*.tftest.hcl` test files
+* `terraform.log` log file (the name can be anything)
+* `.terraform/plugins/` directory with provider plugins
+* `.terraform/modules/` directory with modules used in the configuration
+* `.terraform/environment` file which tracks active workspace
+* `.terraform/terraform.tfstate` files stores remote backend configuration (for local backend this files does not exist)
+* `.terraform.lock.hcl` file with locked providers' versions
+* `.terraformrc` configuration file. It configures per-user settings for CLI behaviors. The `rc` stands for `runtime configuration`
+* `~/.terraform.d/credentials.tfrc.json` TFC API token
+
+### What does `terraform init` command do?
+
+Initialization performs several tasks to prepare a directory, including
+
+* accessing state in the configured backend
+* downloading and installing provider plugins
+* downloading modules
+
+### When reinitialization can be needed?
+
+The reinitialization is required when there are changes to
+
+* provider requirements
+* module sources
+* version constraints
+* backend configurations
+
+### What planning modes do you know?
+
+* normal (terraform plan)
+  1) reads the current state of any already-existing remote objects and saves this info in memory
+     * when the `-refresh=false` option is provided there is no refresing (reading) remote objects, hence this step is skipped
+  2) compares the in-memory state to the current configuration (not to the state file) and noting differences
+     * when the `-refresh=false` option is provided the `comparison` is made against the state file
+  3) generates a detailed execution plan that outlines the actions it will take to achieve the desired state (resources and outputs)
+* refresh-only (terraform plan -refresh-only)
+  1) reads the current state of any already-existing remote objects and saves this info in memory
+  2) compares the in-memory state to the state file (not the current configuration) and noting differences
+  3) generates a detailed execution plan that outlines the changes it will make to the state file (resources and outputs)
+* destroy (terraform plan -destroy)
+
+### What does the `-lock=false` do?
+
+Don't hold a state lock during the operation.
+
+This is dangerous if others might concurrently run commands against the same workspace.
+
+### Where TF stores an API token?
+
+By default, Terraform will obtain an API token and save it in plain text in a local CLI configuration file called `credentials.tfrc.json` in `~/.terraform.d` directory in linux
+
+### How can you quickly test some TF expressions?
+
+The `terraform console` command provides an interactive console for evaluating expressions.
+
+You can use the `-plan` option to instead generate an execution plan first, as if running terraform plan, and then evaluate against the planned state.
+
+### How does Terraform determine the backend configuration when you apply a plan that you have already saved to a file?
+
+When applying a plan that you previously saved to a file, Terraform uses the backend configuration stored in that file instead of the current backend settings.
+
+### What important limitations apply to backend configuration?
+
+1) A configuration can only provide one backend block
+2) A backend block cannot refer to named values (like input variables, locals, or data source attributes)
+3) You cannot reference values declared within backend blocks elsewhere in the configuration
+
+### What potential issues could arise if the `-backend-config` (partial configuration) option is used during initialization to supply the remaining configuration?
+
+The `-backend-config` option takes either PATH or "KEY=VALUE" value
+
+* `-backend-config=config.consul.tfbackend`
+* `-backend-config="address=demo.consul.io"`
+* `-backend-config="scheme=https"`
+
+1) most shells retain command-line flags in a history file, so it's not recommended for secrets
+2) this can leak sensitive credentials, as Terraform will include these in the `.terraform/terraform.tfstate` file
+3) this can leak sensitive credentials, as Terraform will include backend configuration (plan files capture the information in `.terraform/terraform.tfstate` at the time the plan was created) in plan files
+
+### Does the `terraform validate` hold a lock?
+
+No
+
+The `terraform validate` command validates the configuration files in a directory, referring only to the configuration and not accessing any remote services such as remote state, provider APIs, etc.
+
+Validate runs checks that verify whether a configuration is syntactically valid and internally consistent, regardless of any provided variables or existing state. It is thus primarily useful for general verification of reusable modules, including correctness of attribute names and value types.
+
+Validation requires an initialized working directory with any referenced plugins and modules installed. As I understand it uses providers shemas to verify types of resource attributes.
+
+### How does the `create_before_destroy` work?
+
+Terraform propagates and applies the `lifecycle.create_before_destroy` meta-attribute behaviour to all resource dependencies. For example, if `create_before_destroy` is enabled on resource `A` but not on resource `B`, but resource `A` is dependent on resource `B`, then Terraform enables `create_before_destroy` for resource B implicitly by default and stores it to the state file. You cannot override `create_before_destroy` to `false` on resource `B` because that would imply dependency cycles in the graph.
+
+### What actions are allowed only to organization owners?
+
+Every organization has a team named owners, and members of the owners team are sometimes called organization owners.
+
+Only organization owners can perform the following tasks:
+
+* Creating and deleting teams
+* Managing organization-level permissions granted to teams
+* Viewing the full list of teams, both visible and secret
+* Managing organization settings
+
+### Does terraform reject a resource replacement/removal with `lifecycle.prevent_destroy` if resource is needed to be replaced/destroed?
+
+Yes, terraform will provide a plan and throw the `Instance cannot be destroyed` error

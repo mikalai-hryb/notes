@@ -930,9 +930,9 @@ I would say yes, it's better to follow `terraform-provider-<TYPE>` naming conver
 
 For example,
 
-* https://github.com/hashicorp/terraform-provider-aws
-* https://github.com/hashicorp/terraform-provider-google
-* https://github.com/oracle/terraform-provider-oci
+* <https://github.com/hashicorp/terraform-provider-aws>
+* <https://github.com/hashicorp/terraform-provider-google>
+* <https://github.com/oracle/terraform-provider-oci>
 
 ### What does module `source` address consist of?
 
@@ -948,8 +948,8 @@ Defaults to "registry.terraform.io"
 
 For example,
 
-* https://registry.terraform.io/modules/hashicorp/consul/aws/latest
-* https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest
+* <https://registry.terraform.io/modules/hashicorp/consul/aws/latest>
+* <https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest>
 
 ### Do module repositories have a naming convention?
 
@@ -957,9 +957,9 @@ Yes, they have to follow `terraform-<PROVIDER>-<NAME>`.
 
 For example,
 
-* https://github.com/hashicorp/terraform-aws-consul
-* https://github.com/terraform-aws-modules/terraform-aws-iam
-* https://github.com/terraform-aws-modules/terraform-aws-ec2-instance
+* <https://github.com/hashicorp/terraform-aws-consul>
+* <https://github.com/terraform-aws-modules/terraform-aws-iam>
+* <https://github.com/terraform-aws-modules/terraform-aws-ec2-instance>
 
 ### How many arguments can be specified in `variable` block?
 

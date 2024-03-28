@@ -1055,7 +1055,7 @@ Operators that work on only one value place an operator symbol before that value
 
 ### How to expand function arguments?
 
-Provide the list value as an argument and follow it with the `...` symbol
+Provide the list value as an argument and follow it with the `...` symbol (the expansion symbol)
 
 ```tf
 min([55, 2453, 2]...)

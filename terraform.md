@@ -1170,7 +1170,7 @@ For local state, Terraform stores the workspace states in a directory called `te
 * `.terraform/environment` file which tracks active workspace
 * `.terraform/terraform.tfstate` files stores remote backend configuration (for local backend this files does not exist)
 * `.terraform.lock.hcl` file with locked providers' versions
-* `.terraformrc` configuration file. It configures per-user settings for CLI behaviors. The `rc` stands for `runtime configuration`
+* `~/.terraformrc` configuration file. It configures per-user settings for CLI behaviors. The `rc` stands for `runtime configuration`
 * `~/.terraform.d/credentials.tfrc.json` TFC API token
 
 ### What does `terraform init` command do?
@@ -1208,7 +1208,7 @@ The reinitialization is required when there are changes to
 
 Don't hold a state lock during the operation.
 
-This is dangerous if others might concurrently run commands against the same workspace.
+This is dangerous if others might concurrently run commands against the same workspace. The state locking will provide safety against race conditions.
 
 ### Where TF stores an API token?
 
@@ -1270,3 +1270,43 @@ Only organization owners can perform the following tasks:
 ### Does terraform reject a resource replacement/removal with `lifecycle.prevent_destroy` if resource is needed to be replaced/destroed?
 
 Yes, terraform will provide a plan and throw the `Instance cannot be destroyed` error
+
+### Does TF support unsigned providers?
+
+No, Terraform does NOT support fetching and using unsigned binaries.
+
+### What are provider signature types?
+
+* Signed by HashiCorp - are built, signed, and supported by HashiCorp.
+* Signed by Trusted Partners - are built, signed, and supported by a third party. HashiCorp has verified the ownership
+* Self-signed are built, signed, and supported by a third party. HashiCorp does not provide a verification
+
+### How to get information about the provider requirements?
+
+The `terraform providers` command shows information about the provider requirements of the configuration in the current working directory, as an aid to understanding where each requirement was detected from.
+
+### How to get information about the current installed providers?
+
+The `terraform version` displays the current version of Terraform and all installed plugins.
+
+### What is a speculative plan?
+
+Speculative plans are plan-only runs: they show a set of possible changes (and check them against Sentinel policies)
+
+* you cannot apply those changes
+* they can begin at any time without waiting for other runs, since they don't affect real infrastructure
+* do not appear in a workspace's list of runs
+* viewing them requires a direct link, which is provided when the plan is initiated
+
+### What is the config-driven import?
+
+Config-driven import is a new declarative workflow to add existing resources into Terraform state and solves the limitations of the existing import command.
+
+`terraform import` limitations
+
+* Resources are imported one at a time
+  * You can define multiple `import` blocks
+* State is immediately modified, with no opportunity to preview the results
+  * Config-driven import is a plannable operation, not a state operation. Import operations can be executed in bulk and are now part of the standard plan and apply cycle
+* The matching resource code has to be manually written
+  * You can use `terraform plan -generate-config-out=generated_resources.tf` to automatically create the matching resource blocks

@@ -4,12 +4,12 @@
 
 ## Benefits of using up to date Terraform versions
 
-* TFC
+* HCP Terraform
   * remote state management
   * private registry
   * remote execution
   * structured plan output
-  * workspace resource summuries
+  * workspace resource summaries
 * validation
   * variables validation
   * precondition and postcondition for resources and data sources
@@ -40,13 +40,13 @@ A Terraform configuration is a complete document in the Terraform language that 
 
 ### What is IaC?
 
-The infrastructure as code workflow lets your declaratively manage a variety of services and automate your changes to them
+The infrastructure as code workflow lets you declaratively provision and manage computing infrastructure through machine-readable files and automate your changes to them
 
-### What other "infrastructure as" stules exist?
+### What other "infrastructure as" styles exist?
 
 ???
 
-### What deployment strateges do you know? And describe them
+### What deployment strategies do you know? And describe them
 
 blue/green, canary, ...
 
@@ -64,9 +64,9 @@ There are 2 options
 
 ### How does TF select a provider version to download?
 
-If there is a lock file then TF will donwload the provider versions specifed in the lock file.
+If there is a lock file then TF will download the provider versions specified in the lock file.
 
-If Terraform does not find a lock file, it will download the latest versions of the providers that fulfill the version constraints defined in the `required_providers` block. If there is no the `required_providers` block TF will download the latest version.
+If Terraform does not find a lock file, it will download the latest versions of the providers that fulfill the version constraints defined in the `terraform.required_providers` block. If there is no the `terraform.required_providers` block TF will download the latest version.
 
 ### What is the dependency lock file and what is this file for?
 
@@ -81,12 +81,16 @@ Dependency lock file or `.terraform.lock.hcl` has pinned provider versions and i
 
 ### How many APIs TF can work with?
 
-HashiCorp and the Terraform community have already written thousands of providers to manage many different types of resources and services.
+HashiCorp and the Terraform community have already written thousands (4000+) of providers to manage many different types of resources and services.
+
+* Official 30+
+* Partner 340+
+* Community 3700+
 
 ### What does core TF workflow look like?
 
 write -> plan -> apply
-a developer defines resources -> TF create an execution plan -> TF performes the proposed operations in the correct order
+a developer defines resources -> TF create an execution plan -> TF performs the proposed operations in the correct order
 
 refresh - TF views real word infrastructure
 plan - TF figures out what it needs to do (reconciling the configuration and infrastructure)
@@ -100,7 +104,7 @@ Applying a Terraform configuration is the process of creating, updating, and des
 
 There are mutable and immutable approaches.
 
-Mutable: Take existing infrastructure and try to upgdade in place
+Mutable: Take existing infrastructure and try to upgrade in place
 Immutable: Take existing infrastructure, create new infrastructure running at the new versions (on distinct machines) and destroy the existing things in place
 
 ### What approach does TF take in terms of infrastructure mutability?
@@ -111,7 +115,7 @@ TF takes an immutable approach to infrastructure reducing the complexity of upgr
 
 The primary purpose of Terraform state is to store bindings between objects in a remote system and resource instances declared in your configuration.
 
-State file acts as a source of truth for your invironment.
+State file acts as a source of truth for your environment.
 TF uses the state file to determine the changes to make to your infrastructure so that it will match your configuration.
 The Terraform state file is the only way Terraform can track which resources it manages.
 
@@ -1305,7 +1309,7 @@ Config-driven import is a new declarative workflow to add existing resources int
 `terraform import` limitations
 
 * Resources are imported one at a time
-  * You can define multiple `import` blocks
+  * In Config-driven import you can define multiple `import` blocks
 * State is immediately modified, with no opportunity to preview the results
   * Config-driven import is a plannable operation, not a state operation. Import operations can be executed in bulk and are now part of the standard plan and apply cycle
 * The matching resource code has to be manually written

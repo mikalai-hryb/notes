@@ -161,13 +161,13 @@ Most of Terraform's features (including resources, input variables, output value
 
 ### What is a resource block body?
 
-The content between {} is called resourbe block body or block body.
+The content between {} is called resource block body or block body.
 
 ### What is a resource identifier?
 
-A resource type and a resource name form a resource identifier(ID) separated by a peried in the format `resource_type.resource_name`.
+A resource type and a resource name form a resource identifier(ID) separated by a period in the format `resource_type.resource_name`.
 The resource identifier must be unique within a workspace.
-The resouce identifier is not the same as resource id attribute.
+The resource identifier is not the same as resource id attribute.
 
 ### What types of properties does a resource have?
 
@@ -212,11 +212,11 @@ It means the variable is required.
 * `terraform.tfvars`
 * `terraform.tfvars.json`
 * `*.auto.tfvars` or `*.auto.tfvars.json` files, processed in lexical order of their filenames
-* workspace terraform variale (HCL or not)
+* workspace terraform variable (HCL or not)
 * `-var '<variable-name>="<value>"` or
   `-var-file *.tfvars` or
   `-var-file *.tfvars.json`
-  The last definded option takes precedence
+  The last defined option takes precedence
 * variables in `variables` block within test files
 * variables in `variables` block within `run` block in test files
 
@@ -245,7 +245,7 @@ Terraform automatically loads all files in the current directory with the exact 
 
 Variable values must be literal values, and cannot use computed values like resource attributes, expressions, or other variables.
 
-### What varialbe types does TF support?
+### What variable types does TF support?
 
 * string
 * number
@@ -273,7 +273,7 @@ Terraform Cloud runs Terraform on disposable virtual machines in its own cloud i
 
 ### What are simple (single-values) types?
 
-Simpe variables are variables that contain single value.
+Simple variables are variables that contain single value.
 
 * number
 * string
@@ -297,7 +297,7 @@ Structural types have a fixed number of values that can be of different types.
 * tuple(...): A fixed-length sequence of values of specified types.
 * object(...): A lookup table, matching a fixed set of keys to values of specified types.
 
-Sructural types require a schema as an argument, to specify which types are allowed for which elements.
+Structural types require a schema as an argument, to specify which types are allowed for which elements.
 
 ### What are complex types?
 
@@ -312,7 +312,7 @@ String interpolation is the inserting the output of an expression into a string.
 Yes, for instance, AWS provider marks `aws_db_instance.this.password` as `sensitive value`.
 When an argument is marked as `sensitive` by a developer it will be marked `sensitive` in the plan.
 
-### What are benifits of using locals?
+### What are benefits of using locals?
 
 * simplification TF configuration since you can reference the local multiple times (reduce repetition in the configuration)
 * writing more readable configuration by using meaningful names rather than hard-coding values
@@ -341,8 +341,8 @@ Outputs are also about exposing data from a child module to a root module.
 
 ### In which cases TF does not redact sensitive outputs?
 
-* quering a specific output by name
-* quering all of your outputs in JSON format
+* querying a specific output by name
+* querying all of your outputs in JSON format
 * using outputs from a child module in your root module
 * storing outputs in state file
 
@@ -368,7 +368,7 @@ The pattern is `data.<type>.<name>.<attribute>`
 
 ### How TF understands dependencies between resources?
 
-Terraform infers dependencies between resources based on the configuration given (studying the resouorce attributes), so that resources are created and destroyed in the correct order.
+Terraform infers dependencies between resources based on the configuration given (studying the resource attributes), so that resources are created and destroyed in the correct order.
 There are cases when TF cannot infer dependencies between different parts of your resources. And you will need to create an explicit dependency with the help of `depends_on` argument.
 
 ### what is the `count` argument for?
@@ -382,7 +382,7 @@ Terraform's for_each meta-argument allows you to configure a set of similar reso
 
 ### How to define a function in TF?
 
-HCL does not provide a posibility to define a function because it's a configuration language but not a programming language. However, you can use several built-in functions to perform operations dynamically.
+HCL does not provide a possibility to define a function because it's a configuration language but not a programming language. However, you can use several built-in functions to perform operations dynamically.
 
 ### What is the `templatefile` function for?
 
@@ -398,14 +398,14 @@ The syntax of a conditional expression first defines the condition, then the out
 The splat expression captures all objects in a list that share an attribute.
 `aws_instance.ubuntu[*].id` --> this will produce a list of ids.
 
-### What potintial errors you can face when you are working with TF?
+### What potential errors you can face when you are working with TF?
 
 There are four potential types of issues that you can face
 
 1. Language errors: When Terraform encounters a syntax error in your configuration, it prints out the line numbers and an explanation of the error.
 2. State errors: If state is out of sync, Terraform may destroy or change your existing resources.
 3. Core errors: Errors produced at this level may be a bug in TF.
-4. Provider errors: Errors produced at this level may be a bug in a Proveder.
+4. Provider errors: Errors produced at this level may be a bug in a Provider.
 
 ### How to reduce the number of simple errors?
 
@@ -436,7 +436,7 @@ locals {
 It's not possible. The splat expression patterns (`[*]`) apply only to lists, sets, and tuples.
 To get a similar result with maps/objects you must use `for` expression.
 
-### Does TF allow to generate logs separatelly?
+### Does TF allow to generate logs separately?
 
 Terraform 0.15+ allows you to generate logs from the Terraform provider and the core application separately.
 
@@ -459,7 +459,7 @@ Terraform will only update the state file `version` when a new version of Terraf
 
 Terraform will update the terraform_version whenever you apply a change to your configuration using a newer Terraform version.
 
-### What best practises you know/want to follow?
+### What best practices you know/want to follow?
 
 * Using Terraform in production, the team should have plans and procedures in place to determine how they will manage Terraform versions and handle upgrades.
 * using objects in modules to group related attributes together
@@ -543,12 +543,12 @@ TF
 * installs all modules and providers
 * creates a version lock file
 
-### What feateres does TFC include?
+### What features does TFC include?
 
 * remote state
 * remote execution
 * structured plan output
-* workspace resource summuries
+* workspace resource summaries
 
 ### What is `.terraform` for?
 
@@ -598,7 +598,7 @@ en error workflow
 
 TF does not support automatically rolling back a partially-completed apply.
 
-### Name common resons for apply errors?
+### Name common reasons for apply errors?
 
 * change to a resource outside of TF
 * networking or other transient errors
@@ -608,7 +608,7 @@ TF does not support automatically rolling back a partially-completed apply.
 ### What is the difference between TF input variables and variables in programming languages?
 
 * TF variables don't change values during a Terraform run
-* TF variables allow users to more safely customize thier infrastructure
+* TF variables allow users to more safely customize their infrastructure
 
 ### What does the `~>` mean?
 
@@ -635,14 +635,14 @@ The `plan` command support `-replace` as well.
 
 The `terraform taint` command is DEPRECATED now in favor of `-replace` flag.
 
-### How to rename a resource adress in a state file?
+### How to rename a resource address in a state file?
 
 The `terraform mv` command can help.
 
 * the `terraform state mv -state-out=<another-state-file> <resource_address> <resource_address>` moves the resource to another state file without changing the resource address
   * `-state-out` flag is DEPRECATED. To move a resource to another state file
-    1. remove the resorce from the first state file with `removed` block in old configuration
-    2. remove the resorce from old configuration
+    1. remove the resource from the first state file with `removed` block in old configuration
+    2. remove the resource from old configuration
     3. add `import` block to new configuration
     4. define the resource in new configuration
 * the `terraform state mv <old_resource_address> <new_resource_address>` renames the resource within the state file
@@ -658,7 +658,7 @@ Use a `removed` block to remove specific resources from your state.
 * moved - can move a rename a resource
 * removed
 
-### HashiCorp promissed to add feature that generates configuration based on existing infrastructure. Is TF supporting this feature now?
+### HashiCorp promised to add feature that generates configuration based on existing infrastructure. Is TF supporting this feature now?
 
 Yes, but this feature is still experimental (v1.7.3)
 
@@ -710,7 +710,7 @@ NOTE: now TF does not overwrite the state file as part of `plan` or `apply`! It 
 1) a resource data `aws_s3_bucket.data`
 2) a data block data `data.aws_s3_objects.data`
 3) a local variable value `local.bucket_name`
-4) function manupulations
+4) function manipulations
 
 The console holds a lock on the state, and you will not be able to use the console while performing other actions that modify state.
 
@@ -737,9 +737,9 @@ A module that is called by another configuration is referred to as a "child modu
 ### What the difference between local and remote modules?
 
 Local modules are loaded from local filesystem.
-Remote modules are loadede from a remote source.
+Remote modules are loaded from a remote source.
 
-* Terrafrom Registry
+* Terraform Registry
 * most VCS
 * HTTP URLs
 * TFC
@@ -774,7 +774,7 @@ Embedded inside the current workspace are called submodules.
 
 ### What is the cloud-init?
 
-Cloud-init is the industry standard multi-distribution method for cross-platform cloud instance initialisation. It is supported across all major public cloud providers, provisioning systems for private cloud infrastructure, and bare-metal installations.
+Cloud-init is the industry standard multi-distribution method for cross-platform cloud instance initialization. It is supported across all major public cloud providers, provisioning systems for private cloud infrastructure, and bare-metal installations.
 
 ### How cloud-init config looks like?
 
@@ -786,11 +786,11 @@ The block header is the block type and any quoted labels that follow it.
 
 ### Is it possible to override TF blocks (variable, output, data, resource, terraform blocks)?
 
-Yes, blocks in `*_override.tf` or `override.tf` (.json extentions as well) files override blocks in normal configuration files.
+Yes, blocks in `*_override.tf` or `override.tf` (.json extensions as well) files override blocks in normal configuration files.
 
 Keep in mind that the merging behavior is slightly different for each block type.
 
-### What aproach does TF use for checksum verifiation?
+### What approach does TF use for checksum verification?
 
 This checksum verification is intended to represent a `trust on first use` approach.
 
@@ -862,10 +862,10 @@ TF defers reading data resources:
 There is "d" data resource and "r" managed resource. The d depends on r.attribute
 
 1) changes in r.b
-   1) using r.attribute directly in d.attribute deffers the reading
+   1) using r.attribute directly in d.attribute defers the reading
    2) using local variable (r.attribute) in d.attribute prevents deferring reading (reading happens during refresh)
-   3) using r.attribute in d.precondition or d.postcondition deffers the reading
-   4) using local variable (r.attribute) in d.precondition or d.postcondition deffers the reading
+   3) using r.attribute in d.precondition or d.postcondition defers the reading
+   4) using local variable (r.attribute) in d.precondition or d.postcondition defers the reading
 2) no changes in r
    1) using r.attribute directly in d (reading happens during refresh)
    2) using local variable in d.attribute (reading happens during refresh)
@@ -921,7 +921,7 @@ module "tunnel" {
 
 ### What does provider `source` address consist of?
 
-It consists of `[<HOSTNAME>/]<NAMESPACE>/<TYPE>`, for example, hashicorm/aws
+It consists of `[<HOSTNAME>/]<NAMESPACE>/<TYPE>`, for example, hashicorp/aws
 
 * HOSTNAME is the hostname of the Terraform registry that distributes the provider "registry.
 Defaults to "registry.terraform.io"
@@ -930,7 +930,7 @@ Defaults to "registry.terraform.io"
 
 ### Do provider repositories have a naming convention?
 
-I would say yes, it's better to follow `terraform-provider-<TYPE>` naming convertion.
+I would say yes, it's better to follow `terraform-provider-<TYPE>` naming conversion.
 
 For example,
 
@@ -943,7 +943,7 @@ For example,
 * `<NAMESPACE>/<NAME>/<PROVIDER>` for public Terraform registry.
 For example, `"hashicorp/consul/aws"`
 
-* `<HOSTNAME>/<NAMESPACE>/<NAME>/<PROVIDER>` for private regirstry.
+* `<HOSTNAME>/<NAMESPACE>/<NAME>/<PROVIDER>` for private registry.
 For example, `"app.terraform.io/example_corp/vpc/aws"`
 
 * HOSTNAME is the hostname of the Terraform registry that distributes the module "registry.
@@ -970,7 +970,7 @@ For example,
 * description - This specifies the input variable's documentation
 * type - This argument specifies what value types are accepted for the variable
 * default - A default value which then makes the variable optional
-* sensitive - Limits Terraform UI output when the variable is used in configuration (defalts to false)
+* sensitive - Limits Terraform UI output when the variable is used in configuration (defaults to false)
 * nullable - Specify if the variable can be null within the module (defaults to true)
 * validation - A block to define validation rules, usually in addition to type constraints
 
@@ -1018,7 +1018,7 @@ Yes, the `import` block is idempotent, meaning that applying an import action an
 
 ### Is literal value an expression?
 
-Yes, both "some_stinrg" and 5 are the simplest expressions.
+Yes, both "some_string" and 5 are the simplest expressions.
 
 ### What is the result of an expression?
 
@@ -1090,7 +1090,7 @@ version = ">= 3.0.0, !=3.0.2, < 4.0.0"
 Prerelease versions do not match inexact operators such as `>=`, `~>`, etc.
 To pick a prerelease version (with suffix, for example, `1.2.0-beta`) the constraint has to use the `=` operator or no operator.
 
-### What is the type constrainsts?
+### What is the type constraints?
 
 Type constraints are expressed using a mixture of type keywords and function-like constructs called type constructors.
 
@@ -1102,7 +1102,7 @@ The keyword `any` is a special construct that serves as a placeholder for a type
 
 ### Is the `tfe_outputs` data source able to read sensitive outputs?
 
-Yes, however, the whole map of `data.tfe_outputs.values` will be marked sensitve if at least one output is marked sensitive.
+Yes, however, the whole map of `data.tfe_outputs.values` will be marked sensitive if at least one output is marked sensitive.
 
 The `nonsensitive` function can help to expose the sensitive values.
 You can filter state JSON data in TFC.
@@ -1125,7 +1125,7 @@ Compared to many tools that scan existing infrastructure for policy infractions,
 
 Sentinel can enforce compliance policies and policies are checked when a run is performed, after the `terraform plan` but before it can be confirmed or the `terraform apply` is executed.
 
-### Check all TF environemnt variables?
+### Check all TF environment variables?
 
 Does `TF_CLI_ARGS`, `TF_IN_AUTOMATION` exist?
 
@@ -1137,7 +1137,7 @@ The flag `TF_CLI_ARGS` affects all Terraform commands. If you specify a named co
 
 These arguments are inserted directly after the subcommand (such as plan) and before any flags specified directly on the command-line. This behavior ensures that flags on the command-line take precedence over environment variables.
 
-### What is the difference beetween `terraform show` and `terraform state show`?
+### What is the difference between `terraform show` and `terraform state show`?
 
 `terraform show` is used to provide human-readable output from a state or plan file. It outputs the result similar to plan - data, resource and output blocks with attributes and data, resource identifiers. The `-json` option can be used.
 It also can be used to read the information from a plan file.
@@ -1164,7 +1164,7 @@ For local state, Terraform stores the workspace states in a directory called `te
 * `*.tf` files (TF configuration files)
 * `*.tfvars`, `*.auto.tfvars`, `*.tfvars.json`, `*.auto.tfvars.json` variable files
 * `terraform.tfstate` state file if backend is local and only one workspace
-  * this file always for `default` worksapce even if extra workspaces exist
+  * this file always for `default` workspace even if extra workspaces exist
 * `terraform.tfstate.backup` backup state file. Terraform forces every state modification command to write a backup file
 * `terraform.tfstate.d/<WORKSPACE NAME>/terraform.tfstate` state files if backend is local and a few extra workspaces are used
 * `tests/*.tftest.hcl` test files
@@ -1198,7 +1198,7 @@ The reinitialization is required when there are changes to
 
 * normal (terraform plan)
   1) reads the current state of any already-existing remote objects and saves this info in memory
-     * when the `-refresh=false` option is provided there is no refresing (reading) remote objects, hence this step is skipped
+     * when the `-refresh=false` option is provided there is no refreshing (reading) remote objects, hence this step is skipped
   2) compares the in-memory state to the current configuration (not to the state file) and noting differences
      * when the `-refresh=false` option is provided the `comparison` is made against the state file
   3) generates a detailed execution plan that outlines the actions it will take to achieve the desired state (resources and outputs)
@@ -1254,11 +1254,11 @@ The `terraform validate` command validates the configuration files in a director
 
 Validate runs checks that verify whether a configuration is syntactically valid and internally consistent, regardless of any provided variables or existing state. It is thus primarily useful for general verification of reusable modules, including correctness of attribute names and value types.
 
-Validation requires an initialized working directory with any referenced plugins and modules installed. As I understand it uses providers shemas to verify types of resource attributes.
+Validation requires an initialized working directory with any referenced plugins and modules installed. As I understand it uses providers schemas to verify types of resource attributes.
 
 ### How does the `create_before_destroy` work?
 
-Terraform propagates and applies the `lifecycle.create_before_destroy` meta-attribute behaviour to all resource dependencies. For example, if `create_before_destroy` is enabled on resource `A` but not on resource `B`, but resource `A` is dependent on resource `B`, then Terraform enables `create_before_destroy` for resource B implicitly by default and stores it to the state file. You cannot override `create_before_destroy` to `false` on resource `B` because that would imply dependency cycles in the graph.
+Terraform propagates and applies the `lifecycle.create_before_destroy` meta-attribute behavior to all resource dependencies. For example, if `create_before_destroy` is enabled on resource `A` but not on resource `B`, but resource `A` is dependent on resource `B`, then Terraform enables `create_before_destroy` for resource B implicitly by default and stores it to the state file. You cannot override `create_before_destroy` to `false` on resource `B` because that would imply dependency cycles in the graph.
 
 ### What actions are allowed only to organization owners?
 
@@ -1271,7 +1271,7 @@ Only organization owners can perform the following tasks:
 * Viewing the full list of teams, both visible and secret
 * Managing organization settings
 
-### Does terraform reject a resource replacement/removal with `lifecycle.prevent_destroy` if resource is needed to be replaced/destroed?
+### Does terraform reject a resource replacement/removal with `lifecycle.prevent_destroy` if resource is needed to be replaced/destroyed?
 
 Yes, terraform will provide a plan and throw the `Instance cannot be destroyed` error
 

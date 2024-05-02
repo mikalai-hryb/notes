@@ -178,9 +178,10 @@ This implies
 acquiring
 This is seamless when changing a resource's attributes
 
-
-
-
 so we recommend `moderation`
 
 " traight double-quote characters
+neglecting
+Changes may also result from new business requirements.
+formerly Terraform Cloud
+that's what I've thought you said

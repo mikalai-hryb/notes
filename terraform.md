@@ -193,19 +193,22 @@ Meta-arguments change a resource's behavior, such as using a `count` meta-argume
 Input variables make your Terraform configuration more flexible by defining values that your end users can assign to customize the configuration.
 Unlike variables found in programming languages, Terraform's input variables don't change values during a Terraform run such as plan, apply, or destroy.
 
-### What arguments can an input variable have?
+### How many arguments can be specified in `variable` block (input variable)?
 
-* description: A short description to document the purpose of the variable.
-* type: The type of data contained in the variable.
-* default: The default value.
-* validation blocks
-* sensitive
+* description - This specifies the input variable's documentation. Defaults to `""`
+* type - This argument specifies what value types are accepted for the variable
+* default - A default value which then makes the variable optional
+* sensitive - Limits Terraform UI output when the variable is used in configuration. Defaults to `false`
+* nullable - Specify if the variable can be null within the module. Defaults to `true`
+* validation - A block to define validation rules, usually in addition to type constraints
 
 ### If an input variable does not have the `default` argument what does it mean?
 
 It means the variable is required.
 
 ### In which order TF load variables?
+
+Terraform loads variables in the following order, with later sources taking precedence over earlier ones:
 
 * `TF_VAR_*` defined in cloud
 * `TF_VAR_*` defined locally
@@ -222,6 +225,17 @@ It means the variable is required.
 
 If no mechanism of the above is used TF will ask for the value of a required variable or the default value of an optional variable will be used.
 
+### What are outputs?
+
+TF outputs let you export structured data about your resources.
+This data can be used in configurations of other parts of your infrastructure.
+Outputs are also about exposing data from a child module to a root module.
+
+### How to query an individual output?
+
+`terraform output <output_name>` --> if it's a string it will be covered with `""`
+`terraform output -raw <output_name>` --> no covering
+
 ### What happen when you reference a sensitive variable in outputs?
 
 TF will raise an error about exposing the value.
@@ -230,7 +244,7 @@ Keep in mind, that TF stores the state as plain text.
 Marking variables as sensitive is not sufficient to secure them.
 You must also keep them secure while passing them into Terraform configuration, and protect them in your state file.
 
-### In which cases TF does not redact sensitive variables?
+### In which cases TF does not redact sensitive variables (they can be read)?
 
 * query a specific output by name (`terraform output <my_variable>`)
 * query all of your outputs in JSON format (`terraform output -json`)
@@ -250,11 +264,11 @@ Variable values must be literal values, and cannot use computed values like reso
 * string
 * number
 * bool
-* map
 * list
 * set
-* object
+* map
 * tuple
+* object
 * any
 
 ### Does TF do variable conversion?
@@ -267,7 +281,11 @@ But it's better to use appropriate types.
 
 To refer to an input variable you need to use the following syntax `var.variable_name`
 
-### Where TFC runs TF?
+### What stands for HCP?
+
+HCP - HashiCorp Cloud Platform
+
+### Where HCP Terraform runs TF?
 
 Terraform Cloud runs Terraform on disposable virtual machines in its own cloud infrastructure by default.
 
@@ -301,7 +319,9 @@ Structural types require a schema as an argument, to specify which types are all
 
 ### What are complex types?
 
-???
+A complex type is a type that groups multiple values into a single value.
+
+There are two categories of complex types: collection types (for grouping similar values), and structural types (for grouping potentially dissimilar values).
 
 ### What is string interpolation?
 
@@ -325,26 +345,6 @@ When an argument is marked as `sensitive` by a developer it will be marked `sens
 * dynamic expressions
 * functions
 * resource attributes
-
-??? Respond to the confirmation prompt with yes.
-
-### What are outputs?
-
-TF outputs let you export structured data about your resources.
-This data can be used in configurations of other parts of your infrastructure.
-Outputs are also about exposing data from a child module to a root module.
-
-### How to query an individual output?
-
-`terraform output <output_name>` --> if it's a string it will be covered with `""`
-`terraform output -raw <output_name>` --> no covering
-
-### In which cases TF does not redact sensitive outputs?
-
-* querying a specific output by name
-* querying all of your outputs in JSON format
-* using outputs from a child module in your root module
-* storing outputs in state file
 
 ### What are data sources?
 
@@ -964,15 +964,6 @@ For example,
 * <https://github.com/hashicorp/terraform-aws-consul>
 * <https://github.com/terraform-aws-modules/terraform-aws-iam>
 * <https://github.com/terraform-aws-modules/terraform-aws-ec2-instance>
-
-### How many arguments can be specified in `variable` block?
-
-* description - This specifies the input variable's documentation
-* type - This argument specifies what value types are accepted for the variable
-* default - A default value which then makes the variable optional
-* sensitive - Limits Terraform UI output when the variable is used in configuration (defaults to false)
-* nullable - Specify if the variable can be null within the module (defaults to true)
-* validation - A block to define validation rules, usually in addition to type constraints
 
 ### When TF can disclose a sensitive variable?
 

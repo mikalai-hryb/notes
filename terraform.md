@@ -356,7 +356,7 @@ The data sources are a special type of resource used only for looking up informa
 
 The pattern is `data.<type>.<name>.<attribute>`
 
-### How to share data between TFC workspaces?
+### How to share data between HCP Terraform workspaces?
 
 * you can use outputs of `terraform_remote_state` data source
 * you can use outputs of `tfe_outputs` data source
@@ -543,7 +543,7 @@ TF
 * installs all modules and providers
 * creates a version lock file
 
-### What features does TFC include?
+### What features does HCP Terraform include?
 
 * remote state
 * remote execution
@@ -697,7 +697,7 @@ NOTE: now TF does not overwrite the state file as part of `plan` or `apply`! It 
 * `terraform plan -refresh-only` only checks the diff between current infrastructure and state file, it does not compare state with the configuration
 * `terraform apply -refresh-only` checks the diff between current infrastructure and state file, it does not compare state with the configuration, it also check the diff in outputs
 
-### How to migrate local TF file to the TFC?
+### How to migrate local TF file to the HCP Terraform?
 
 1) Configure `terraform.cloud` block
 2) Run `terraform login`
@@ -742,7 +742,7 @@ Remote modules are loaded from a remote source.
 * Terraform Registry
 * most VCS
 * HTTP URLs
-* TFC
+* HCP Terraform
 * TFE
 
 ### What problems can modules solve?
@@ -1096,7 +1096,7 @@ The keyword `any` is a special construct that serves as a placeholder for a type
 Yes, however, the whole map of `data.tfe_outputs.values` will be marked sensitive if at least one output is marked sensitive.
 
 The `nonsensitive` function can help to expose the sensitive values.
-You can filter state JSON data in TFC.
+You can filter state JSON data in HCP Terraform.
 
 ### What does the terraform plan command do? (16)
 
@@ -1166,7 +1166,7 @@ For local state, Terraform stores the workspace states in a directory called `te
 * `.terraform/terraform.tfstate` files stores remote backend configuration (for local backend this files does not exist)
 * `.terraform.lock.hcl` file with locked providers' versions
 * `~/.terraformrc` configuration file. It configures per-user settings for CLI behaviors. The `rc` stands for `runtime configuration`
-* `~/.terraform.d/credentials.tfrc.json` TFC API token
+* `~/.terraform.d/credentials.tfrc.json` HCP Terraform API token
 
 ### What does `terraform init` command do?
 

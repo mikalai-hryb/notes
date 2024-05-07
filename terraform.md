@@ -20,6 +20,11 @@
 * better handling sensitive information
 * provider functions
 
+### What best practices you know/want to follow?
+
+* Using Terraform in production, the team should have plans and procedures in place to determine how they will manage Terraform versions and handle upgrades.
+* using objects in modules to group related attributes together
+
 ## Docs
 
 ### What is Terraform?
@@ -119,6 +124,14 @@ State file acts as a source of truth for your environment.
 TF uses the state file to determine the changes to make to your infrastructure so that it will match your configuration.
 The Terraform state file is the only way Terraform can track which resources it manages.
 
+### What is the `version` key in the state file?
+
+Terraform will only update the state file `version` when a new version of Terraform requires a change to the state file's format.
+
+### What is the `terraform_version` key in the state file?
+
+Terraform will update the terraform_version whenever you apply a change to your configuration using a newer Terraform version.
+
 ### What is `lineage` in a state file?
 
 The "lineage" is a unique ID assigned to a state when it is created.
@@ -126,6 +139,10 @@ The "lineage" is a unique ID assigned to a state when it is created.
 ### What is `serial` in a state file?
 
 Terraform uses the `serial` to keep track of the changes made in each new state file and uses it to make sure your operations run against the correct known state file
+
+### What version format does HashiCorp use for TF versions?
+
+HashiCorp uses the semantic versioning format `major.minor.patch` for Terraform versions.
 
 ### What programming style do TF configuration files use? Procedural, declarative or imperative?
 
@@ -152,6 +169,7 @@ About collaboration. Since the configuration is written in a file, the VCS can b
 A block is a container for other content.
 A block has a type. Each block type defines how many labels must follow the type keyword.
 The `network_interface` nested block has no labels.
+The `resource` top-level block has 2 labels - `"type"` and `"name"`.
 
 Most of Terraform's features (including resources, input variables, output values, data sources, etc.) are implemented as top-level blocks.
 
@@ -277,7 +295,7 @@ Yes, it will convert input variable values into the correct type if possible.
 For example, "2" -> 2, if `type = number`.
 But it's better to use appropriate types.
 
-### How you can refer to an input variable in your configuration?
+### How you can refer to an input variable in your configuration? What syntax should you use?
 
 To refer to an input variable you need to use the following syntax `var.variable_name`
 
@@ -371,18 +389,21 @@ The pattern is `data.<type>.<name>.<attribute>`
 Terraform infers dependencies between resources based on the configuration given (studying the resource attributes), so that resources are created and destroyed in the correct order.
 There are cases when TF cannot infer dependencies between different parts of your resources. And you will need to create an explicit dependency with the help of `depends_on` argument.
 
-### what is the `count` argument for?
+### What is the `count` argument for?
 
 The `count` argument replicates the given resource or module a specific number of times with an incrementing counter.
 To use it within the block body you need `count.index` - starting with zero.
 
-### what is the `for_each` argument for?
+### What is the `for_each` argument for?
 
-Terraform's for_each meta-argument allows you to configure a set of similar resources by iterating over a data structure to configure a resource or module for each item in the data structure.
+Terraform's `for_each` meta-argument allows you to configure a set of similar resources by iterating over a data structure to configure a resource or module for each item in the data structure.
 
 ### How to define a function in TF?
 
 HCL does not provide a possibility to define a function because it's a configuration language but not a programming language. However, you can use several built-in functions to perform operations dynamically.
+
+And starting from Terraform 1.8, providers can now offer functions.
+The syntax for calling a provider-contributed function is `provider::provider_name::function_name()`.
 
 ### What is the `templatefile` function for?
 
@@ -441,28 +462,12 @@ To get a similar result with maps/objects you must use `for` expression.
 Terraform 0.15+ allows you to generate logs from the Terraform provider and the core application separately.
 
 `terraform version` - to confirm your provider and Terraform versions
-`export TF_LOG=TRACE` - to enable all logs
+`export TF_LOG=TRACE` - to enable all logs to appear on `stderr`
+  Available options are `TRACE`, `DEBUG`, `INFO`, `WARN` or `ERROR`
 `export TF_LOG_CORE=TRACE` - to enable core logging
-`export TF_LOG_PROVIDER=TRACE` -to generate provider logs
+`export TF_LOG_PROVIDER=TRACE` - to generate provider logs
 `export TF_LOG_PATH=logs.txt` - to create the specified file and append logs generated by Terraform
 `terraform refresh` - can be used to generate an example
-
-### What version format does HashiCorp use for TF versions?
-
-HashiCorp uses the format `major.minor.patch` for Terraform versions.
-
-### What is the `version` key in the state file?
-
-Terraform will only update the state file `version` when a new version of Terraform requires a change to the state file's format.
-
-### What is the `terraform_version` key in the state file?
-
-Terraform will update the terraform_version whenever you apply a change to your configuration using a newer Terraform version.
-
-### What best practices you know/want to follow?
-
-* Using Terraform in production, the team should have plans and procedures in place to determine how they will manage Terraform versions and handle upgrades.
-* using objects in modules to group related attributes together
 
 ### How to move resources between modules in TF?
 
@@ -537,7 +542,7 @@ Tests let module authors verify the behavior of the configuration and ensure tha
 
 ### What does `init` step include?
 
-TF
+The `terraform init` command initializes a working directory containing Terraform configuration files.
 
 * configures the backend
 * installs all modules and providers
@@ -637,7 +642,7 @@ The `terraform taint` command is DEPRECATED now in favor of `-replace` flag.
 
 ### How to rename a resource address in a state file?
 
-The `terraform mv` command can help.
+The `terraform state mv` command can help.
 
 * the `terraform state mv -state-out=<another-state-file> <resource_address> <resource_address>` moves the resource to another state file without changing the resource address
   * `-state-out` flag is DEPRECATED. To move a resource to another state file
@@ -813,7 +818,7 @@ When we use the `depends_on` attribute it's called explicit dependency.
 
 ### Can `depends_on` include arbitrary expressions?
 
-The `depends_on` include arbitrary expressions because its value must be known before Terraform knows resource relationships and thus before it can safely evaluate expressions.
+The `depends_on` cannot include arbitrary expressions because its value must be known before Terraform knows resource relationships and thus before it can safely evaluate expressions.
 
 ### When to use `for_each` instead of `count`?
 

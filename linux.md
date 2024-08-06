@@ -74,3 +74,78 @@ byte (B)
 1 gibibyte (GiB) = 1024 MiB = 2^30  B
 1 tebibyte (TiB) = 1024 GiB = 2^40  B
 1 pebibyte (PiB) = 1024 TiB = 2^50  B
+
+## What are Linux namespaces?
+
+Namespaces are a feature of the Linux kernel that partitions kernel resources in a way that one set of processes sees one set of resources, while another set of processes sees a different set of resources.
+
+## What are Linux cgroups?
+
+cgroups (abbreviated from control groups) is a Linux kernel feature that limits, accounts for, and isolates the resource usage (CPU, memory, disk I/O, etc.) of a collection of processes.
+
+## Describe file types in Linux (ls -lah)
+
+* `-` - Regular file
+* `b` - Block special file
+* `c` - Character special file
+* `d` - Directory
+* `l` - Symbolic link
+* `n` - Network file
+* `p` - FIFO
+* `s` - Socket
+
+### What is a Container?
+
+A container image is a ready-to-run software package containing everything needed to run an application.
+Containers are intended to be stateless and immutable.
+
+### What is a Container Image?
+
+A container image represents binary data that encapsulates an application and all its software dependencies.
+Container images are executable software bundles that can run standalone and that make very well defined assumptions about their runtime environment.
+
+Images can also include a registry hostname (defaults to Docker Hub) and optionally a tag (defaults to `latest`), for example
+`fictional.registry.example:10443/image-name:1.32.0`
+
+Image name with custom registry and digest
+`registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07`
+
+### What is Image Digest?
+
+Image digests are a unique identifier for a specific version of an image.
+Image digests consists of a hash algorithm and a hash value, for example
+`sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07`
+
+### What is File Descriptor?
+
+It is a process-unique identifier (handle) for a file or other input/output resource, such as a pipe or network socket.
+
+In Linux, a file descriptor is an integer that identifies an open file in a process. In summary, it's a form of identification that Linux uses internally to manage open files per process.
+
+```bash
+ls -l /proc/$$/fd  # list all open file descriptors
+ls -l /proc/<PID>/fd  # list open file descriptors for a process ID
+lsof -p <PID>  # provide more info than ls
+cat /proc/<PID>/limits  # show process limits
+```
+
+* maximum number of open descriptors a process can have - often 1024 or 65535
+* unreleased descriptors can leak resources over time
+* descriptors often reveal what files/resources were open during a crash or error, they provide insight into what happened behind the scenes
+
+### What standard data streams do you know?
+
+* `stdin`  - standard input stream, associated identifier is `0`
+* `stdout` - standard out stream, associated identifier is `1`
+* `stderr` - standard error stream, associated identifier is `2`
+
+A stream is something that can transfer data. In terms of Linux data is text.
+Streams have a source and an outflow.
+
+Streams in Linux, like almost everything else, are treated as though they were files. You can read text from a file, and you can write text into a file.
+
+[How to work with data streams (stdin, stdout, and stderr)?](./bash.md#how-to-work-with-data-streams-stdin-stdout-and-stderr)
+
+### What is systemd?
+
+[Please read this](./systemd.md)

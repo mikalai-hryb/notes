@@ -1,7 +1,7 @@
 # DNS
 
 <details>
-<summary>What is a configuration file for DNS queries in Linux?</summary>
+<summary><b>What is a configuration file for DNS queries in Linux?</b></summary>
 
 In Linux, the `/etc/resolv.conf` file is a configuration file for DNS queries.
 In Linux, the `resolver` refers to a library that consists of a collection of functions that does domain name translation.

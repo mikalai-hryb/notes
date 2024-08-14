@@ -5,9 +5,13 @@
 [Glossary](https://kubernetes.io/docs/reference/glossary/?all=true)
 
 CRI - Container Runtime Interface
+
 CDI - Contexts and Dependency Injection
+
 distroless images - enable you to deploy minimal container images that reduce attack surface and exposure to bugs and vulnerabilities.
+
 VIP - virtual IP address - is IP address that does not correspond to a physical network interface
+
 SSL/TLS termination - refers to the process of decrypting encrypted traffic (HTTPS) at a network endpoint, such as a load balancer or reverse proxy, and forwarding the decrypted traffic to the destination server/application.
 
 ## Commands
@@ -109,7 +113,7 @@ The Guaranteed will be the last to be evicted.
 
 * Guaranteed (requests and limits are defined and the same)
 * Burstable (pod does not meet the criteria for Guaranteed, and at least one container has a memory or CPU request set)
-* BestEffort
+* BestEffort (no requests and no limits for cpu and memory)
 
 </details></li>
 
@@ -241,6 +245,9 @@ The scheduler determines which Nodes are valid placements for each Pod in the sc
 <summary><b>What is kube-controller-manager?</b></summary>
 
 Control plane component that runs controller processes.
+
+The Kubernetes controller manager is a daemon that embeds the core control loops.
+A controller is a control loop that watches the shared state of the cluster through the apiserver and makes changes attempting to move the current state towards the desired state.
 </details></li>
 
 <li><details>
@@ -264,16 +271,6 @@ Node components run on every node, maintaining running pods and providing the Ku
 </details></li>
 
 <li><details>
-<summary><b>How to add a Node to the API server?</b></summary>
-
-There are two main ways to have Nodes added to the API server:
-
-* The kubelet on a node self-registers to the control plane
-* You (or another human user) manually add a Node object
-
-</details></li>
-
-<li><details>
 <summary><b>What is kubelet?</b></summary>
 
 An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
@@ -288,6 +285,31 @@ The kubelet connects to container runtime via CRI with the help of gRPC
 Pods are only scheduled once in their lifetime. Once a Pod is scheduled (assigned) to a Node, the Pod runs on that Node until it stops or is terminated.
 
 Pods are relatively ephemeral/disposable (rather than durable) entities.
+</details></li>
+
+<li><details>
+<summary><b>What is kube-proxy?</b></summary>
+
+kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
+
+kube-proxy maintains network rules on nodes.
+</details></li>
+
+<li><details>
+<summary><b>How to add a Node to the API server?</b></summary>
+
+There are two main ways to have Nodes added to the API server:
+
+* The kubelet on a node self-registers to the control plane
+* You (or another human user) manually add a Node object
+
+</details></li>
+
+<li><details>
+<summary><b>What is Container runtime?</b></summary>
+
+A fundamental component that empowers Kubernetes to run containers effectively.
+It is responsible for managing the execution and lifecycle of containers within the Kubernetes environment.
 </details></li>
 
 <li><details>
@@ -337,21 +359,6 @@ A Pod Template in a DaemonSet must have a RestartPolicy equal to Always, or be u
 * OnFailure: Only restarts the container if it exits with an error (non-zero exit status).
 * Never: Does not automatically restart the terminated container.
 
-</details></li>
-
-<li><details>
-<summary><b>What is kube-proxy?</b></summary>
-
-kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
-
-kube-proxy maintains network rules on nodes.
-</details></li>
-
-<li><details>
-<summary><b>What is Container runtime?</b></summary>
-
-A fundamental component that empowers Kubernetes to run containers effectively.
-It is responsible for managing the execution and lifecycle of containers within the Kubernetes environment.
 </details></li>
 
 <li><details>

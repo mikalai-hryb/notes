@@ -293,6 +293,8 @@ Pods are relatively ephemeral/disposable (rather than durable) entities.
 kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
 
 kube-proxy maintains network rules on nodes.
+
+Kube-Proxy is a network proxy that runs on each node in a Kubernetes cluster. It is responsible for maintaining network connectivity between services and pods. Kube-Proxy does this by translating service definitions into actionable networking rules.
 </details></li>
 
 <li><details>
@@ -375,7 +377,9 @@ kubectl <action> <resource>
 </details></li>
 
 <li><details>
-<summary><b>What is k8s cluster?</b></summary>
+<summary><b>What is cluster?</b></summary>
+
+A Kubernetes cluster is a set of nodes that run containerized applications.
 
 A Kubernetes cluster consists of two types of resources:
 
@@ -625,19 +629,24 @@ Each probe has one of three results:
 <summary><b>What are types of probe?</b></summary>
 
 * livenessProbe
+
   Indicates whether the container is running.
   If a liveness probe fails, Kubernetes will restart the container.
   * if you'd like your container to be killed and restarted if a probe fails
   * it can be used for long-running processes that may occasionally fail
 * readinessProbe
+
   Indicates whether the container is ready to respond to requests.
   If a readiness probe fails, the endpoints controller will remove the pod from the list of endpoints for the service, thus stopping traffic from being sent to it.
   * if this probe is present it means that the Pod will start without receiving any traffic and only start receiving traffic after the probe starts succeeding
   * can be configured with livenessProbe (livenessProbe will check if app is running) to make sure the backend is responding as well
   * Graceful Rollouts: Ensures that traffic is only sent to pods that are fully initialized and ready to handle requests, which is useful during rolling updates.
 * startupProbe
-  Indicates whether the application within the container is started.
-  All other probes are disabled if a startup probe is provided, until it succeeds
+
+  Sometimes, you have to deal with applications that require additional startup time on their first initialization.
+
+  StartupProbe Indicates whether the application within the container is started.
+  All other probes are disabled if a startup probe is provided, until it succeeds. This can be used to adopt liveness checks on slow starting containers, avoiding them getting killed by the kubelet before they are up and running.
   * in case loading large data, configuration files, or migrations during startup
 
 </details></li>
@@ -695,6 +704,8 @@ A ReplicaSet ensures that a specified number of pod replicas are running at any 
 ReplicaSets do not support a rolling update directly.
 
 To isolating Pods from a ReplicaSet you can change their labels. This technique may be used to remove Pods from service for debugging, data recovery, etc.
+
+Kubernetes team recommends using Deployments instead of directly using ReplicaSets, unless you require custom update orchestration or don't require updates at all.
 </details></li>
 
 <li><details>
@@ -845,8 +856,21 @@ Names of resources need to be unique within a namespace, but not across namespac
 <li><details>
 <summary><b>What is rolling update?</b></summary>
 
-it's about incrementally replacing the current Pods/replicas/app-instances with new ones.
-???
+Rolling update is a deployment strategy where the new version of an application is gradually deployed across servers or containers, such as Docker instances, replacing the old version incrementally.
+
+It's about incrementally replacing the current Pods/replicas/app-instances with new ones (there’s always a version of the application available to serve user requests).
+
+It allows for the application to run different versions briefly during the deployment process.
+
+However, managing different versions during the rollout can be complex, especially with database changes.
+</details></li>
+
+<li><details>
+<summary><b>What is the difference Between Rolling and Blue-Green Deployments?</b></summary>
+
+In rolling deployment the new version of an application is deployed gradually.
+In blue-green deployment the new version of an application is deployed simultaneously.
+
 </details></li>
 
 ### How to use previous deployment versions?
@@ -1304,6 +1328,8 @@ There is the "IP-per-pod" model - containers within a Pod must coordinate port u
 
 <li><details>
 <summary><b>What is Service?</b></summary>
+
+A Kubernetes service is a logical abstraction for a deployed group of pods in a cluster (which all perform the same function). Since pods are ephemeral, a service enables a group of pods, which provide specific functions (web services, image processing, etc.) to be assigned a name and unique IP address (clusterIP).
 
 A Service is a method for exposing a network application that is running as one or more Pods in your cluster.
 The Service API, part of Kubernetes, is an abstraction to help you expose groups of Pods over a network. It defines a logical set of Pods and a policy by which to access them.

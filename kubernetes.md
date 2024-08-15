@@ -915,6 +915,8 @@ A container using a ConfigMap as a `subPath` volume mount will not receive Confi
 [https://kubernetes.io/docs/concepts/configuration/secret/]
 
 Secrets are also used to store key-value pairs, they differ from ConfigMaps in that they're intended for confidential/sensitive information and are stored using Base64 encoding.
+
+A container using a Secret as a `subPath` volume mount does not receive automated Secret updates.
 </details></li>
 
 ### What is the difference between configMap volume or a projected volume?
@@ -1028,6 +1030,12 @@ There are two hooks that are exposed to Containers:
 Affinity - a liking or sympathy for someone or something, especially because of shared characteristics.
 
 Node affinity is a property of Pods that attracts them to a set of nodes (either as a preference or a hard requirement).
+
+Affinity can guarantee that pods will be assigned to some Nodes.
+
+* `preferredDuringSchedulingIgnoredDuringExecution`
+* `requiredDuringSchedulingIgnoredDuringExecution`
+
 </details></li>
 
 <li><details>
@@ -1039,6 +1047,24 @@ Taints allow a node to repel a set of pods.
 A taint is a characteristic of a Node.
 
 `.spec.nodeName` for a Pod bypasses scheduler/taints
+
+#### Taints syntax
+
+```bash
+kubectl taint nodes node1 key1=value1:NoSchedule
+```
+
+NoSchedule is effect
+
+</details></li>
+
+<li><details>
+<summary><b>What are Effects of Taints?</b></summary>
+
+* NoExecute (affects pods that are already running on the node)
+* NoSchedule (No new Pods will be scheduled on the tainted node. Pods currently running on the node are not evicted)
+* PreferNoSchedule (is a "preference" or "soft" version of NoSchedule)
+
 </details></li>
 
 <li><details>
@@ -1047,6 +1073,8 @@ A taint is a characteristic of a Node.
 Tolerations are applied to pods. Tolerations allow the scheduler to schedule pods with matching taints.
 
 Tolerations allow scheduling but don't guarantee scheduling: the scheduler also evaluates other parameters as part of its function.
+
+Tolerations do not guarantee that pods will be assigned to Nodes.
 </details></li>
 
 <li><details>
@@ -1184,6 +1212,7 @@ svc.cluster.local. - svc seems permanent, cluster.local is cluster domain name
 At its core, a volume is a directory, possibly with some data in it, which is accessible to the containers in a pod.
 
 Ephemeral volume types have a lifetime of a pod
+
 Persistent volumes exist beyond the lifetime of a pod
 
 Volumes cannot mount within other volumes (but see Using subPath for a related mechanism). Also, a volume cannot contain a hard link to anything in a different volume.
@@ -1361,7 +1390,9 @@ If you want to make sure that connections from a particular client are passed to
 * NodePort - it exposes the Service on the same port of each selected Node in the cluster using NAT. It's a superset of ClusterIP. Default range is 30000-32767. Each node proxies that port (the same port number on every Node) into your Service.
 * LoadBalancer - Creates an external load balancer in the current cloud (if supported) and assigns a fixed, external IP to the Service. Superset of NodePort.
 * ExternalName - it maps the Service to a DNS name by setting `externalName` field
-  Accessing ExternalName record works in the same way as other Services but with the crucial difference that redirection happens at the DNS level rather than via proxying or forwarding
+  Accessing ExternalName record works in the same way as other Services but with the crucial difference that redirection happens at the DNS level rather than via proxying or forwarding.
+  The great use case is to use it when you migrate your app to/from kubernetes.
+  https://adil.medium.com/kubernetes-service-externalname-6b4cfb7640a2
 
 </details></li>
 
@@ -1489,7 +1520,7 @@ ServiceAccount uses authorization mechanism such as RBAC.
 </details></li>
 
 <li><details>
-<summary><b>What is the difference between Service Account and User Account?</b></summary>
+# <summary><b>What is the difference between Service Account and User Account?</b></summary>
 
 Service accounts are different from user accounts, which are authenticated human users in the cluster. By default, user accounts don't exist in the Kubernetes API server (at least one `default` Service Account exists).
 </details></li>

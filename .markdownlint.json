@@ -3,7 +3,9 @@
         "allowed_elements": [
             "details",
             "summary",
-            "b"
+            "b",
+            "ol",
+            "li"
         ]
     },
     "MD013": false

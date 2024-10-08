@@ -72,7 +72,7 @@ kubectl drain node01 --ignore-daemonsets=true
 <li><details>
 <summary><b>What is Kubernetes?</b></summary>
 
-Kubernetes, also known as K8s, is an open source system for automating deployment, scaling, and management of containerized applications.
+Kubernetes, also known as K8S, is an open source system for automating deployment, scaling, and management of containerized applications.
 
 Kubernetes believes in automated, API-driven infrastructure without tight coupling between components.
 </details></li>
@@ -87,7 +87,7 @@ Kubernetes believes in automated, API-driven infrastructure without tight coupli
 * Having enough worker nodes available, or able to quickly become available, as changing workloads warrant it.
 * Scale: plan how to scale to relieve increased pressure from more requests to the control plane and worker nodes or scale down to reduce unused resources.
 * define limits for resources
-* set rules for access management
+* set rules for access management - role-based access control (RBAC)
 * [prevent creating namespaces with the same name as public top-level domains](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 * use [Kubelet credential provider](https://kubernetes.io/docs/concepts/containers/images/#kubelet-credential-provider) to pull Container Images
 * use Linux distributions with cgroup v2
@@ -312,6 +312,12 @@ There are two main ways to have Nodes added to the API server:
 
 A fundamental component that empowers Kubernetes to run containers effectively.
 It is responsible for managing the execution and lifecycle of containers within the Kubernetes environment.
+
+* containerd
+* CRI-O - Container Runtime Interface (CRI) to enable using Open Container Initiative (OCI) compatible runtimes
+* Docker Engine
+* Mirantis Container Runtime
+
 </details></li>
 
 <li><details>
@@ -844,6 +850,15 @@ kubectl get services  --all-namespaces --field-selector metadata.namespace!=defa
 
 Namespaces provide a mechanism for isolating groups of resources within a single cluster.
 Names of resources need to be unique within a namespace, but not across namespaces.
+Namespaces provide a scope for names.
+Namespaces are a way to divide cluster resources between multiple users (via resource quota).
+For a production cluster, consider not using the `default` namespace.
+If you want to reach across namespaces, you need to use the fully qualified domain name (FQDN) - `<service-name>.<namespace-name>.svc.cluster.local`.
+Namespaces themselves are not in namespaces and low-level resources, such as nodes and persistentVolumes, are not in any namespace as well.
+
+* namespaced objects (e.g. Deployments, Services, etc.)
+* cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc.)
+
 </details></li>
 
 <li><details>
@@ -1523,6 +1538,12 @@ ServiceAccount uses authorization mechanism such as RBAC.
 # <summary><b>What is the difference between Service Account and User Account?</b></summary>
 
 Service accounts are different from user accounts, which are authenticated human users in the cluster. By default, user accounts don't exist in the Kubernetes API server (at least one `default` Service Account exists).
+</details></li>
+
+<li><details>
+<summary><b>What is the difference between port and targetPort in Service declaration?</b></summary>
+
+To put it simply, port is used to listen for incoming traffic from external clients, while targetPort is the Service‘s internal communication port with the pods responsible for handling that traffic.
 </details></li>
 
 </ol>

@@ -1,0 +1,24 @@
+- name: Learn Ansible
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Show variables
+      debug:
+        msg: "Hello {{ ntp_server}}"
+    - name: Create file
+      copy:
+        dest: /text.txt
+        content: |
+          line 01
+          line 02
+    - name: Shell
+      shell: |
+        FILE_PATH=/abc.txt
+        if [ ! -f $FILE_PATH ]; then
+          touch $FILE_PATH
+        else
+          echo "file exists"
+        fi
+      register: result
+      changed_when: "not 'file exists' in result.stdout"

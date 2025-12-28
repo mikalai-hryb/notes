@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # disable updating guest additions
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+  # disable guest additions
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.define "ubuntu" do |ubuntu|
+    ubuntu.vm.box = "ubuntu/focal64"
+    ubuntu.vm.network "private_network", ip: "192.168.56.10"
+    ubuntu.vm.provider "virtualbox" do |virtualbox|
+      virtualbox.name = "ubuntu"
+    end
+  end
+
+  config.vm.define "fedora" do |fedora|
+    fedora.vm.box = "fedora/34-cloud-base"
+    fedora.vm.network "private_network", ip: "192.168.56.11"
+	fedora.vm.provider "virtualbox" do |virtualbox|
+      virtualbox.name = "fedora"
+    end
+  end
+
+  config.vm.define "debian" do |debian|
+    debian.vm.box = "debian/buster64"
+    debian.vm.network "private_network", ip: "192.168.56.12"
+	  debian.vm.provider "virtualbox" do |virtualbox|
+      virtualbox.name = "debian"
+    end
+  end
+end

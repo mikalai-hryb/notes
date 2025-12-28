@@ -1,0 +1,52 @@
+---
+- hosts: app-servers
+  serial: 1
+
+  tasks:
+
+  - name: Take app server out of the load balancer
+    delegate_to: localhost
+    cs_loadbalancer_rule_member:
+      name: balance_http
+      vm: "{{ inventory_hostname_short }}"
+      state: absent
+
+  - name: Create a VM snapshot before an upgrade
+    delegate_to: localhost
+    cs_vmsnapshot:
+      name: Snapshot before upgrade
+      vm: "{{ inventory_hostname_short }}"
+      snapshot_memory: true
+
+  - block:
+      - name: Upgrade the application
+        script: upgrade-app.sh
+
+      - name: Run smoke tests
+        script: smoke-tests.sh
+        register: upgrade
+
+    rescue:
+
+      - name: Revert the VM to a snapshot after a failed upgrade
+        delegate_to: localhost
+        cs_vmsnapshot:
+          name: Snapshot before upgrade
+          vm: "{{ inventory_hostname_short }}"
+          state: revert
+
+  - name: Re-add app server to the loadbalancer
+    delegate_to: localhost
+    when: upgrade is success
+    cs_loadbalancer_rule_member:
+      name: balance_http
+      vm: "{{ inventory_hostname_short }}"
+      state: present
+
+  - name: Remove a VM snapshot after successful upgrade or successful rollback
+    delegate_to: localhost
+    cs_vmsnapshot:
+      name: Snapshot before upgrade
+      vm: "{{ inventory_hostname_short }}"
+      state: absent
+...

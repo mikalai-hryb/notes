@@ -1,0 +1,13 @@
+---
+# https://plugins.jenkins.io/configuration-as-code/
+casc_configs: /var/lib/jenkins/casc_configs
+
+# https://github.com/jenkinsci/job-dsl-plugin/wiki/JCasC
+jenkins_seed_name: pipeline-seed
+jenkins_seed_template: seed-config.xml.j2
+jenkins_job_template: jobs.groovy.j2
+jenkins_git_host: github.com
+
+jenkins_git_user: jenkins
+
+...

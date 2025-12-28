@@ -1,0 +1,47 @@
+[production]
+frankfurt.example.com
+helsinki.example.com
+hongkong.example.com
+johannesburg.example.com
+london.example.com
+newyork.example.com
+seoul.example.com
+sydney.example.com
+tokyo.example.com
+toronto.example.com
+
+[staging]
+amsterdam.example.com
+chicago.example.com
+
+[lb]
+helsinki.example.com
+
+[web]
+amsterdam.example.com
+seoul.example.com
+sydney.example.com
+toronto.example.com
+vagrant1
+
+[task]
+amsterdam.example.com
+hongkong.example.com
+johannesburg.example.com
+newyork.example.com
+vagrant2
+
+[rabbitmq]
+chicago.example.com
+tokyo.example.com
+vagrant3
+
+[db]
+chicago.example.com
+frankfurt.example.com
+london.example.com
+
+[vagrant]
+vagrant1 ansible_port=2222
+vagrant2 ansible_port=2200
+vagrant3 ansible_port=2201

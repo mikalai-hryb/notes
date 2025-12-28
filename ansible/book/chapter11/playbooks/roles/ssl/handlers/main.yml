@@ -1,0 +1,5 @@
+---
+- name: SSL certs changed
+  debug:
+    msg: SSL changed event triggered
+  listen: ssl_certs_changed

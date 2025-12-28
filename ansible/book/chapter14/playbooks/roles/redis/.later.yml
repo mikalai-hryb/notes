@@ -1,0 +1,11 @@
+---
+ansible:
+  # List of yamllint compatible literal bools (ANSIBLE0014)
+  literal-bools:
+    - "true"
+    - "false"
+rules:
+  exclude_files:
+    - molecule/
+
+...

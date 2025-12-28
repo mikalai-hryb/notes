@@ -1,0 +1,54 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Provision servers
+  hosts: all
+  vars:
+    crypto_settings: faster.yml
+    install_goss: true
+  roles:
+    - goss
+
+  post_tasks:
+
+    - name: Ping hosts
+      ping:
+
+    - name: Check python3
+      stat:
+        path: /usr/bin/python3
+      register: python3
+      tags:
+        - python3
+
+    - name: Install python3
+      become: true
+      async: 500
+      poll: 0
+      package:
+        name: python3
+      when: not python3.stat.exists
+      tags:
+        - python3
+
+    - name: Install Goss
+      include_role:
+        name: goss
+        tasks_from: install
+      tags:
+        - goss
+
+    - name: Improve ssh configuration
+      include_role:
+        name: ssh
+      tags:
+        - ssh
+        - goss
+
+    - name: Flush handlers
+      meta: flush_handlers
+
+    - name: Run Goss tests
+      include_role:
+        name: goss
+        tasks_from: tests
+...

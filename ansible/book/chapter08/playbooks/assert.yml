@@ -1,0 +1,28 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Assert module examples
+  hosts: all
+  vars:
+    ports:
+      - 80
+      - 8080
+
+  tasks:
+
+    - name: Assert that the enp0s3 ethernet interface exists
+      assert:
+        that: ansible_enp0s3 is defined
+
+    - name: Assert length of a list
+      assert:
+        that: "ports|length == 2"
+
+    - name: Stat /boot/grub
+      stat:
+        path: /boot/grub
+      register: st
+
+    - name: Assert that /boot/grub is a directory
+      assert:
+        that: st.stat.isdir

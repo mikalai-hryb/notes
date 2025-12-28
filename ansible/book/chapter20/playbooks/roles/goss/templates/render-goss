@@ -1,0 +1,8 @@
+#!/bin/bash -e
+myDir={{ goss_test_directory }}
+mkdir -p "${myDir}"
+rm -f "${myDir}/goss.yaml"
+echo 'gossfile:' > "${myDir}/goss.tmp"
+ls -1 ${myDir}/*.yaml|sed 's/^/  /;s/$/: {}/' >> "${myDir}/goss.tmp"
+mv "${myDir}/goss.tmp" "${myDir}/goss.yaml"
+{{ goss_dest }} -g "${myDir}/goss.yaml" render > /dev/null

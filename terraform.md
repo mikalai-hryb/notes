@@ -5,11 +5,11 @@
 ## Benefits of using up to date Terraform versions
 
 * HCP Terraform
-  * remote state management
-  * private registry
-  * remote execution
+  * remote state management (allows all members of a team to work collaboratively )
+  * private registry (github, s3, terraform registry)
+  * remote execution (webhooks from your VCS provider)
   * structured plan output
-  * workspace resource summaries
+  * workspace resource summaries (???)
 * validation
   * variables validation
   * precondition and postcondition for resources and data sources
@@ -24,6 +24,14 @@
 
 * Using Terraform in production, the team should have plans and procedures in place to determine how they will manage Terraform versions and handle upgrades.
 * using objects in modules to group related attributes together
+* use the latest versions because TF team is constantly working on improving the performance and fixing bugs
+* hardcode unchangeable values instead of using data block to retrieve this data, for instance S3 Bucket name, VPC Id. You can, for example, create a shared module with these values
+* create a saved/execution plan and use it in apply step (terraform plan -out plan.plan && terraform apply "plan.plan"). This helps to reduce the number of requests to AWS because `terraform apply` first runs `terraform plan` and waits for your approval.
+* use some options in terraform backend and provider blocks, [for example, `skip_metadata_api_check`,`skip_region_validation`, `skip_credentials_validation`](https://medium.com/@anton.babenko/make-terraform-faster-skip-unnecessary-checks-aws-and-s3-3ab00df9c3a9)
+* increase the limit of parallel resource operations with `-parallelism=n` option
+* cache plugin's installation by configuring `plugin_cache_dir` in TF configuration file (terraform.rc)
+* if you create shared modules it's better to create one repository for one module instead putting all the modules in one repository because when you need one module TF will download all the modules
+* be careful with partial backend configuration because the commands will remain in history and this can leak sensitive credentials (this information is stored in `.terraform/terraform.tfstate`)
 
 ## Docs
 
@@ -46,10 +54,6 @@ A Terraform configuration is a complete document in the Terraform language that 
 ### What is IaC?
 
 The infrastructure as code workflow lets you declaratively provision and manage computing infrastructure through machine-readable files and automate your changes to them
-
-### What other "infrastructure as" styles exist?
-
-???
 
 ### What deployment strategies do you know? And describe them
 
@@ -89,17 +93,17 @@ Dependency lock file or `.terraform.lock.hcl` has pinned provider versions and i
 HashiCorp and the Terraform community have already written thousands (4000+) of providers to manage many different types of resources and services.
 
 * Official 30+
-* Partner 340+
-* Community 3700+
+* Partner 350+
+* Community 4000+
 
 ### What does core TF workflow look like?
 
 write -> plan -> apply
-a developer defines resources -> TF create an execution plan -> TF performs the proposed operations in the correct order
+a developer defines resources -> TF creates an execution plan -> TF performs the proposed operations in the correct order
 
 refresh - TF views real word infrastructure
 plan - TF figures out what it needs to do (reconciling the configuration and infrastructure)
-apply - TF build the infrastructure
+apply - TF builds the infrastructure
 
 ### When we say TF apply, what exactly do we mean?
 
@@ -119,10 +123,10 @@ TF takes an immutable approach to infrastructure reducing the complexity of upgr
 ### What is the purpose of the state file in TF?
 
 The primary purpose of Terraform state is to store bindings between objects in a remote system and resource instances declared in your configuration.
+The Terraform state file is the only way Terraform can track which resources it manages.
 
 State file acts as a source of truth for your environment.
 TF uses the state file to determine the changes to make to your infrastructure so that it will match your configuration.
-The Terraform state file is the only way Terraform can track which resources it manages.
 
 ### What is the `version` key in the state file?
 
@@ -177,6 +181,10 @@ Most of Terraform's features (including resources, input variables, output value
 
 `resource "type" "name" {}` is all this together called resource block.
 
+### What is a block header?
+
+The block header is the block type and any quoted labels that follow it.
+
 ### What is a resource block body?
 
 The content between {} is called resource block body or block body.
@@ -203,8 +211,20 @@ Attributes are values exposed by an existing resource. References to resource at
 
 ### What is a resource meta-argument?
 
-Meta-arguments are a function of Terraform itself and are not resource or provider-specific.
+Meta-arguments are a feature of Terraform itself and are not resource or provider-specific.
 Meta-arguments change a resource's behavior, such as using a `count` meta-argument to create multiple resources.
+
+* provider
+* count
+* for_each
+* depends_on
+* lifecycle
+  * create_before_destroy
+  * prevent_destroy
+  * ignore_changes
+  * replace_triggered_by
+  * precondition
+  * postcondition
 
 ### What are TF input variables?
 
@@ -261,6 +281,7 @@ You will need to mark the output variable sensitive as well to get rid of the er
 Keep in mind, that TF stores the state as plain text.
 Marking variables as sensitive is not sufficient to secure them.
 You must also keep them secure while passing them into Terraform configuration, and protect them in your state file.
+It can be viewed using `terraform output <output_name>`.
 
 ### In which cases TF does not redact sensitive variables (they can be read)?
 
@@ -397,6 +418,7 @@ To use it within the block body you need `count.index` - starting with zero.
 ### What is the `for_each` argument for?
 
 Terraform's `for_each` meta-argument allows you to configure a set of similar resources by iterating over a data structure to configure a resource or module for each item in the data structure.
+To use it within the block body you need `each.key` or/and `each.value` map attributes.
 
 ### How to define a function in TF?
 
@@ -629,6 +651,8 @@ Not always, resource targeting updates the target resource and resources that th
 
 Targeting resources can introduce inconsistencies.
 
+For example, C depends on B, and B depends on A. If you target the B then TF will update A first and then B.
+
 ### How to review resources in the state file?
 
 The Terraform CLI allows you to review resources in the state file with `terraform show`.
@@ -660,7 +684,7 @@ Use a `removed` block to remove specific resources from your state.
 ### What blocks can help you to refactor a TF configuration?
 
 * import
-* moved - can move a rename a resource
+* moved - can move or rename a resource
 * removed
 
 ### HashiCorp promised to add feature that generates configuration based on existing infrastructure. Is TF supporting this feature now?
@@ -784,10 +808,6 @@ Cloud-init is the industry standard multi-distribution method for cross-platform
 ### How cloud-init config looks like?
 
 It's a YAML config that starts with `#cloud-config` comment.
-
-### What is a block header?
-
-The block header is the block type and any quoted labels that follow it.
 
 ### Is it possible to override TF blocks (variable, output, data, resource, terraform blocks)?
 
@@ -1310,3 +1330,11 @@ Config-driven import is a new declarative workflow to add existing resources int
   * Config-driven import is a plannable operation, not a state operation. Import operations can be executed in bulk and are now part of the standard plan and apply cycle
 * The matching resource code has to be manually written
   * You can use `terraform plan -generate-config-out=generated_resources.tf` to automatically create the matching resource blocks
+
+### What is the difference between Terraform CLI and HCP Terraform workspaces?
+
+Terraform CLI workspaces are associated with a specific working directory and isolate multiple state files in the same working directory, letting you manage multiple groups of resources with a single configuration.
+
+HCP Terraform workspaces are required. They represent all of the collections of infrastructure in an organization. They are also a major component of role-based access in HCP Terraform.
+
+### Terraform and sso

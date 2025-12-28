@@ -63,6 +63,10 @@ Failover is the ability to switch automatically and seamlessly to a reliable bac
 
 ### What is IaaS
 
+Infrastructure as a Service
+
+Is a cloud computing model that provides on-demand access to computing resources such as servers, storage, networking, and virtualization.
+
 ### What is PaaS?
 
 Platform as a Service
@@ -70,3 +74,28 @@ Platform as a Service
 In the PaaS model, you are only responsible for managing data and the application resources, while the third-party cloud provider maintains servers, networks, storage, databases, and operating system software.
 
 ### What is SaaS?
+
+Software as a Service
+
+a way of licensing the use of software to others while keeping that software essentially hosted and managed.
+
+Examples:
+
+* Gmail for Business
+* Office 365 Outlook
+
+### IPv6
+
+IPv6 addresses are really just 128-bit binary numbers.
+
+IPv6 addresses are usually written out as eight groups of 16 bits each.
+Each one of these groups is further made up of four hexadecimal numbers.
+
+For example, 2001:0000:130F:0000:0000:09C0:876A:130B
+
+Pv6 address that begins with 2001:0db8 has been reserved for documentation and education
+
+FF00:: is used for multi-cast
+FE80:: are used for link-local unicast.
+
+The first 64 bits of any IPv6 address is the network ID, and the second 64 bits of any IPv6 address is the host ID.

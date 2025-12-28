@@ -190,3 +190,99 @@ Respond to the confirmation prompt with yes.
 
 serial
 lineage
+Ensure that no resource starvation occurs.
+ by static member information or by dynamic discovery
+ would underperform
+ increased ease
+ image immutability
+ That's how Kubernetes comes to the rescue!
+  It takes care of scaling and failover for your application,
+comprehensive and accurate view of the API
+
+in its deprecation period
+ to receive a stable amount of demand
+ tightly coupled
+ A Service routes traffic across a set of Pods.
+ When traffic increases, we will need to scale the application to keep up with user demand.
+ appropriate choice for
+ one-off task
+
+ owners vs owned objects/dependents
+ which objects are dependent on others.
+ containerized applications
+
+ to take into account
+ to take into consideration
+ If you are running Kubernetes on your own premises
+  or to help tolerate failures.
+  a resource leak
+
+   different parts of your cluster, and external components communicate with one another.
+   provide an outline of something
+
+Just back off and let us do this on our own, will you?
+by safeguarding information and systems
+You'd then benefit from the extra isolation
+I won't tolerate lying.
+
+tolerate - to accept behaviour and beliefs that are different from your own, although you might not agree with or approve of them:
+
+evict - to force someone to leave somewhere:
+to act on the new information
+Interoperability
+
+that are tightly coupled and
+
+ which services talk to one another and what actions they perform
+ fine-grained control
+
+ ephemeral
+ applies an exponential backoff delay for subsequent restarts
+ init containers are not continuously running alongside the main containers.
+ code should be idempotent
+ spread applications across racks
+ a quorum-based application
+ Failover to another node
+ failover cluster
+ rollout
+ rollup
+ rollover (multiple updates in-flight)
+ rollback
+ cluster performance degradation
+ no resource starvation occurs.
+ which have specific Kubernetes connotations
+ Reply traffic
+ principle of least privilege.
+ PV removal is postponed until
+ File system expansion
+must be a valid path segment name
+could result in overly permissive access being granted to sensitive resources.
+
+and the rightmost file will take precedence
+
+trends can be viewed over the time
+
+toi query an intermediary
+
+to put it in use we have to run it
+
+Side note
+narrow down
+having hands-on on the live examples is the best way to get most out of a concept.
+
+memory consumption
+they kind of look like magical, I must admit
+and variable in length.
+
+without fully understanding what's going on behind the scenes
+
+collaboratively
+simultaneously
+sequentially
+the primary purpose
+lineage
+efficiently
+conversion
+authoritative
+authors
+constructive criticism.

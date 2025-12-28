@@ -674,7 +674,7 @@ interface Lesson {
 function freeze<T>(obj: T): Readonly<T> { // <T> here is a function type parameter
     return Object.freeze(obj)
 }
-function freeze2<T extends object>(obj: T): Readonly<T> {} // only object-like entities are allowed, this is a way how to constrain T type
+function freeze2<T extends object>(obj: T): Readonly<T> {} // only object-like (Plain objects, Arrays, Class Instances, functions, Maps, Sets, other built-in objects) entities are allowed, this is a way how to constrain T type
 const lesson: Lesson = {title: "something", seqNo: 10}
 const frozen = freeze(lesson)
 const frozen2 = freeze<Lesson>({title: "something", seqNo: 10})
@@ -745,3 +745,15 @@ const v2 = new KeyValue("1", 10).value
 ### Decorators
 
 Decorators are powerful tools that provide an elegant way to modify or extend the behavior of classes, methods, properties, or parameters.
+
+## What is a call signature of an object literal type?
+
+```ts
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let myIdentity1: <T>(arg: T) => T = identity;
+let myIdentity2: {<T>(arg: T): T} = identity;
+// myIdentity1 and myIdentity2 have the same type definitions because function in JS is an objects, and call signature is used to specify function
+```

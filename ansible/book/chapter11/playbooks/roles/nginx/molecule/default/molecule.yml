@@ -1,0 +1,23 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: nginx-centos7
+    box: centos/7
+    memory: 2048
+    cpus: 2
+    groups:
+      - web
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

@@ -1,0 +1,10 @@
+[vagrant]
+ubuntu ansible_host=192.168.56.10.nip.io
+fedora ansible_host=192.168.56.11.nip.io
+debian ansible_host=192.168.56.12.nip.io
+centos ansible_host=192.168.56.13.nip.io
+
+[vagrant:vars]
+ansible_user=vagrant
+ansible_private_key_file = ~/.vagrant.d/insecure_private_key
+ansible_python_interpreter = /usr/bin/python3

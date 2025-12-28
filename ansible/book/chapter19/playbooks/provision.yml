@@ -1,0 +1,49 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Provision servers
+  hosts: all
+  vars:
+    crypto_settings: faster.yml
+    install_goss: true
+  roles:
+    - {role: goss}
+    - {role: dependencies, tags: dependencies}
+
+  post_tasks:
+
+    - name: Ping hosts
+      ping:
+
+    - name: Create Debian locale
+      become: true
+      command: localedef -i en_US -f UTF-8 en_US.UTF-8
+      when: ansible_distribution == 'Debian'
+
+    - name: Create fedora locale
+      become: true
+      command: localectl set-locale LANG=en_US.UTF-8
+      when: ansible_distribution == 'Fedora'
+
+    - name: Install Goss
+      include_role:
+        name: goss
+        tasks_from: install
+      tags:
+        - goss
+
+    - name: Improve ssh configuration
+      include_role:
+        name: ssh
+      tags:
+        - ssh
+
+    - name: Flush handlers
+      meta: flush_handlers
+
+    - name: Run Goss tests
+      include_role:
+        name: goss
+        tasks_from: tests
+      tags:
+        - goss
+...

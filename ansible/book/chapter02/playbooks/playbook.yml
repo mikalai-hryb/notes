@@ -1,0 +1,33 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Play to test vagrant VM
+  hosts: all:!localhost
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Forward Agent
+      copy:
+        dest: /home/vagrant/.ssh/config
+        content: 'ForwardAgent yes'
+        owner: vagrant
+        group: vagrant
+        mode: 0600
+
+    - name: Print out operating system details
+      debug:
+        msg: >-
+          os_family:
+          {{ ansible_os_family }},
+          distro:
+          {{ ansible_distribution }}
+          {{ ansible_distribution_version }}
+
+- name: Play to test ansible roles
+  hosts: all:!localhost
+  gather_facts: false
+  become: true
+
+  roles:
+    - role: java
+...

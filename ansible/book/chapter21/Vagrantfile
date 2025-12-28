@@ -1,0 +1,57 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+UUID = "OGVIFL"
+
+Vagrant.configure(2) do |config|
+  config.vbguest.auto_update = false
+  config.ssh.forward_agent = true
+
+  config.vm.define "bastion", autostart: false do |bastion|
+    bastion.vm.box = "ansiblebook/Bastion"
+    bastion.vm.synced_folder '.', '/vagrant', disabled: true
+
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    bastion.vm.network "private_network", ip: "192.168.56.10"
+    bastion.vm.hostname = "bastion"
+    bastion.ssh.private_key_path = "./playbooks/files/id_rsa"
+    bastion.vm.provider "virtualbox" do |vb|
+      vb.name = "bastion"
+      # Use VBoxManage to customize the VM. For example to change memory:
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+
+    bastion.vm.provision "ansible" do |ansible|
+      ansible.limit = 'bastion'
+      ansible.galaxy_role_file = "playbooks/roles/requirements.yml"
+      ansible.galaxy_roles_path = "playbooks/roles"
+      ansible.playbook = "playbooks/vagrant-playbook.yml"
+      ansible.verbose = "v"
+      ansible.compatibility_mode = "2.0"
+    end
+  end
+
+  config.vm.define "junos", autostart: false do |junos|
+    # https://github.com/Juniper/vqfx10k-vagrant
+    junos.ssh.insert_key = false
+    junos.vm.box = "juniper/vqfx10k-re"
+    junos.vm.network :forwarded_port, guest: 22, host: 2210, id: 'ssh'
+    junos.vm.synced_folder '.', '/vagrant', disabled: true
+    junos.vm.network 'private_network', auto_config: false, nic_type: '82540EM', virtualbox__intnet: "OGVIFL_vqfx_internal_1"
+  end
+
+  config.vm.define "nxosv", autostart: false do |nxosv|
+    # https://app.vagrantup.com/sysnet4admin/boxes/nxosv_v9
+    nxosv.vm.box = "sysnet4admin/nxosv_v9"
+    nxosv.vm.network :forwarded_port, guest: 443, host: 12443, id: 'https'
+  end
+
+  config.vm.define "vyos", autostart: false do |vyos|
+    # https://app.vagrantup.com/sysnet4admin/boxes/VyOS
+    vyos.vm.box = "sysnet4admin/VyOS"
+    vyos.vm.network :forwarded_port, guest: 22, host: 2202, id: 'ssh'
+  end
+
+end

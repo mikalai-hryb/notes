@@ -1,0 +1,8 @@
+plugin: azure_rm
+platform: azure_rm
+auth_source: auto
+plain_host_names: true
+keyed_groups:
+# places each host in a group named 'azure_loc_(location name)'
+- prefix: azure_loc
+  key: location

@@ -1,0 +1,24 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Setup machine for Java development
+  hosts: windows
+  gather_facts: false
+  vars:
+
+  pre_tasks:
+    - name: Verifying connectivity
+      win_ping:
+
+  roles:
+    - role: win_config
+      tags: config
+    - role: win_choco
+      tags: choco
+    - role: win_vscode
+      tags: vscode
+    - role: java_developer
+      tags: java
+    - role: win_updates
+      tags: updates
+...

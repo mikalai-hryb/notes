@@ -89,6 +89,7 @@ Extra things will require testing, documentation and maintenance time, time to u
 * I - Interface Segregation Principle
 
     Clients should not be forced to depend on interfaces they do not use.
+
     To follow the Interface Segregation Principle, we should create specific interfaces for each type of functionality.
 
 * D - Dependency Inversion Principle

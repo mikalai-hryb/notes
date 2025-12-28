@@ -1,0 +1,9 @@
+---
+
+- name: prepare
+  hosts: all
+
+  tasks:
+    - name: Display OS
+      debug:
+        msg: "os {{ ansible_os_family }}"

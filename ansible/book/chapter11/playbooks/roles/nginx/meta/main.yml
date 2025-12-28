@@ -1,0 +1,31 @@
+---
+galaxy_info:
+  role_name: nginx
+  namespace: ansiblebook
+  author: Bas Meijer
+  description: This role installs nginx
+  company: O'Reilly
+
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  # Some suggested licenses:
+  # https://en.wikipedia.org/wiki/Software_license
+  license: MIT
+
+  min_ansible_version: 2.9
+  github_branch: main
+
+  platforms:
+    - name: RedHat
+      versions:
+        - 7  # not tested with different versions
+
+  galaxy_tags:
+    - http
+    - https
+    - nginx
+    - webserver
+
+dependencies: []

@@ -1,0 +1,32 @@
+---
+
+- name: Provision a Vagrant machine
+  hosts: localhost
+  vars:
+    box: "centos/stream8"
+  tasks:
+    - name: Create a Vagrantfile
+      command: "vagrant init {{ box }}"
+      args:
+        creates: Vagrantfile
+
+    - name: Bring up the vagrant machine
+      command: vagrant up
+      args:
+        creates: .vagrant/machines/default/virtualbox/box_meta
+
+    - name: Add the vagrant machine to the inventory
+      add_host:
+        name: default
+        ansible_host: 127.0.0.1
+        ansible_port: 2222
+        ansible_user: vagrant
+        ansible_private_key_file: .vagrant/machines/default/virtualbox/private_key
+
+- name: Do something to the vagrant machine
+  hosts: default
+  tasks:
+    # The list of tasks would go here
+    - name: Ping
+      ping:
+...

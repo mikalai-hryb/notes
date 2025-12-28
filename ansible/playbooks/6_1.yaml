@@ -1,0 +1,16 @@
+---
+- name: Test something
+  hosts: all
+
+  tasks:
+    - name: Run python script
+      ansible.builtin.script: fail.py
+      args:
+        executable: python3
+      register: result
+      ignore_errors: true
+
+    - name: Debug
+      ansible.builtin.debug:
+        var: result
+      # failed_when: result

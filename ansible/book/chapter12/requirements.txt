@@ -1,0 +1,5 @@
+ansible
+requests
+beautifulsoup4
+httpx
+pywinrm[kerberos]

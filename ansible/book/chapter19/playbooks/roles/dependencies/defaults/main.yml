@@ -1,0 +1,16 @@
+---
+
+dependencies:
+  - name: Python 3
+    package: python3
+    binary: /usr/bin/python3
+  - name: Perl5
+    package: perl
+    binary: /usr/bin/perl
+  - name: Netcat
+    package: nmap
+    binary: /usr/bin/nc
+  - name: jq
+    package: jq
+    binary: /usr/bin/jq
+...

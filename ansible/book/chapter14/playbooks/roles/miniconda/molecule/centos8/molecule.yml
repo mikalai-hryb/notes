@@ -1,0 +1,16 @@
+---
+
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: conda_centos8
+    image: quay.io/centos/centos:stream8
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

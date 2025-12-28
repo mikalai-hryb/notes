@@ -1,0 +1,24 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: chapter 9 advanced handlers
+  hosts: localhost
+
+  handlers:
+    - name: print message
+      command: echo handler executed
+
+  pre_tasks:
+    - name: echo pre tasks
+      command: echo pre tasks
+      notify: print message
+
+  tasks:
+    - name: echo tasks
+      command: echo tasks
+      notify: print message
+
+  post_tasks:
+    - name: post tasks
+      command: echo post tasks
+      notify: print message

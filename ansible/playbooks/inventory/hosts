@@ -1,0 +1,8 @@
+[webservers]
+web ansible_host=172.17.0.5
+
+[webservers:vars]
+ansible_user=root
+ansible_ssh_pass=redhat
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ForwardAgent=yes'

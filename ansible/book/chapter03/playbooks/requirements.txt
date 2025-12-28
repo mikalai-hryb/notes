@@ -1,0 +1,4 @@
+ansible==4.0.0
+ansible-lint==4.3.7
+pipx
+yamllint==1.26.1

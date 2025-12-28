@@ -1,0 +1,8 @@
+---
+
+roles: []
+
+collections:
+  # Install Tower/AWX collection from Ansible Galaxy.
+  - name: awx.awx
+...

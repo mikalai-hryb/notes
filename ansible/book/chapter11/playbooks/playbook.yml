@@ -1,0 +1,58 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: chapter 9 playbook
+  hosts: web
+  gather_facts: false
+  become: false
+
+  tasks:
+
+    - name: Download goss binary
+      delegate_to: localhost
+      connection: local
+      become: false
+      get_url:
+        url: "https://github.com/aelsabbahy/goss/releases/download/v0.3.18/goss-linux-amd64"
+        dest: "~/Downloads/goss"
+        mode: '0755'
+      ignore_errors: true
+
+    - name: wait for web ssh daemon to be running
+      wait_for:
+        port: 22
+        host: "{{ inventory_hostname }}"
+        search_regex: OpenSSH
+
+    - name: ping the host
+      ping:
+
+    - name: gather facts
+      setup:
+
+    - name: display eth1 ip-address
+      debug:
+        msg: "{{ ansible_eth1.ipv4.address }} {{ inventory_hostname }}"
+
+- hosts: strategies
+  connection: local
+  strategy: free
+  gather_facts: false
+  tasks:
+    - name: first task
+      command: sleep "{{ sleep_seconds }}"
+      changed_when: false
+      tags:
+        - first
+
+    - name: second task
+      command: sleep "{{ sleep_seconds }}"
+      changed_when: false
+      tags:
+        - second
+
+    - name: third task
+      command: sleep "{{ sleep_seconds }}"
+      changed_when: false
+      tags:
+        - third

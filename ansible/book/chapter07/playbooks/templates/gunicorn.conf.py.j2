@@ -1,0 +1,7 @@
+from multiprocessing import cpu_count
+
+bind = "unix:{{ proj_path }}/gunicorn.sock"
+workers = cpu_count() * 2 + 1
+errorlog = "/home/{{ user }}/logs/{{ proj_name }}_error.log"
+loglevel = "error"
+proc_name = "{{ proj_name }}"

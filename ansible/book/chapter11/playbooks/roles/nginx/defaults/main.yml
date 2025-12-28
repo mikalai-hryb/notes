@@ -1,0 +1,11 @@
+---
+nginx_document_root: /usr/share/nginx/html
+# Set this to true for https with TLSv1.2
+nginx_https_transport: false
+# defaults file for nginx
+nginx_dhparam_key_size: 2048
+# when you want to use your own dhparam file or simply don't need it
+# set this to false
+nginx_create_dhparam: true
+# in seconds, see README.md
+hsts_max_age: 120

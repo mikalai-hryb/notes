@@ -1,0 +1,20 @@
+---
+- name: Configure webserver with nginx
+  hosts: webservers
+
+  tasks:
+    - name: Ensure nginx is installed
+      package:
+        name: nginx
+        update_cache: true
+    - ansible.builtin.debug: var=ansible_facts.services
+    - ansible.builtin.service_facts:
+    - ansible.builtin.debug: var=ansible_facts.services
+      tags:
+        - abc
+      # debugger: always
+    - name: Set nginx_state
+      when: ansible_facts.services.nginx.state is defined
+      set_fact:
+        nginx_state: "{{ ansible_facts.services.nginx.state }}"
+    # - debug: var=hostvars[inventory_hostname]

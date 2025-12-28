@@ -1,0 +1,105 @@
+---
+
+- block:
+    - name: install required packages
+      become: true
+      yum:
+        name:
+          - selinux-policy
+          - policycoreutils-python
+          - libsemanage-python
+          - python-passlib
+        state: present
+      retries: 5
+
+    - name: install Nginx repo
+      become: true
+      yum:
+        # yamllint disable-line rule:line-length
+        name: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+        state: installed
+      retries: 5
+  when: ansible_facts.os_family == 'RedHat'
+
+- name: install nginx package
+  yum:
+    name: nginx
+
+- name: ensure firewalld is running
+  systemd:
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: firewalld allow http and https on zone public
+  firewalld:
+    zone: public
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop:
+    - http
+    - https
+
+- name: enable SELinux in enforcing mode
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: configure SELinux booleans
+  seboolean:
+    name: "{{ item }}"
+    state: true
+    persistent: true
+  loop:
+    - httpd_read_user_content
+    - httpd_can_network_connect
+    - httpd_can_network_relay
+
+- name: create sudoers.d file
+  template:
+    src: nginx.sudoers
+    dest: /etc/sudoers.d/nginx.sudoers
+    owner: root
+    group: root
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s
+
+- name: configure logrotation for nginx
+  become: true
+  template:
+    src: logrotate.conf
+    dest: /etc/logrotate.d/nginx
+
+- name: add TLS support
+  when: nginx_https_transport is defined and nginx_https_transport|bool
+  template:
+    src: ssl.conf.j2
+    dest: /etc/nginx/conf.d/ssl.conf
+    owner: nginx
+    group: nginx
+    mode: 0400
+  notify: restart nginx
+
+- block:
+    - name: Check if dhparam file exists
+      stat:
+        path: /etc/pki/tls/certs/dhparam.pem
+      register: dhparamfile
+
+    - name: Generate dhparam.pem
+      # yamllint disable-line rule:line-length
+      command: "openssl dhparam -out /etc/ssl/certs/dhparam.pem {{ nginx_dhparam_key_size }}"
+      args:
+        creates: /etc/ssl/certs/dhparam.pem
+      when: not dhparamfile.stat.exists|bool
+      notify: restart nginx
+  when: nginx_create_dhparam|bool
+
+- name: enable service
+  systemd:
+    name: nginx
+    enabled: true
+    masked: false
+  notify: restart nginx

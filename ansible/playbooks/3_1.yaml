@@ -1,0 +1,75 @@
+---
+- name: Configure webserver with nginx
+  hosts: webservers
+  become: true
+  vars:
+    abc: some-text
+    server_name: localhost
+    key_file: nginx.key
+    cert_file: nginx.crt
+    tls_dir: /etc/nginx/ssl/
+    conf_file: /etc/nginx/sites-available/default
+
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+
+  tasks:
+    - name: Check variables
+      ansible.builtin.debug:
+        msg: "the variable abc: {{ abc }}, aaa: {{ aaa }}, inventory_hostname: {{ inventory_hostname }}"
+      vars:
+        aaa: another text
+
+    - name: Ensure nginx is installed
+      package:
+        name: nginx
+        update_cache: true
+      notify: Restart nginx
+
+    - name: Create directories for TLS certificates
+      file:
+        path: "{{ tls_dir }}"
+        state: directory
+        mode: 0750
+      notify: Restart nginx
+
+    - name: Copy TLS files
+      copy:
+        src: "{{ item }}"
+        dest: "{{ tls_dir }}"
+        mode: 0600
+      loop:
+        - "{{ key_file }}"
+        - "{{ cert_file }}"
+      notify: Restart nginx
+
+    - name: Manage nginx config template
+      template:
+        src: nginx.conf.j2
+        dest: "{{ conf_file }}"
+        mode: 0644
+      notify: Restart nginx
+
+    - name: Install home page
+      template:
+        src: index.html.j2
+        dest: /usr/share/nginx/html/index.html
+        mode: 0644
+
+    - name: Restart nginx
+      meta: flush_handlers
+
+    - name: "Test it! https://{{ inventory_hostname }}/index.html"
+      delegate_to: localhost
+      become: false
+      uri:
+        url: 'https://{{ inventory_hostname }}/index.html'
+        validate_certs: false
+        return_content: true
+      register: this
+      failed_when: "'Running on ' not in this.content"
+      tags:
+        - test

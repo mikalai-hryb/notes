@@ -1,0 +1,25 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Deploy postgres on db
+  hosts: db
+  vars_files:
+    - secrets.yml
+
+  roles:
+    - role: database
+      tags: database
+      database_name: "{{ mezzanine_proj_name }}"
+      database_user: "{{ mezzanine_proj_name }}"
+
+- name: Deploy mezzanine on web
+  hosts: web
+  vars_files:
+    - secrets.yml
+
+  roles:
+    - role: mezzanine
+      tags: mezzanine
+      database_host: "{{ hostvars.db.ansible_enp0s8.ipv4.address }}"
+    - role: nginx
+      tags: nginx
+...

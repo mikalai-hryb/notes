@@ -1,0 +1,37 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Chapter 12
+  hosts: all
+
+  tasks:
+
+    - name: Run my shell script
+      script: scripts/can_reach.sh www.google.com 80 1
+      tags:
+        - script
+        - shell
+
+    - name: Run my perl script
+      environment:
+        LANGUAGE: en_US.UTF-8
+        LC_ALL: en_US.UTF-8
+      script: scripts/can_reach.pl www.google.com 80
+      tags:
+        - script
+        - perl
+
+    - name: Run my custom module
+      can_reash:
+        host: localhost
+        port: 22
+        timeout: 1
+      tags:
+        - module
+
+    - name: Run my custom module again (failing)
+      can_reash:
+        host: example.com
+        port: 5432
+      tags:
+         module
+...

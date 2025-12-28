@@ -1,0 +1,8 @@
+# vagrant.py
+paramiko
+# aws
+boto3
+botocore
+# azure
+msrest
+msrestazure

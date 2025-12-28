@@ -1,0 +1,24 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- hosts: all:!localhost
+  become: true
+  gather_facts: false
+
+  pre_tasks:
+    - name: Register RHEL 8
+      redhat_subscription:
+        state: present
+        username: "{{ lookup('env','RH_USER') }}"
+        password: "{{ lookup('env','RH_PASS') }}"
+        auto_attach: true
+        force_register: true
+        syspurpose:
+          role: "Red Hat Enterprise Server"
+          usage: "Development/Test"
+          service_level_agreement: "Self-Support"
+
+  roles:
+    - role: vscode
+
+...

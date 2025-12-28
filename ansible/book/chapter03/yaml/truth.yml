@@ -1,0 +1,37 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: True or false?
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: "All these boolean inputs evaluate to 'true'"
+      debug:
+        msg: "{{ item }}"
+      with_items:
+        - true
+        - True
+        - TRUE
+        - yes
+        - Yes
+        - YES
+        - on
+        - On
+        - ON
+
+    - name: "All these boolean inputs evaluate to 'false'"
+      debug:
+        msg: "{{ item }}"
+      with_items:
+        - false
+        - False
+        - FALSE
+        - no
+        - No
+        - NO
+        - off
+        - Off
+        - OFF
+...

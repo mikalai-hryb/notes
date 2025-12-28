@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "rootDir": "src",
+        "outDir": "dist",
+        "module": "CommonJS",
+        "lib": ["ES5", "DOM"], // libraries that the compiler already knows about
+        "baseUrl": "src", // where the imports in our program should point in case that we are not using a relative import path
+    },
+    "files": [
+        // "src/21-intersection-types.ts",
+        "src/27-generics.ts"
+    ],
+    // "include": ["src/20*", "src/20-exclude.ts", "src/20-never-type.ts"],
+    // "exclude": ["src/20-ex*"]
+}

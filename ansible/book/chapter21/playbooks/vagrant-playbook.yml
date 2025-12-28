@@ -1,0 +1,25 @@
+#!/usr/bin/env -S ansible-playbook -vv
+---
+
+- name: Security Audit
+  hosts: bastion
+  become: true
+  gather_facts: true
+
+  post_tasks:
+
+    - name: 'Run the audit and create a report.'
+      command:
+        oscap xccdf eval \
+          --report /tmp/report.html
+          --profile ospp
+          /usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml
+      no_log: true
+      ignore_errors: true
+
+    - name: 'Fetch the report.'
+      fetch:
+        flat: true
+        src: /tmp/report.html
+        dest: "~/Downloads/ospp.html"
+...

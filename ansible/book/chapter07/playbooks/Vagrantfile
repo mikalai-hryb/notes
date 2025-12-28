@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |this|
+
+  # Forward ssh-agent for cloning from Github.com
+  this.ssh.forward_agent = true
+  # disable updating guest additions
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    this.vbguest.auto_update = false
+  end
+  # disable guest additions
+  this.vm.synced_folder '.', '/vagrant', disabled: true
+  this.vm.define "web" do |web|
+    web.vm.box = "ubuntu/focal64"
+    web.vm.hostname = "web"
+    # This IP is used in the playbook
+    web.vm.network "private_network", ip: "192.168.56.10"
+    web.vm.network "forwarded_port", guest: 80, host: 8000
+    web.vm.network "forwarded_port", guest: 443, host: 8443
+    web.vm.provider "virtualbox" do |virtualbox|
+      virtualbox.name = "web"
+    end
+  end
+  this.vm.provision "ansible" do |ansible|
+    ansible.playbook = "mezzanine.yml"
+    ansible.verbose = "v"
+    ansible.compatibility_mode = "2.0"
+    ansible.host_key_checking = false
+  end
+end

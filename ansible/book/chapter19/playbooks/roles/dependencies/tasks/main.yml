@@ -1,0 +1,17 @@
+---
+
+- name: Update cache
+  become: true
+  package:
+    update_cache: true
+
+- name: Install EPEL on centos
+  become: true
+  when: ansible_distribution == 'CentOS'
+  yum:
+    name: epel-release
+
+- name: Install dependencies
+  include_tasks: install.yml
+  with_items: "{{ dependencies }}"
+...

@@ -89,6 +89,8 @@ For example, http_requests_total {method="get"} -> 32
 
 Prometheus stores metrics in a time-series database (TSDB), which is optimized for high-performance and efficient data retrieval.
 
+Prometheus includes a local on-disk time series database, but also optionally integrates with remote storage systems.
+
 ### On which port Prometheus is running by default?
 
 Prometheus uses `9090` port - `localhost:9090`.
@@ -369,3 +371,12 @@ Note: with rate() function and Counter metric it's a good practice to strip `_to
 operations - list of operations that were applied to the metric under evaluation. Newest operations comes first.
 
 For example, for `avg without (cpu) (rate(node_cpu_seconds_total{mode="idle"}[5m]))` we can have `job:node_cpu_seconds:average_rate5m_idle`.
+
+### What is Alert?
+
+An alert is to warn someone because any unusual or potentially dangerous thing  had happened or is going to happen, right?
+
+Prometheus allows you to define some conditions/logics in the form of PromQL expressions that continuously gets evaluated and when those conditions are met, they become alerts.
+
+* free Node memory should not be less than 10%
+* CPU load not more than 95%

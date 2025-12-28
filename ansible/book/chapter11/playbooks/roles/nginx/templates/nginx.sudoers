@@ -1,0 +1,4 @@
+## Services
+Cmnd_Alias NGINX = /usr/bin/systemctl status -l nginx, /usr/bin/systemctl start nginx, /usr/bin/systemctl stop nginx, /usr/bin/systemctl restart nginx, /usr/bin/journalctl -u nginx, /sbin/nginx -t, /usr/bin/less /var/log/nginx/access.log, /usr/bin/lnav /var/log/nginx/access.log
+
+%staff ALL=(ALL) NOPASSWD: NGINX

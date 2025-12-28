@@ -1,0 +1,17 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: quote or double?
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: Show escaped quotes
+      debug:
+        msg: '"The module will print escaped quotes: neat, eh?"'
+
+    - name: Show quoted quotes
+      debug:
+        msg: "'The module will print quoted quotes: neat, eh?'"
+...

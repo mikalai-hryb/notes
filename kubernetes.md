@@ -47,7 +47,7 @@ kubectl get pod web-nginx -n custom -o yaml
 kubectl get pods -A --sort-by=metadata.creationTimestamp
 kubectl get nodes
 kubectl get nodes -o wide --show-labels
-kubectl get nodes –show-labels
+kubectl get nodes --show-labels
 kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}'
 
 kubectl scale --replicas=3 deployment/nginx-deployment
@@ -421,9 +421,10 @@ Deployments can be rollout, rollback, pause and resume
 
 Deployment statuses:
 
-Progressing (type: Progressing, status: True, reason: \<DIFFERENT-REASONS>)
-Complete    (type: Progressing, status: True, reason: NewReplicaSetAvailable)
-Failed      (type: Progressing, status: False, reason: \<DIFFERENT-REASONS>)
+* Progressing (type: Progressing, status: True, reason: \<DIFFERENT-REASONS>)
+* Complete    (type: Progressing, status: True, reason: NewReplicaSetAvailable)
+* Failed      (type: Progressing, status: False, reason: \<DIFFERENT-REASONS>)
+
 </details></li>
 
 <li><details>
@@ -570,6 +571,8 @@ The main use for static Pods is to run a self-hosted control plane: in other wor
 
 The kubelet automatically tries to create a mirror Pod (a pod object that a kubelet uses to represent a static pod) on the Kubernetes API server for each static Pod.
 Static Pods do not depend on the apiserver, making them useful in cluster bootstrapping cases.
+
+They are used for running critical system services or for initial bootstrapping of clusters where control plane components need to be deployed directly on the nodes.
 </details></li>
 
 <li><details>
@@ -640,6 +643,7 @@ Each probe has one of three results:
   If a liveness probe fails, Kubernetes will restart the container.
   * if you'd like your container to be killed and restarted if a probe fails
   * it can be used for long-running processes that may occasionally fail
+
 * readinessProbe
 
   Indicates whether the container is ready to respond to requests.
@@ -647,6 +651,7 @@ Each probe has one of three results:
   * if this probe is present it means that the Pod will start without receiving any traffic and only start receiving traffic after the probe starts succeeding
   * can be configured with livenessProbe (livenessProbe will check if app is running) to make sure the backend is responding as well
   * Graceful Rollouts: Ensures that traffic is only sent to pods that are fully initialized and ready to handle requests, which is useful during rolling updates.
+
 * startupProbe
 
   Sometimes, you have to deal with applications that require additional startup time on their first initialization.
@@ -1196,6 +1201,12 @@ a Horizontal Pod Autoscaler/HorizontalPodAutoscaler (HPA) automatically updates 
 It is implemented as a Kubernetes API resource and a controller and periodically adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
 </details></li>
 
+<li><details>
+<summary><b>What is VPA?</b></summary>
+
+a Vertical Pod Autoscaler/VerticalPodAutoscaler
+</details></li>
+
 ### Service
 
 nslookup web-0.nginx
@@ -1204,6 +1215,7 @@ nslookup web-0.nginx
 <summary><b>What is Headless Service?</b></summary>
 
 It's used when when you don't need load-balancing and a single Service IP (for example, StatefulSet)
+It is useful when you need clients to interact with the pods directly instead of routing traffic through a single IP or load balancer.
 
 To get a Headless Service you need to set `.spec.clusterIP: None` and the `.spec.type` to `ClusterIP`.
 
@@ -1286,10 +1298,11 @@ PersistentVolume types are implemented as plugins.
 <li><details>
 <summary><b>What are PersistentVolume accessModes?</b></summary>
 
-ReadWriteOncePod - the volume can be mounted as read-write by a single Pod.
-ReadWriteOnce    - the volume can be mounted as read-write by a single Node.
-ReadWriteMany    - the volume can be mounted as read-write by many Nodes.
-ReadOnlyMany     - the volume can be mounted as read-only by many Nodes.
+* ReadWriteOncePod - the volume can be mounted as read-write by a single Pod.
+* ReadWriteOnce    - the volume can be mounted as read-write by a single Node.
+* ReadWriteMany    - the volume can be mounted as read-write by many Nodes.
+* ReadOnlyMany     - the volume can be mounted as read-only by many Nodes.
+
 </details></li>
 
 <li><details>
@@ -1474,7 +1487,7 @@ When a deny all network policy is defined, it is only guaranteed to deny TCP, UD
 
 Each pod has /etc/resolv.conf
 
-data DNS query is expanded to data.<namesapce>.svc.cluster.local (check /etc/resolv.conf)
+data DNS query is expanded to `data.<namesapce>.svc.cluster.local` (check /etc/resolv.conf)
 
 <li><details>
 <summary><b>What objects get DNS records?</b></summary>
@@ -1535,7 +1548,7 @@ ServiceAccount uses authorization mechanism such as RBAC.
 </details></li>
 
 <li><details>
-# <summary><b>What is the difference between Service Account and User Account?</b></summary>
+<summary><b>What is the difference between Service Account and User Account?</b></summary>
 
 Service accounts are different from user accounts, which are authenticated human users in the cluster. By default, user accounts don't exist in the Kubernetes API server (at least one `default` Service Account exists).
 </details></li>

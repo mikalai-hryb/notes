@@ -1,0 +1,32 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Publish image to docker hub
+  hosts: localhost
+  gather_facts: false
+
+  vars_prompt:
+    - name: username
+      prompt: Enter Docker Registry username
+    - name: password
+      prompt: Enter Docker Registry password
+      private: true
+
+  tasks:
+
+    - name: Authenticate with repository
+      docker_login:
+        username: "{{ username }}"
+        password: "{{ password }}"
+      tags:
+        - login
+
+    - name: Push image up
+      docker_image:
+        name: "bbaassssiiee/nginx-ghost"
+        push: true
+        source: local
+        state: present
+      tags:
+        - push
+...

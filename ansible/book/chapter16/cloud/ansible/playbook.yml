@@ -1,0 +1,22 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: all:127.0.0.1
+  gather_facts: true
+  become: true
+
+  vars:
+    net_allow:
+      - '10.1.0.0/16'
+      - '192.168.0.0/16'
+
+  roles:
+    - {role: common, tags: common}
+    - {role: epel, tags: epel}
+    - {role: ansible-auditd, tags: auditd}
+    - {role: nettime, tags: nettime}
+    - {role: rsyslog, tags: syslog}
+    - {role: crontab, tags: crontab}
+    - {role: keybase, tags: keybase}
+    - {role: gpg_agent, tags: gpg}
+    - {role: tailscale, tags: tailscale}
+...

@@ -1,0 +1,17 @@
+[Unit]
+Description=Goss Server Checking
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart={{ goss_path }}/goss -g {{ goss_test_directory }}/goss.yaml serve -l {{ goss_bind_addr }}:{{ goss_port }} -f {{ goss_format }}
+ExecStop=kill $(ps -ef|grep goss|grep -v grep|awk '{print $2}')
+ExecReload=/usr/local/bin/render-goss
+SuccessExitStatus=143
+User={{ goss_user }}
+Group={{ goss_group }}
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

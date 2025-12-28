@@ -1,0 +1,24 @@
+---
+- name: include OS specific variables
+  include_vars: "{{ ansible_facts.os_family }}.yml"
+
+- name: copy SSL certs
+  copy:
+    src: "{{ item }}"
+    dest: {{ ssl_certs_path }}/
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ ssl_certs }}"
+  notify: ssl_certs_changed
+
+- name: copy SSL keys
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ssl_keys_path }}/"
+    owner: root
+    group: root
+    mode: 0640
+  loop: "{{ ssl_keys }}"
+  no_log: true
+  notify: ssl_certs_changed

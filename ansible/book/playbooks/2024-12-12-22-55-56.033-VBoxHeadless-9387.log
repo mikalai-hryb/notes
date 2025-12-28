@@ -1,0 +1,12 @@
+Log created: 2024-12-12T22:55:56.330460000Z
+Process ID:  9387 (0x24ab)
+Parent PID:  2806 (0xaf6)
+Executable:  /usr/lib/virtualbox/VBoxHeadless
+Arg[0]: /usr/lib/virtualbox/VBoxHeadless
+Arg[1]: --comment
+Arg[2]: playbooks_default_1734029914416_42614
+Arg[3]: --startvm
+Arg[4]: c64f5f32-3aaa-4b8f-9044-257fa5e7c1d8
+Arg[5]: --vrde
+Arg[6]: config
+AddRef: illegal refcnt=3221225469 state=2

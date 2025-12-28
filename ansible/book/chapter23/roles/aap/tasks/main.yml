@@ -1,0 +1,102 @@
+---
+
+- name: Download setup_bundle
+  get_url:
+    url: "https://releases.ansible.com/ansible-tower/setup/{{ setup_bundle }}"
+    dest: '~'
+    mode: 0644
+  tags:
+    - tower
+
+- name: Unarchive setup_bundle
+  unarchive:
+    remote_src: true
+    src: "~/{{ setup_bundle }}"
+    dest: "/tmp"
+    creates: "/tmp/{{ tower_name }}"
+  tags:
+    - tower
+
+- name: Create /var/log/tower directory
+  file:
+    path: /var/log/tower
+    mode: 0755
+    state: directory
+  tags:
+    - tower
+
+- name: Place inventory file for setup.sh
+  template:
+    src: inventory.j2
+    dest: "/tmp/{{ tower_name }}/inventory"
+    mode: 0644
+  tags:
+    - tower
+    - setup
+
+- name: Declare variable for tower_state
+  set_fact:
+    tower_state: 'unknown'
+  tags:
+    - tower
+    - test
+
+- name: Check which services are running
+  no_log: true
+  service_facts:
+  tags:
+    - tower
+    - test
+
+- name: Set tower_state fact
+  set_fact:
+    tower_state: "{{ ansible_facts.services['ansible-tower.service']['state'] }}"
+  when: ansible_facts.services['ansible-tower.service'] is defined
+  tags:
+    - tower
+    - test
+
+- name: Running Tower setup.sh, time for a 15 minute break?
+  async: 3600
+  poll: 60
+  command: bash -lc "cd /tmp/{{ tower_name }} && bash ./setup.sh"
+  when:
+    - role == 'primary'
+    - tower_state == 'unknown'
+  tags:
+    - tower
+    - setup
+
+- name: Verify ports
+  wait_for:
+    port: "{{ item }}"
+  with_items:
+    - 80
+    - 443
+  tags:
+    - tower
+    - test
+
+- name: Check again which services are running
+  service_facts:
+  no_log: true
+  tags:
+    - tower
+    - test
+
+- name: Display supervisord state
+  debug:
+    var: ansible_facts.services['supervisord.service']
+  tags:
+    - tower
+    - test
+
+- name: Verify url
+  uri:
+    url: "https://{{ primary_machine }}/#/login"
+    validate_certs: "{{ tower_validate_certs }}"
+    status_code: 200
+  tags:
+    - tower
+    - test
+...

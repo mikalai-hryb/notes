@@ -18,3 +18,17 @@ componentNames
   * The*
 Nuxt patterns?
 testing??? Vites
+
+## What is Composable?
+
+A Vue composable is a function that leverages Vue's Composition API to encapsulate and reuse stateful logic.
+
+* your function uses other composables
+* your function uses lifecycle hooks
+* your function has stateful logic (usually a ref)
+
+## Where Composables can be used?
+
+* in the `<script setup>` function on the top level
+* other composables
+* lifecycle hooks

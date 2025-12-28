@@ -42,6 +42,15 @@ source ~/.bashrc  # or
 . ~/.bashrc
 ```
 
+### How to iterate through a range?
+
+```bash
+for i in {1..10}
+do
+  echo "Printing ${i}"
+done
+```
+
 ### What does a conditional block look like?
 
 ```bash

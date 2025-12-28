@@ -6,7 +6,7 @@
 `|` - pipe
 `+` - addition
 `-` - subtraction
-`*` - multiplication
+`*` - multiplication, asterisk, splat
 `/` - division
 `%` - modulo
 `^` - power/exponentiation

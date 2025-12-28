@@ -1,0 +1,25 @@
+---
+
+- name: Check for vscode
+  win_stat:
+    path: 'C:\Program Files\Microsoft VS Code\Code.exe'
+  register: vscode
+
+- name: Install VSCode
+  when: not vscode.stat.exists|bool
+  win_chocolatey:
+    name: "{{ vscode_distribution }}"
+    state: present
+  register: download_vscode
+  until: download_vscode is succeeded
+  retries: 10
+  delay: 2
+
+- name: Install vscode extensions
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ vscode_extensions }}"
+  retries: 10
+  delay: 2
+...

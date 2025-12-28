@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  become: true
+  gather_facts: true
+
+  vars:
+    nginx_https_transport: false
+
+  roles:
+    - role: nginx

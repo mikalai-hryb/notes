@@ -21,13 +21,10 @@ http - protocol
 8000 - port - the TCP port of the server listening for requests
 users/1 path
 
-NGINX   
+NGINX
 
 /etc/nginx/nginx.conf - main server configuration
 /etc/nginx/conf.d - virtual hosts
 
 
-directive events is a a contex  
-
-
-
+directive events is a a contex

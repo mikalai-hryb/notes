@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" A script to set the admin credentials """
+"""A script to set the admin credentials"""
 # Assumes three environment variables
 #
 # PROJECT_DIR: root directory of the project

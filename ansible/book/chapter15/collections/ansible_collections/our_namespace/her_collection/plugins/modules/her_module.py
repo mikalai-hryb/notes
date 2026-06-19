@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-""" her_module ansible module """
+"""her_module ansible module"""
+
 from ansible.module_utils.basic import AnsibleModule
 
 DOCUMENTATION = r"""

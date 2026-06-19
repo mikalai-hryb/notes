@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-""" A script to set the site domain """
+"""A script to set the site domain"""
+
 # Assumes three environment variables
 #
 # PROJECT_DIR: root directory of the project

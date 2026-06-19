@@ -1,4 +1,4 @@
-""" https://stackoverflow.com/a/68610557/571517 """
+"""https://stackoverflow.com/a/68610557/571517"""
 
 
 class FilterModule:

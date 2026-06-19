@@ -76,7 +76,6 @@ with open(SOURCE_FILE_PATH, newline="") as f:
             print(f"IndexError for file {file_name}. No a row for this file.")
             continue
         else:
-
             wav_path = os.path.join(AUDIO_FILES_DIR_PATH, "wav", file_name)
             wav_renamed = os.path.join(
                 AUDIO_FILES_DIR_PATH,
@@ -134,10 +133,10 @@ with open(SOURCE_FILE_PATH, newline="") as f:
                 comment_line = comment if comment.endswith(".") else comment + "."
 
                 locality = row[locality_header]
-                locality_line = f'{locality_header}: {locality if locality.endswith(".") else locality + "."}'
+                locality_line = f"{locality_header}: {locality if locality.endswith('.') else locality + '.'}"
 
                 instruments = row[instruments_header]
-                instruments_line = f'{instruments_header}: {instruments if instruments.endswith(".") else instruments + "."}'
+                instruments_line = f"{instruments_header}: {instruments if instruments.endswith('.') else instruments + '.'}"
 
                 full_comment = " ".join(
                     [comment_line, locality_line, instruments_line]

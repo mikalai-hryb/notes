@@ -46,7 +46,7 @@ A document, in turn, consists of a hierarchical tree of nodes.
 
 As the browser parses HTML, it creates a JavaScript object for every element and section of text encountered. These objects are called nodes—element nodes and text nodes, respectively.
 
-A node is a fundamental record representing a single object within the document. 
+A node is a fundamental record representing a single object within the document.
 
 ### DOM API
 https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API
@@ -59,7 +59,7 @@ HTML documents are basically a tree of nodes, including HTML elements (ELEMENT_N
 
 Some nodes:
 * ELEMENT_NODE = 1
-* ATTRIBUTE_NODE 2 
+* ATTRIBUTE_NODE 2
 * TEXT_NODE = 3
 * CDATA_SECTION_NODE = 4
 * COMMENT_NODE = 8
@@ -68,7 +68,7 @@ Some nodes:
 Web Developers basically work with HTML elements only.
 HTML consists of a series of elements, which you use to enclose, or wrap, different parts of the content to make it appear or act in a certain way. HTML elements are delineated by tags, written using angle brackets (< and >).
 
-Elements and tags aren't the exact same thing, though many people use the terms interchangeably. 
+Elements and tags aren't the exact same thing, though many people use the terms interchangeably.
 The tag includes tag name and the brackets, for example, `<h1>`. An "element" is the opening and closing tags, and all the content between those tags, including nested elements.
 
 ![Alt text](images/what-is-html-element.png)
@@ -80,7 +80,7 @@ In some cases, browsers will include elements even if the tags aren't present in
 
 The default appearance of semantic elements is set by user-agent stylesheets.
 
-The element you choose, and therefore the tags you use, should be appropriate for the content you are displaying, as tags have semantic meaning. 
+The element you choose, and therefore the tags you use, should be appropriate for the content you are displaying, as tags have semantic meaning.
 
 The semantics, or role, of an element is important to assistive technologies and, in some cases, search engines.
 
@@ -92,7 +92,7 @@ There is no object/widjet for non-replaced elements
 ### Replaced and void elements
 Replaced elements are replaced by objects/widgets. Being replaced by objects, each comes with a default appearance.
 
-Void elements are all self-closing elements and are represented by one tag. 
+Void elements are all self-closing elements and are represented by one tag.
 
 * `<meta />`
 * `<link />`
@@ -171,13 +171,13 @@ That may seem counterintuitive
 case-insensitive
 
  to do so is poor usability and negatively impacts accessibility.
- Don't you hate it when 
+ Don't you hate it when
 
  I think we have enough small talk, why are you here?
- 
+
  will understand the outline of the document.
 
- To get the most out of this module,  it would be a good idea to 
+ To get the most out of this module,  it would be a good idea to
 
  Basic computer literacy
  To gain familiarity with accessibility, including what it is
@@ -216,7 +216,7 @@ The class attribute takes as its value a
 * consider putting some meta tags (`apple-mobile-web-app-capable`, `application-name`) into manifist for PWA
 * check other meta elements https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name
 * check if necessary links have `target` attribute
-* all images have  alternative text 
+* all images have  alternative text
 * Is my date picker widget usable by people using screen readers?
 * If content updates dynamically, do visually impaired people know about it?
 * Are my UI buttons accessible to both keyboard and touch interface users?
@@ -253,7 +253,7 @@ accessibility object model (AOM)
 # Attributes
 Attributes are what make HTML so powerful. Attributes are space-separated names and name/value pairs appearing in the opening tag, providing information about and functionality for the element.
 
-If a boolean attribute is present, it is always true. 
+If a boolean attribute is present, it is always true.
 Boolean attributes include `autofocus`, `inert`, `checked`, `disabled`, `required`, `reversed`, `allowfullscreen`, `default`, `loop`, `autoplay`, `controls`, `muted`, `readonly`, `multiple`, and `selected`.
 Note that in XML languages, like SVG, all attributes need to include a value, including boolean attributes.
 
@@ -302,4 +302,4 @@ There are over 50 aria-* states and properties that can be used to ensure access
 
 # JS
 docoment.getElementsBy... returns live node list
-document.querySelectorAll returns static node list ( will not update if more elements are added to the node ) 
+document.querySelectorAll returns static node list ( will not update if more elements are added to the node )

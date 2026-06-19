@@ -304,5 +304,5 @@ There are two types of hosted zones:
 For example, you might create records that cause DNS to do the following:
 
 * Route internet traffic for example.com to the IP address of a host in your data center.
-* Route email for that domain (abc@example.com) to a mail server (mail.example.com).
+* Route email for that domain [abc@example.com] to a mail server (mail.example.com).
 * Route traffic for a subdomain called operations.tokyo.example.com to the IP address of a different host.

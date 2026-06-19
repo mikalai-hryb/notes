@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
 # Создаем "лестницу целей" в виде схемы
 fig, ax = plt.subplots(figsize=(10, 6))

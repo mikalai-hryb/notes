@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-""" can_reach ansible module """
+"""can_reach ansible module"""
+
 from ansible.module_utils.basic import AnsibleModule
 
 DOCUMENTATION = r"""

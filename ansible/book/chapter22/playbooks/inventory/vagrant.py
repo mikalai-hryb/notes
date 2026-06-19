@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Vagrant inventory script """
+"""Vagrant inventory script"""
 # Adapted from Mark Mandel's implementation
 # https://github.com/markmandel/vagrant_ansible_example
 
